@@ -1,0 +1,60 @@
+# Generic
+
+*~
+*.[oa]
+*.bak
+backup/
+
+# Mac OS X
+
+Desktop DF
+Desktop DB
+.Spotlight-V100
+.DS_Store
+.Trashes
+.com.apple.timemachine.supported
+.fseventsd
+.syncinfo
+.TemporaryItems
+._.*
+
+# Windows
+
+Thumbs.db
+desktop.ini
+
+# TextMate
+
+*.tm_build_errors
+*.tmproj
+
+# Xcode 3
+
+build/
+*~.nib
+*.pbxuser
+*.perspectivev3
+*.mode1
+*.mode1v3
+*.mode2v3
+
+# Xcode 4
+
+xcuserdata/
+*.xcworkspace
+
+# Python
+
+*.pyc
+__pycache__/
+
+# Eclipse / Aptana
+
+*.project
+doc/
+
+# CodePro
+
+coverage.txt
+coverage/
+
