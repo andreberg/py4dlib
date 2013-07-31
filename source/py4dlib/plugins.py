@@ -15,9 +15,9 @@
 import os
 import ConfigParser
 
-__version__ = (0, 1)
+__version__ = (0, 2)
 __date__ = '2012-09-26'
-__updated__ = '2013-07-30'
+__updated__ = '2013-07-31'
 
 
 class UserDefaults(object):
@@ -56,29 +56,27 @@ class UserDefaults(object):
         Initializes a new user defaults object by either reading or creating
         a settings file at 'filepath'.
         
-        @param filepath: usually C{res/settings.ini}relative to the 
+        :param filepath: ``str`` 
+            usually ``res/settings.ini``relative to the 
             source code file of the plugin, that uses the config store.
-        @type filepath: C{str}
-        @param defaults: default values to be used if the config
+        :param defaults: ``dict`` default values to be used if the config
             file needs to be created.
-        @type defaults: C{dict}
-        @param header: the name for a section in the .ini file.
+        :param header: ``str``  the name for a section in the .ini file.
             Usually you can get away with leaving it at the default.
             This will add a header "[Settings]" under which your
             settings will appear. If you have more advanced uses
             you are advised to modify the config parser state 
-            directly through C{self.state}.
-        @type header: C{str}
+            directly through ``self.state``.
         """
         super(UserDefaults, self).__init__()
         if not isinstance(filepath, basestring):
-            raise TypeError("param 'filepath': expected type 'str', but got %s" % type(filepath))
+            raise TypeError("E: param 'filepath': expected type 'str', but got %s" % type(filepath))
         if not isinstance(header, basestring):
-            raise TypeError("param 'default_section': expected type 'str', but got %s" % type(header))
+            raise TypeError("E: param 'default_section': expected type 'str', but got %s" % type(header))
         if defaults is None:
             config = ConfigParser.ConfigParser()
         elif not isinstance(defaults, dict):
-            raise TypeError("param 'defaults': expected type 'dict', but got %s" % type(defaults))
+            raise TypeError("E: param 'defaults': expected type 'dict', but got %s" % type(defaults))
         else:
             config = ConfigParser.ConfigParser(defaults)
         self.state = config
@@ -94,13 +92,10 @@ class UserDefaults(object):
         """
         Retrieve a previously stored value from the config object.
          
-        @param name: name of the setting
-        @type name: C{str}
-        @param section: the section name. C{self.default_section} if None.
-        @type section: C{str}
-        @param default: a default value to use in case name wasn't found.
-        @type default: any
-        @return C{str} on success, None or 'default' on failure.
+        :param name: ``str``  name of the setting
+        :param section: ``str`` the section name. ``self.default_section`` if None.
+        :param default: ``any`` a default value to use in case name wasn't found.
+        :return: ``str`` on success, None or 'default' on failure.
             this will always return a string even if the value was
             stored as another type previously. So the caller is
             responsible for the convertion to the wanted data type.
@@ -120,13 +115,10 @@ class UserDefaults(object):
         """
         Store a value in the config object for later retrieval.
         
-        @param name: name of the setting
-        @type name: C{str}
-        @param value: value to set.
-        @type value: any
-        @param section: the section name. C{self.default_section} if None.
-        @type section: C{str}
-        @return True if successful, False otherwise.
+        :param name: ``str`` name of the setting
+        :param value: ``any`` value to set.
+        :param section: ``str`` the section name. ``self.default_section`` if None.
+        :return: True if successful, False otherwise.
         """
         if section is None:
             section = self.header
@@ -142,8 +134,8 @@ class UserDefaults(object):
         """
         Read state from configuration file.
         
-        @return True if successful.
-        @raise OSError: if config file couldn't be read.
+        :return: True if successful.
+        :raise OSError: if config file couldn't be read.
         """
         read_ok = self.state.read(self.filepath)
         if len(read_ok) == 0:
@@ -153,23 +145,22 @@ class UserDefaults(object):
     def save(self, config=None, filepath=None):
         """
         Save settings to a configuration file.
-        @param config: 
+        
+        :param config: ``ConfigParser``
             the config object to save. 
-            If None, uses C{self.config} instead.
-        @type config: C{ConfigParser}
-        @param filepath: 
+            If None, uses ``self.config`` instead.
+        :param filepath: ``str``
             allows for specifying another path
-            than C{self.filepath} in order to save a copy
+            than ``self.filepath`` in order to save a copy
             of the config object.
-        @type filepath: C{str}
-        @return True if successful, False otherwise.
+        :return: True if successful, False otherwise.
         """
         if filepath is None:
             filepath = self.filepath
         elif not isinstance(filepath, basestring):
-            raise TypeError("param 'filepath': expected type 'str', but got %s" % type(filepath))
+            raise TypeError("E: param 'filepath': expected type 'str', but got %s" % type(filepath))
         if config and not isinstance(config, ConfigParser.ConfigParser):
-            raise TypeError("param 'config': expected type 'ConfigParser', but got %r" % config)
+            raise TypeError("E: param 'config': expected type 'ConfigParser', but got %r" % config)
         else:
             config = self.state
         result = False

@@ -9,13 +9,14 @@
 #  andre.bergmedia@googlemail.com
 # 
 # pylint: disable-msg=F0401
+from py4dlib.math import BBox
 
 '''py4dlib.objects -- components for working with CINEMA 4D's objects.'''
 
 import os
 import re
 
-__version__ = (0, 1)
+__version__ = (0, 2)
 __date__ = '2012-09-27'
 __updated__ = '2013-07-31'
 
@@ -457,7 +458,7 @@ def findObject(name, start=None, matchfunc=None, *args, **kwargs):
     """
     if name is None: return None
     if not isinstance(name, str):
-        raise TypeError("Expected string, got %s" % type(name))
+        raise TypeError("E: expected string, got %s" % type(name))
     doc = documents.GetActiveDocument()
     if not doc: return None
     result = None
@@ -469,8 +470,8 @@ def findObject(name, start=None, matchfunc=None, *args, **kwargs):
         elif isinstance(start, c4d.BaseObject):
             startop = start
         else:
-            raise TypeError("findObject(): parameter 'start' must be "\
-                            "one of [str, c4d.BaseObject], but is %s" % type(start))
+            raise TypeError("E: parameter 'start' must be one of " +
+                            "[str, c4d.BaseObject], but is %s" % type(start))
     if not startop: return None
     if start:
         print("Finding %s under %r" % (name, startop.GetName()))
@@ -495,7 +496,7 @@ def findObjects(name):
     """Find all objects in the scene with the name 'name'"""
     if name is None: return None
     if not isinstance(name, str):
-        raise TypeError("Expected string, got %s" % type(name))
+        raise TypeError("E: expected string, got %s" % type(name))
     doc = documents.GetActiveDocument()
     if not doc: return None
     result = []
@@ -674,7 +675,7 @@ def setAxisRotation(obj, rot, local=False):
     """
     if obj is None: return False
     if not isinstance(rot, c4d.Vector):
-        raise TypeError("expected c4d.Vector, got %s" % type(rot))
+        raise TypeError("E: expected c4d.Vector, got %s" % type(rot))
     currot = obj.GetRelRot()
     if c4d.utils.VectorEqual(currot, rot): return
     obj.SetRelRot(rot)

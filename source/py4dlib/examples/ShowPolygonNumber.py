@@ -25,10 +25,10 @@ import os
 __all__ = []
 __version__ = (0, 1)
 __date__ = '2013-07-29'
-__updated__ = '2013-07-29'
+__updated__ = '2013-07-31'
 
 
-DEBUG = 1 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
+DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
 TESTRUN = 0 or ('TestRunLevel' in os.environ and os.environ['TestRunLevel'] > 0)
 
 try:
@@ -38,14 +38,16 @@ except ImportError:
     if TESTRUN == 1:
         pass
     
-from py4dlib.mesh import getSelectedPoints, getSelectedPolys, calcPolyNormal, calcPolyCentroid
-from py4dlib.math import buildMatrix2
+from py4dlib.math import buildMatrix2, polyToListList
+from py4dlib.mesh import calcPolyNormal, calcPolyCentroid, calcPolyArea, calcBBox
+from py4dlib.mesh import getSelectedPoints, getSelectedPolys
 from py4dlib.objects import createObject, insertUnderNull
-from py4dlib.utils import clearConsole
+from py4dlib.utils import clearConsole, ppllString
 
 
 # group text spline objects under op else insert at root
 GROUP_UNDER = True
+TEXT_SIZE = 3
 
 
 def main(doc):  # IGNORE:W0621
@@ -94,11 +96,19 @@ def main(doc):  # IGNORE:W0621
 
         for ply in plys:
             poly = allpolys[ply]
-            if DEBUG: print("%d: %s" % (ply, poly))
-
+            if DEBUG: 
+                print("%d: %s, points as list<list>:" % (ply, poly))
+                print("%s" % (ppllString(polyToListList(poly, op))))
+            
             # calculate polygon normals
             pnormal = calcPolyNormal(poly, op)
             if DEBUG: print("normal: %s" % (pnormal))
+
+            # calculate polygon area and bounding box 
+            parea = calcPolyArea(poly, op)
+            pbb = calcBBox(op)
+            parea = (parea / pbb.size.GetLength()) * TEXT_SIZE
+            if DEBUG: print("area: %s" % (parea))
             
             # create text spline objects
             pname = "%d" % ply
@@ -106,9 +116,9 @@ def main(doc):  # IGNORE:W0621
             if pmark:
                 pmark.Remove()
             pmark = createObject(c4d.Osplinetext, pname)
-            pmark[c4d.PRIM_TEXT_TEXT] = pname     # Text
-            pmark[c4d.PRIM_TEXT_HEIGHT] = 5       # Font Height 0.1
-            pmark[c4d.PRIM_PLANE] = 1             # Plane ZY
+            pmark[c4d.PRIM_TEXT_TEXT] = pname    # Text
+            pmark[c4d.PRIM_TEXT_HEIGHT] = parea  # Font Height
+            pmark[c4d.PRIM_PLANE] = 1            # Plane ZY
             
             op_mg = op.GetMg()
             op_rr = c4d.utils.HPBToMatrix(op.GetRelRot())
@@ -122,7 +132,8 @@ def main(doc):  # IGNORE:W0621
                 prot = (op_rr * pnormal)
 
             # match position and orientation
-            pmg = buildMatrix2(prot, off=ppos, base="-x")
+            pmg = buildMatrix2(prot, off=ppos, base="x")
+            pmg.v2 = -pmg.v2
             pmark.SetMg(pmg)
             
             pmarks.append(pmark)

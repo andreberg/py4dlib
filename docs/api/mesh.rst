@@ -29,10 +29,6 @@ Functions for working with CINEMA 4D's point and polygon objects.
       
          allpolys = obj.GetAllPolygons()
          poly = allpolys[index]
-   
-.. function:: polyToList(p)
-
-.. function:: listToPoly(l)
 
 .. function:: calcPolyCentroid(p, obj)
     
@@ -40,7 +36,7 @@ Functions for working with CINEMA 4D's point and polygon objects.
 
 .. function:: calcPolyNormal(p, obj)
 
-   Calculate the orientation of face normal by using Newell's method.
+   Calculate the orientation of face normal using Newell's method.
    
    See :py:func:`calcVertexNormal` for an example of usage within the calling context.
 
@@ -62,4 +58,17 @@ Functions for working with CINEMA 4D's point and polygon objects.
    Doesn't take orientation of neighboring polygons into account.
    
 
+.. function:: calcTriangleArea(p, obj)
+
+   Calculate area of a triangle using ``|(v3 - v1) x (v3 - v2)|/2``.
+   
+.. function:: calcPolyArea(p, obj, normalized=False)
+
+   Calculate the area of a planar polygon.
+   
+
+.. function:: calcBBox(e)
+
+   Construct a :py:class:`BBox` for a ``c4d.PointObject`` - using selected points only or all points if no selection -  or for a ``c4d.CPolygon``.
+   
    

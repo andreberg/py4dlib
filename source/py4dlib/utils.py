@@ -14,7 +14,7 @@
 
 import os
 
-__version__ = (0, 1)
+__version__ = (0, 2)
 __date__ = '2012-09-27'
 __updated__ = '2013-07-31'
 
@@ -61,9 +61,8 @@ def fuzzyCompareStrings(a, b, limit=20):
             maxlen = max(len(a), len(b)) # percentage relative to longest str
             maxchars = int((maxp/100.0) * maxlen)
         except:
-            raise ValueError('fuzzyCompareStrings(): parameter "limit" must be'\
-                             'one of [str, int] where str should indicate a '\
-                             'percentage, e.g. "75%".')
+            raise ValueError("E: param 'limit' must be one of [str, int] " +
+                             "where str indicates a percentage, e.g. '75%'.")
     idx = 0
     for char in a:
         if idx >= maxchars: 
@@ -80,6 +79,14 @@ def fuzzyCompareStrings(a, b, limit=20):
 def versionString(versionTuple):
     """(x,y,z .. n) -> 'x.y.z...n'"""
     return '.'.join(str(x) for x in versionTuple)
+
+
+def ppllString(ll):
+    """Returns a pretty-printed string of a list<list> structure."""
+    s = repr(ll)[1:-2]
+    lines = s.split('],')
+    result = '],\n'.join(lines)
+    return result + ']'
 
 
 def system(cmd, args=None):
@@ -213,7 +220,7 @@ def require(*args, **kwargs):
             def _check_type(_funcname, _locator, _arg, _types):
                 if _arg is not None and not isinstance(_arg, _types):
                         pluralstr = "one " if isinstance(_types, (list, tuple)) else ""  # IGNORE:W0311
-                        raise TypeError("for %s(): argument %r must be %sof %r, but is %r" %  # IGNORE:W0311
+                        raise TypeError("E: for %s(): param %r must be %sof %r, but is %r" %  # IGNORE:W0311
                                         (_funcname, str(_locator), pluralstr, _types, type(_arg)))
             def _get_index(param_name):
                 codeobj_varnames = wrapped_args
