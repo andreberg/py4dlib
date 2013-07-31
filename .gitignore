@@ -48,13 +48,28 @@ xcuserdata/
 *.pyc
 __pycache__/
 
+# Sphinx
+
+_build/
+
+# GitHub
+
+gh-pages/
+
 # Eclipse / Aptana
 
 *.project
+.settings/
 doc/
 
 # CodePro
 
 coverage.txt
 coverage/
+
+# Project Specific
+
+scripts/
+
+
 

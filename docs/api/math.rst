@@ -1,0 +1,28 @@
+Math
+----
+
+.. function:: vDeg(v, isHPB=False)
+
+   Convert each component of vector v to degrees.
+   
+.. function::  vRad(v, isHPB=False)
+   
+   Convert each component of vector v to radians.
+
+.. function:: vAvg(lst)
+
+   Calculate the average of a list of vectors.
+   
+.. function:: vAbsMin(v)
+   
+   Return min component of a vector using ``abs(x) < abs(y)`` comparisons.
+   
+.. function::  buildMatrix(v, off=c4d.Vector(0), order="zyx")
+   
+   Builds a new orthonormal basis from a direction and (optionally) an offset vector using John F. Hughes and Thomas Möller's method.
+
+.. function::  buildMatrix2(v, off=c4d.Vector(0), base="z")
+   
+   Builds a new orthonormal basis from a direction and (optionally) an offset vector using world aligned cross products.
+
+   

@@ -16,7 +16,7 @@ import os
 
 __version__ = (0, 1)
 __date__ = '2013-07-29'
-__updated__ = '2013-07-29'
+__updated__ = '2013-07-31'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -136,9 +136,10 @@ def buildMatrix(v, off=c4d.Vector(0), order="zyx"):
         return c4d.Matrix(off, r, s, t)
 
 
-def buildMatrix2(v, base="z", off=c4d.Vector(0)):
+def buildMatrix2(v, off=c4d.Vector(0), base="z"):
     """ Builds a new orthonormal basis from a direction 
-        and (optionally) an offset vector. 
+        and (optionally) an offset vector using world 
+        aligned cross products. 
     """
     if v is None or not isinstance(v, c4d.Vector):
         raise ValueError("Expected c4d.Vector, but got %r" % v)

@@ -16,7 +16,7 @@ import os
 
 __version__ = (0, 1)
 __date__ = '2013-07-29'
-__updated__ = '2013-07-29'
+__updated__ = '2013-07-30'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -161,7 +161,7 @@ def calcVertexNormal(v, idx, obj):
         Usually called from a construct like the following:
     
         for i, point in enumerate(obj.GetAllPoints()):
-            vn = calcVertexNormal(point, i, obj):
+            vn = calcVertexNormal(point, i, obj)
     """
     if not v: raise ValueError("v can't be None")
     if not isinstance(v, c4d.Vector):

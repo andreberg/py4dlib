@@ -17,7 +17,7 @@ import ConfigParser
 
 __version__ = (0, 1)
 __date__ = '2012-09-26'
-__updated__ = '2013-07-29'
+__updated__ = '2013-07-30'
 
 
 class UserDefaults(object):
@@ -56,19 +56,19 @@ class UserDefaults(object):
         Initializes a new user defaults object by either reading or creating
         a settings file at 'filepath'.
         
-        @param filepath: usually ``res/settings.ini``relative to the 
+        @param filepath: usually C{res/settings.ini}relative to the 
             source code file of the plugin, that uses the config store.
-        @type filepath: ``str``
+        @type filepath: C{str}
         @param defaults: default values to be used if the config
             file needs to be created.
-        @type defaults: ``dict``
+        @type defaults: C{dict}
         @param header: the name for a section in the .ini file.
             Usually you can get away with leaving it at the default.
             This will add a header "[Settings]" under which your
             settings will appear. If you have more advanced uses
             you are advised to modify the config parser state 
-            directly through ``self.state``.
-        @type header: ``str``
+            directly through C{self.state}.
+        @type header: C{str}
         """
         super(UserDefaults, self).__init__()
         if not isinstance(filepath, basestring):
@@ -95,12 +95,12 @@ class UserDefaults(object):
         Retrieve a previously stored value from the config object.
          
         @param name: name of the setting
-        @type name: ``str``
-        @param section: the section name. ``self.default_section`` if None.
-        @type section: ``str``
+        @type name: C{str}
+        @param section: the section name. C{self.default_section} if None.
+        @type section: C{str}
         @param default: a default value to use in case name wasn't found.
         @type default: any
-        @return: ``str`` on success, None or 'default' on failure.
+        @return C{str} on success, None or 'default' on failure.
             this will always return a string even if the value was
             stored as another type previously. So the caller is
             responsible for the convertion to the wanted data type.
@@ -113,7 +113,7 @@ class UserDefaults(object):
         except ConfigParser.NoOptionError, noe: # IGNORE:W0612 @UnusedVariable
             pass
         except Exception, e:
-            print "*** Caught exception while getting %r: %s" % (name, e)
+            print("*** Caught exception while getting %r: %s" % (name, e))
         return result
     
     def set(self, name, value, section=None): #@ReservedAssignment
@@ -121,12 +121,12 @@ class UserDefaults(object):
         Store a value in the config object for later retrieval.
         
         @param name: name of the setting
-        @type name: ``str``
+        @type name: C{str}
         @param value: value to set.
         @type value: any
-        @param section: the section name. ``self.default_section`` if None.
-        @type section: ``str``
-        @return: True if successful, False otherwise.
+        @param section: the section name. C{self.default_section} if None.
+        @type section: C{str}
+        @return True if successful, False otherwise.
         """
         if section is None:
             section = self.header
@@ -135,14 +135,14 @@ class UserDefaults(object):
             self.state.set(section, name, value)
             result = True
         except Exception, e: # IGNORE:W0703
-            print "*** Caught exception while setting %r to %r: %s" % (name, value, e)
+            print("*** Caught exception while setting %r to %r: %s" % (name, value, e))
         return result
         
     def read(self):
         """
         Read state from configuration file.
         
-        @return: True if successful.
+        @return True if successful.
         @raise OSError: if config file couldn't be read.
         """
         read_ok = self.state.read(self.filepath)
@@ -153,14 +153,16 @@ class UserDefaults(object):
     def save(self, config=None, filepath=None):
         """
         Save settings to a configuration file.
-        @param config: the config object to save. 
-            If None, uses ``self.config`` instead.
-        @type config: ``ConfigParser``
-        @param filepath: allows for specifying another path
-            than ``self.filepath`` in order to save a copy
+        @param config: 
+            the config object to save. 
+            If None, uses C{self.config} instead.
+        @type config: C{ConfigParser}
+        @param filepath: 
+            allows for specifying another path
+            than C{self.filepath} in order to save a copy
             of the config object.
-        @type filepath: ``str``
-        @return: True if successful, False otherwise.
+        @type filepath: C{str}
+        @return True if successful, False otherwise.
         """
         if filepath is None:
             filepath = self.filepath
@@ -176,7 +178,7 @@ class UserDefaults(object):
                 config.write(configfile)
             result = True
         except Exception, e: # IGNORE:W0703
-            print "*** Caught exception while writing config: %r ***" % e
+            print("*** Caught exception while writing config: %r ***" % e)
         return result
 
 

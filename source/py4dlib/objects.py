@@ -17,7 +17,7 @@ import re
 
 __version__ = (0, 1)
 __date__ = '2012-09-27'
-__updated__ = '2013-07-29'
+__updated__ = '2013-07-31'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -47,13 +47,14 @@ class ObjectIterator(object):
     (op, lvl), where op is a c4d.BaseObject representing the current 
     object and lvl is an integer indicating the current depth level.
         
-    startobj        the object whose hierarchy should be iterated over
-    stopobj         an object or a list of objects at which traversal 
-                    should stop (optional)
-    children_only   if True, iterate through the sub-hierarchy under
-                    startobj and stop as soon as startobj's parent or
-                    stopobj (if given) is reached. This excludes startobj
-                    from the iteration.
+    :param startobj:        the object whose hierarchy should be iterated over
+    :param stopobj:         an object or a list of objects at which traversal 
+                            should stop (optional)
+    :param children_only:   if True, iterate through the sub-hierarchy under
+                            startobj and stop as soon as startobj's parent or
+                            stopobj (if given) is reached. This excludes startobj
+                            from the iteration.
+    :param startlvl:        base indentation level 
     """
     def __init__(self, startobj, stopobj=None, children_only=True, startlvl=-1):
         super(ObjectIterator, self).__init__()
@@ -124,12 +125,12 @@ class ObjectEntry(object):
     """
     def __init__(self, op, lvl=-1, parents=None):
         """
-        @param op: the object to wrap.
-        @type op: ``c4d.BaseObject``
-        @param lvl: the depth level within the hierarchy.
-        @type lvl: ``int``
-        @param parents: a list of parent objects
-        @type parents: ``list<c4d.BaseObject>``
+        :param op: the object to wrap.
+        :type op: ``c4d.BaseObject``
+        :param lvl: the depth level within the hierarchy.
+        :type lvl: ``int``
+        :param parents: a list of parent objects
+        :type parents: ``list<c4d.BaseObject>``
         """
         super(ObjectEntry, self).__init__()
         self.op = op
@@ -176,7 +177,7 @@ class ObjectHierarchy(object):
     expansion. This makes it easy to select a subset of objects,
     based on parent-name relationships.
     
-    filtertype    only recognize objects of this c4d type
+    :param filtertype:    only recognize objects of this c4d type
     """
     def __init__(self, rootobj=None, filtertype=None):
         super(ObjectHierarchy, self).__init__()
@@ -445,14 +446,14 @@ def getActiveObjects(doc):
 def findObject(name, start=None, matchfunc=None, *args, **kwargs):
     """ Find object with name 'name'.
     
-    @param start: a c4d.BaseObject or a str representing the name
+    :param start: a c4d.BaseObject or a str representing the name
         of a c4d.BaseObject from where the search should begin.
-    @type start: ``c4d.BaseObject``
-    @param matchfunc: can be used to customize the matching logic 
+    :type start: ``c4d.BaseObject``
+    :param matchfunc: can be used to customize the matching logic 
         by providing the name of a custom function. This function 
         will be passed a potential candidate object plus any 
         remaining args. It should return True or False.
-    @type matchfunc: ``function``         
+    :type matchfunc: ``function``
     """
     if name is None: return None
     if not isinstance(name, str):

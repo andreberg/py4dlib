@@ -16,7 +16,7 @@ import os
 
 __version__ = (0, 1)
 __date__ = '2012-09-27'
-__updated__ = '2013-07-29'
+__updated__ = '2013-07-31'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -126,16 +126,16 @@ def benchmark(func=None, prec=3, unit='auto', name_width=0, time_width=8):
     
     Accepts the following keyword arguments:
     
-    ``unit``  str  time unit for display. one of `[auto, us, ms, s, m]`.
-    ``prec``  int  radix point precision. 
-    ``name_width``  int  width of the right-aligned function name field.
-    ``time_width``  int  width of the right-aligned time value field.
-    
+    :param unit:         ``str``     time unit for display. one of `[auto, us, ms, s, m]`.
+    :param prec:         ``int``     radix point precision. 
+    :param name_width:   ``int``     width of the right-aligned function name field.
+    :param time_width:   ``int``     width of the right-aligned time value field.
+       
     For convenience you can also set attributes on the benchmark
     function itself with the same name as the keyword arguments
     and the value of those will be used instead. This saves you
     from having to call the decorator with the same arguments each
-    time you use it. Just set, for example, `benchmark.prec = 5`
+    time you use it. Just set, for example, ``benchmark.prec = 5``
     after the import and before you use it for the first time.
     """
     import time
