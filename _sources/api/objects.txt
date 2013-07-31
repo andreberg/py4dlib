@@ -11,27 +11,23 @@ Functions for working with CINEMA 4D's objects.
    ``(op, lvl)``, where op is a ``c4d.BaseObject`` representing the current 
    object and lvl is an integer indicating the current depth level.
 
-      :param startobj:        the object whose hierarchy should be iterated over
-      :param stopobj:         an object or a list of objects at which traversal 
-                              should stop (optional)
-      :param children_only:   if True, iterate through the sub-hierarchy under
-                              startobj and stop as soon as startobj's parent or
-                              stopobj (if given) is reached. This excludes startobj
-                              from the iteration.
-      :param startlvl:        base indentation level 
+   :param startobj:        the object whose hierarchy should be iterated over
+   :param stopobj:         an object or a list of objects at which traversal 
+                           should stop (optional)
+   :param children_only:   if True, iterate through the sub-hierarchy under
+                           startobj and stop as soon as startobj's parent or
+                           stopobj (if given) is reached. This excludes startobj
+                           from the iteration.
+   :param startlvl:        base indentation level 
                            
 .. class:: ObjectEntry(op, lvl=-1, parents=None)
 
    Wraps ``c4d.BaseObject`` and makes them hashable, 
    so they can be used as keys in dictionaries.
    
-      :param op: the object to wrap.
-      :type op: ``c4d.BaseObject``
-      :param lvl: the depth level within the hierarchy.
-      :type lvl: ``int``
-      :param parents: a list of parent objects
-      :type parents: ``list<c4d.BaseObject>``
-   
+   :param op: the object to wrap.
+   :param lvl: the depth level within the hierarchy.
+   :param parents: a list of parent objects   
 
 .. class:: ObjectHierarchy(rootobj=None, filtertype=None)
    
@@ -52,13 +48,13 @@ Functions for working with CINEMA 4D's objects.
    expansion. This makes it easy to select a subset of objects,
    based on parent-name relationships.
    
-      :param filtertype:    only recognize objects of this c4d type
+   :param filtertype:    only recognize objects of this c4d type
    
-   .. function:: pprint(self, stopobj=None, filtertype=None, tabsize=4)
+   .. function:: pprint(stopobj=None, filtertype=None, tabsize=4)
    
       Print an indented, tree-like representation of an object manager hierarchy.
       
-   .. function:: get(self, path)
+   .. function:: get(path)
       
       Get a list of ``c4d.BaseObject`` for the key path given by 'path'.
 
@@ -89,8 +85,8 @@ Functions for working with CINEMA 4D's objects.
 
    Not the same as ``BaseSelect.DeselectAll()``.
 
-      :param inObjMngr:    if True, run the deselect command for the Object Manager, 
-                           else the general one for the editor viewport.
+   :param inObjMngr:    if True, run the deselect command for the Object Manager, 
+                        else the general one for the editor viewport.
    
    
 .. function:: groupObjects(objs, name="Group")
@@ -126,14 +122,12 @@ Functions for working with CINEMA 4D's objects.
 
    Find object with name 'name'.
 
-      :param start: a ``c4d.BaseObject`` or a str representing the name
-          of a ``c4d.BaseObject`` from where the search should begin.
-      :type start: ``c4d.BaseObject``
-      :param matchfunc: can be used to customize the matching logic 
-          by providing the name of a custom function. This function 
-          will be passed a potential candidate object plus any 
-          remaining args. It should return True or False.
-      :type matchfunc: ``function``
+   :param start: a ``c4d.BaseObject`` or a str representing the name
+       of a ``c4d.BaseObject`` from where the search should begin.
+   :param matchfunc: can be used to customize the matching logic 
+       by providing the name of a custom function. This function 
+       will be passed a potential candidate object plus any 
+       remaining args. It should return True or False.
    
 .. function:: findObjects(name)
    
@@ -151,11 +145,11 @@ Functions for working with CINEMA 4D's objects.
    Note: currently does not reset obj's coordinate frame 
    to that of the new parent.
    
-      :param objs:  ``BaseObject``      can be a single object or a list of objects
-      :param grp:   ``BaseObject``      the group to place the objects under 
-                                        (if None a new null object will be created)
-      :param name:  ``str``             name for the new group
-      :param copy:  ``bool``            copy the objects if True
+   :param objs:  ``BaseObject``      can be a single object or a list of objects
+   :param grp:   ``BaseObject``      the group to place the objects under 
+                                     (if None a new null object will be created)
+   :param name:  ``str``             name for the new group
+   :param copy:  ``bool``            copy the objects if True
    
 .. function:: getGlobalPosition(obj)
 
@@ -170,7 +164,7 @@ Functions for working with CINEMA 4D's objects.
    Please remember, like most 3D engines 
    CINEMA 4D handles rotation in radians.
 
-   Example for H=10, P=20, B=30:
+   Example for ``H=10, P=20, B=30``:
 
       .. code:: 
       
@@ -187,11 +181,11 @@ Functions for working with CINEMA 4D's objects.
 
    Set the rotation of the object axis (i.e. keeping points in place).
     
-      :param obj:   object
-      :param rot:   vector
+   :param obj:   object
+   :param rot:   vector
    
-   Courtesy of Scott Ayers, source:
-   http://www.plugincafe.com/forum/forum_posts.asp?TID=5663&PID=23480#23480
+   Courtesy of Scott Ayers (`source <http://www.plugincafe.com/forum/forum_posts.asp?TID=5663&PID=23480#23480>`_)
+   
    
 .. function:: centerObjectAxis(obj)
 

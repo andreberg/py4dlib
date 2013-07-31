@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Plugins &mdash; py4dlib 0.1 documentation</title>
+    <title>Plugins &mdash; py4dlib 0.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.1 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.2 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="next" title="Utils" href="utils.html" />
     <link rel="prev" title="Objects" href="objects.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="objects.html" title="Objects"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.2 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -83,32 +83,28 @@ by reading from it.</p>
 <span class="go">use default instead</span>
 </pre></div>
 </div>
+</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param filepath:</th><td class="field-body">usually <tt class="docutils literal"><span class="pre">res/settings.ini</span></tt> relative to the
-source code file of the plugin, that uses the config store.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type filepath:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">param defaults:</th><td class="field-body">default values to be used if the config
-file needs to be created.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type defaults:</th><td class="field-body"><tt class="docutils literal"><span class="pre">dict</span></tt></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">param header:</th><td class="field-body">the name for a section in the .ini file.
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filepath</strong> &#8211; <tt class="docutils literal"><span class="pre">str</span></tt>
+usually <tt class="docutils literal"><span class="pre">res/settings.ini</span></tt> relative to the
+source code file of the plugin, that uses the config store.</li>
+<li><strong>defaults</strong> &#8211; <tt class="docutils literal"><span class="pre">dict</span></tt> default values to be used if the config
+file needs to be created.</li>
+<li><strong>header</strong> &#8211; <tt class="docutils literal"><span class="pre">str</span></tt>  the name for a section in the .ini file.
 Usually you can get away with leaving it at the default.
 This will add a header &#8220;[Settings]&#8221; under which your
 settings will appear. If you have more advanced uses
 you are advised to modify the config parser state
-directly through <tt class="docutils literal"><span class="pre">self.state</span></tt>.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type header:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt></td>
+directly through <tt class="docutils literal"><span class="pre">self.state</span></tt>.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 <dl class="function">
 <dt id="UserDefaults.get">
 <tt class="descname">get</tt><big>(</big><em>self</em>, <em>name</em>, <em>section=None</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#UserDefaults.get" title="Permalink to this definition">¶</a></dt>
@@ -118,9 +114,9 @@ directly through <tt class="docutils literal"><span class="pre">self.state</span
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>name</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; name of the setting</li>
-<li><strong>section</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; the section name. <tt class="docutils literal"><span class="pre">self.default_section</span></tt> if None.</li>
-<li><strong>default</strong> (<em>any</em>) &#8211; a default value to use in case name wasn&#8217;t found.</li>
+<li><strong>name</strong> &#8211; <tt class="docutils literal"><span class="pre">str</span></tt>  name of the setting</li>
+<li><strong>section</strong> &#8211; <tt class="docutils literal"><span class="pre">str</span></tt> the section name. <tt class="docutils literal"><span class="pre">self.default_section</span></tt> if None.</li>
+<li><strong>default</strong> &#8211; <tt class="docutils literal"><span class="pre">any</span></tt> a default value to use in case name wasn&#8217;t found.</li>
 </ul>
 </td>
 </tr>
@@ -143,9 +139,9 @@ responsible for the convertion to the wanted data type.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>name</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; name of the setting</li>
-<li><strong>value</strong> (<em>any</em>) &#8211; value to set.</li>
-<li><strong>section</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; the section name. <tt class="docutils literal"><span class="pre">self.default_section</span></tt> if None.</li>
+<li><strong>name</strong> &#8211; <tt class="docutils literal"><span class="pre">str</span></tt> name of the setting</li>
+<li><strong>value</strong> &#8211; <tt class="docutils literal"><span class="pre">any</span></tt> value to set.</li>
+<li><strong>section</strong> &#8211; <tt class="docutils literal"><span class="pre">str</span></tt> the section name. <tt class="docutils literal"><span class="pre">self.default_section</span></tt> if None.</li>
 </ul>
 </td>
 </tr>
@@ -181,9 +177,11 @@ responsible for the convertion to the wanted data type.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>config</strong> (<tt class="docutils literal"><span class="pre">ConfigParser</span></tt>) &#8211; the config object to save.
+<li><strong>config</strong> &#8211; <tt class="docutils literal"><span class="pre">ConfigParser</span></tt>
+the config object to save.
 If None, uses <tt class="docutils literal"><span class="pre">self.config</span></tt> instead.</li>
-<li><strong>filepath</strong> (<tt class="docutils literal"><span class="pre">str</span></tt>) &#8211; allows for specifying another path
+<li><strong>filepath</strong> &#8211; <tt class="docutils literal"><span class="pre">str</span></tt>
+allows for specifying another path
 than <tt class="docutils literal"><span class="pre">self.filepath</span></tt> in order to save a copy
 of the config object.</li>
 </ul>
@@ -246,7 +244,7 @@ of the config object.</li>
         <li class="right" >
           <a href="objects.html" title="Objects"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.2 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>

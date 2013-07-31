@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Utils &mdash; py4dlib 0.1 documentation</title>
+    <title>Utils &mdash; py4dlib 0.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.1 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.2 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="prev" title="Plugins" href="plugins.html" /> 
   </head>
@@ -37,7 +37,7 @@
         <li class="right" >
           <a href="plugins.html" title="Plugins"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.2 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -71,7 +71,13 @@ the longest string match.</p>
 <dl class="function">
 <dt id="versionString">
 <tt class="descname">versionString</tt><big>(</big><em>versionTuple</em><big>)</big><a class="headerlink" href="#versionString" title="Permalink to this definition">¶</a></dt>
-<dd><p><tt class="docutils literal"><span class="pre">(x,y,z</span> <span class="pre">..</span> <span class="pre">n)</span> <span class="pre">-&gt;</span> <span class="pre">'x.y.z...n'</span></tt></p>
+<dd><p><tt class="docutils literal"><span class="pre">(x,y,z,</span> <span class="pre">..</span> <span class="pre">n)</span> <span class="pre">-&gt;</span> <span class="pre">'x.y.z...n'</span></tt></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ppllString">
+<tt class="descname">ppllString</tt><big>(</big><em>ll</em><big>)</big><a class="headerlink" href="#ppllString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a pretty-printed string of a <tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> structure.</p>
 </dd></dl>
 
 <dl class="function">
@@ -85,26 +91,23 @@ returns <tt class="docutils literal"><span class="pre">stdout</span></tt> and <t
 Python 2.5 and lower or a <tt class="docutils literal"><span class="pre">namedtuple</span></tt> in 2.6
 and higher. So you can use <tt class="docutils literal"><span class="pre">result[0]</span></tt> in the
 first case and <tt class="docutils literal"><span class="pre">result.out</span></tt> in the second.</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param cmd:</th><td class="field-body">a console command line</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type cmd:</th><td class="field-body"><tt class="docutils literal"><span class="pre">string</span></tt></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">param args:</th><td class="field-body">a list of arguments that
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cmd</strong> &#8211; <tt class="docutils literal"><span class="pre">string</span></tt> a console command line</li>
+<li><strong>args</strong> &#8211; <tt class="docutils literal"><span class="pre">list</span></tt> a list of arguments that
 will be expanded in cmd
-starting with <tt class="docutils literal"><span class="pre">$0</span></tt></td>
+starting with <tt class="docutils literal"><span class="pre">$0</span></tt></li>
+</ul>
+</td>
 </tr>
-<tr class="field-even field"><th class="field-name">type args:</th><td class="field-body"><tt class="docutils literal"><span class="pre">list</span></tt></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body"><tt class="docutils literal"><span class="pre">tuple</span></tt> or <tt class="docutils literal"><span class="pre">namedtuple</span></tt></td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">tuple</span></tt> or <tt class="docutils literal"><span class="pre">namedtuple</span></tt></p>
+</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </dd></dl>
 
 </div>
@@ -136,6 +139,12 @@ and the value of those will be used instead. This saves you
 from having to call the decorator with the same arguments each
 time you use it. Just set, for example, <tt class="docutils literal"><span class="pre">benchmark.prec</span> <span class="pre">=</span> <span class="pre">5</span></tt>
 after the import and before you use it for the first time.</p>
+<p>Sample output:</p>
+<blockquote>
+<div><div class="code highlight-python"><pre>-&gt; factorial() @ 001: 8.000 us, total: 8.000 us
+-&gt; factorial() @ 002: 22.000 us, total: 30.000 us</pre>
+</div>
+</div></blockquote>
 </dd></dl>
 
 <dl class="function">
@@ -150,6 +159,14 @@ second member specifies a type or a tuple of types.</li>
 be a type or a tuple of types.</li>
 </ol>
 <p>None is always a valid type, to allow for optional args.</p>
+<p>Usage example:</p>
+<blockquote>
+<div><div class="code highlight-python"><div class="highlight"><pre><span class="nd">@require</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">):</span>
+   <span class="k">return</span>  <span class="n">x</span> <span class="o">/</span> <span class="n">y</span>
+</pre></div>
+</div>
+</div></blockquote>
 </dd></dl>
 
 <dl class="function">
@@ -212,7 +229,7 @@ be a type or a tuple of types.</li>
         <li class="right" >
           <a href="plugins.html" title="Plugins"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.2 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>

@@ -1,6 +1,46 @@
 Math
 ----
 
+
+.. class:: class BBox()
+   
+   Calculate various area metrics from a list of points,
+   such as min, max, midpoint, radius and size.
+      
+   .. classmethod:: fromSelectedPoints(cls, obj)
+      
+      Returns a new BBox object with the 
+      number of points currently selected 
+      added, or None if there are no points 
+      or obj doesn't exist.
+
+      :raise ValueError: if the object has no points.
+      
+   .. classmethod:: fromPoints(cls, obj)
+   
+      Returns a new BBox object with all 
+      points of obj added.
+      
+      :raise ValueError: if the object has no points.
+
+   .. function:: addPoint(p)
+
+   .. function:: addPoints(lst)
+            
+   .. function:: getMax()
+   
+   .. function:: getMin()
+
+   .. function:: getMp()
+
+   .. function:: getRad()
+
+   .. function:: getSize()
+      
+.. function:: mAbs(m)
+
+   ``abs()`` each component vector of matrix m.
+   
 .. function:: vDeg(v, isHPB=False)
 
    Convert each component of vector v to degrees.
@@ -21,8 +61,41 @@ Math
    
    Builds a new orthonormal basis from a direction and (optionally) an offset vector using John F. Hughes and Thomas Möller's method.
 
-.. function::  buildMatrix2(v, base="z", off=c4d.Vector(0))
+.. function::  buildMatrix2(v, off=c4d.Vector(0), base="z")
    
-   Builds a new orthonormal basis from a direction and (optionally) an offset vector using world aligned cross products.
+   Builds a new orthonormal basis from a direction and (optionally) an offset vector using base aligned cross products.
+   
+   :param base:  ``str`` the base component 'v' represents. Must be one of ``x, y, z, -x, -y, -z``
 
+.. function:: getMulP(m, v)
    
+   Multiply a matrix with a vector representing a point.
+
+.. function:: getMulV(m, v)
+   
+   Multiply a matrix with a vector representing a direction.
+
+.. function:: det(m)
+
+   Determinant of a ``n x n`` matrix where ``n = 3``. 
+   m can be of type ``c4d.Matrix`` or ``list<list>``.
+   
+.. function:: polyToList(p)
+
+.. function:: polyToListList(p, obj)
+   
+   Convert a ``c4d.CPolygon`` to a list of lists.
+   
+.. function:: listToPoly(l)
+
+.. function:: listListToPoly(l)
+
+   Convert a list of lists to ``c4d.CPolygon``.
+   
+.. function:: listListToMatrix(l)
+
+.. function:: matrixToListList(m, includeOffset=False)
+
+.. function:: unitNormal(a, b, c)
+   
+   Calculate unit normal of a planar surface.

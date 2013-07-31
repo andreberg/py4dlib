@@ -21,8 +21,12 @@ Utility toolbelt for great convenience.
    
 .. function:: versionString(versionTuple)
    
-   ``(x,y,z .. n) -> 'x.y.z...n'``
-   
+   ``(x,y,z, .. n) -> 'x.y.z...n'``
+
+.. function:: ppllString(ll)
+
+   Returns a pretty-printed string of a ``list<list>`` structure.
+
 .. function:: system(cmd, args=None)
    
    Convenience function for firing off commands to 
@@ -35,13 +39,11 @@ Utility toolbelt for great convenience.
    and higher. So you can use ``result[0]`` in the
    first case and ``result.out`` in the second.
 
-       :param cmd: a console command line
-       :type cmd: ``string``
-       :param args: a list of arguments that 
-                    will be expanded in cmd 
-                    starting with ``$0``
-       :type args: ``list``
-       :return: ``tuple`` or ``namedtuple``
+   :param cmd: ``string`` a console command line
+   :param args: ``list`` a list of arguments that 
+                will be expanded in cmd 
+                starting with ``$0``
+   :return: ``tuple`` or ``namedtuple``
        
 Decorators
 ----------
@@ -65,6 +67,13 @@ Decorators
    time you use it. Just set, for example, ``benchmark.prec = 5``
    after the import and before you use it for the first time.
    
+   Sample output:
+   
+      .. code::
+
+         -> factorial() @ 001: 8.000 us, total: 8.000 us
+         -> factorial() @ 002: 22.000 us, total: 30.000 us
+   
 .. function:: require(*args, **kwargs)
    
    Decorator that enforces types for function/method args.
@@ -77,6 +86,15 @@ Decorators
       be a type or a tuple of types.
    
    None is always a valid type, to allow for optional args.
+   
+   Usage example:
+   
+      .. code::
+         
+         @require(x=int, y=float)
+         def func(x, y):
+            return  x / y
+   
 
 .. function:: cache(func)
    

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Objects &mdash; py4dlib 0.1 documentation</title>
+    <title>Objects &mdash; py4dlib 0.2 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.1',
+        VERSION:     '0.2',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.1 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.2 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="next" title="Plugins" href="plugins.html" />
     <link rel="prev" title="Mesh" href="mesh.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="mesh.html" title="Mesh"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.2 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -61,27 +61,24 @@
 <p>Using a depth first traversal scheme, return a tuple in the form
 <tt class="docutils literal"><span class="pre">(op,</span> <span class="pre">lvl)</span></tt>, where op is a <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> representing the current
 object and lvl is an integer indicating the current depth level.</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param startobj:</th><td class="field-body">the object whose hierarchy should be iterated over</td>
-</tr>
-<tr class="field-even field"><th class="field-name">param stopobj:</th><td class="field-body">an object or a list of objects at which traversal
-should stop (optional)</td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">param children_only:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">if True, iterate through the sub-hierarchy under
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>startobj</strong> &#8211; the object whose hierarchy should be iterated over</li>
+<li><strong>stopobj</strong> &#8211; an object or a list of objects at which traversal
+should stop (optional)</li>
+<li><strong>children_only</strong> &#8211; if True, iterate through the sub-hierarchy under
 startobj and stop as soon as startobj&#8217;s parent or
 stopobj (if given) is reached. This excludes startobj
-from the iteration.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">param startlvl:</th><td class="field-body">base indentation level</td>
+from the iteration.</li>
+<li><strong>startlvl</strong> &#8211; base indentation level</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </dd></dl>
 
 <dl class="class">
@@ -89,26 +86,19 @@ from the iteration.</td>
 <em class="property">class </em><tt class="descname">ObjectEntry</tt><big>(</big><em>op</em>, <em>lvl=-1</em>, <em>parents=None</em><big>)</big><a class="headerlink" href="#ObjectEntry" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wraps <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> and makes them hashable,
 so they can be used as keys in dictionaries.</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param op:</th><td class="field-body">the object to wrap.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type op:</th><td class="field-body"><tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">param lvl:</th><td class="field-body">the depth level within the hierarchy.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type lvl:</th><td class="field-body"><tt class="docutils literal"><span class="pre">int</span></tt></td>
-</tr>
-<tr class="field-odd field"><th class="field-name">param parents:</th><td class="field-body">a list of parent objects</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type parents:</th><td class="field-body"><tt class="docutils literal"><span class="pre">list&lt;c4d.BaseObject&gt;</span></tt></td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>op</strong> &#8211; the object to wrap.</li>
+<li><strong>lvl</strong> &#8211; the depth level within the hierarchy.</li>
+<li><strong>parents</strong> &#8211; a list of parent objects</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </dd></dl>
 
 <dl class="class">
@@ -127,26 +117,23 @@ provided with the <tt class="docutils literal"><span class="pre">get()</span></t
 coincides with syntax for wildcard and regular epxression
 expansion. This makes it easy to select a subset of objects,
 based on parent-name relationships.</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">param filtertype:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">only recognize objects of this c4d type</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filtertype</strong> &#8211; only recognize objects of this c4d type</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 <dl class="function">
 <dt id="ObjectHierarchy.pprint">
-<tt class="descname">pprint</tt><big>(</big><em>self</em>, <em>stopobj=None</em>, <em>filtertype=None</em>, <em>tabsize=4</em><big>)</big><a class="headerlink" href="#ObjectHierarchy.pprint" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">pprint</tt><big>(</big><em>stopobj=None</em>, <em>filtertype=None</em>, <em>tabsize=4</em><big>)</big><a class="headerlink" href="#ObjectHierarchy.pprint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print an indented, tree-like representation of an object manager hierarchy.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="ObjectHierarchy.get">
-<tt class="descname">get</tt><big>(</big><em>self</em>, <em>path</em><big>)</big><a class="headerlink" href="#ObjectHierarchy.get" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">get</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#ObjectHierarchy.get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a list of <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> for the key path given by &#8216;path&#8217;.</p>
 <p>Key path can contain wildcards (<tt class="docutils literal"><span class="pre">*</span></tt> or <tt class="docutils literal"><span class="pre">?</span></tt>) or regular expression
 syntax. Prepend a &#8216;!&#8217; to &#8216;path&#8217; if you want to forego wildcard expansion
@@ -185,18 +172,15 @@ concatenated parent path.</p>
 <dt id="deselectAll">
 <tt class="descname">deselectAll</tt><big>(</big><em>inObjMngr=False</em><big>)</big><a class="headerlink" href="#deselectAll" title="Permalink to this definition">¶</a></dt>
 <dd><p>Not the same as <tt class="docutils literal"><span class="pre">BaseSelect.DeselectAll()</span></tt>.</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name" colspan="2">param inObjMngr:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">if True, run the deselect command for the Object Manager,
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inObjMngr</strong> &#8211; if True, run the deselect command for the Object Manager,
 else the general one for the editor viewport.</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </dd></dl>
 
 <dl class="function">
@@ -240,27 +224,22 @@ GetSelection also selects tags and materials.</p>
 <dt id="findObject">
 <tt class="descname">findObject</tt><big>(</big><em>name</em>, <em>start=None</em>, <em>matchfunc=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#findObject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find object with name &#8216;name&#8217;.</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param start:</th><td class="field-body">a <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> or a str representing the name
-of a <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> from where the search should begin.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type start:</th><td class="field-body"><tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt></td>
-</tr>
-<tr class="field-odd field"><th class="field-name" colspan="2">param matchfunc:</th></tr>
-<tr class="field-odd field"><td>&nbsp;</td><td class="field-body">can be used to customize the matching logic
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>start</strong> &#8211; a <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> or a str representing the name
+of a <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> from where the search should begin.</li>
+<li><strong>matchfunc</strong> &#8211; can be used to customize the matching logic
 by providing the name of a custom function. This function
 will be passed a potential candidate object plus any
-remaining args. It should return True or False.</td>
-</tr>
-<tr class="field-even field"><th class="field-name">type matchfunc:</th><td class="field-body"><tt class="docutils literal"><span class="pre">function</span></tt></td>
+remaining args. It should return True or False.</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </dd></dl>
 
 <dl class="function">
@@ -282,23 +261,21 @@ This calls <tt class="docutils literal"><span class="pre">c4d.StopAllThreads()</
 <dd><p>Inserts objects under a group (null) object, optionally creating the group.</p>
 <p>Note: currently does not reset obj&#8217;s coordinate frame
 to that of the new parent.</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param objs:</th><td class="field-body"><tt class="docutils literal"><span class="pre">BaseObject</span></tt>      can be a single object or a list of objects</td>
-</tr>
-<tr class="field-even field"><th class="field-name">param grp:</th><td class="field-body"><tt class="docutils literal"><span class="pre">BaseObject</span></tt>      the group to place the objects under
-(if None a new null object will be created)</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">param name:</th><td class="field-body"><tt class="docutils literal"><span class="pre">str</span></tt>             name for the new group</td>
-</tr>
-<tr class="field-even field"><th class="field-name">param copy:</th><td class="field-body"><tt class="docutils literal"><span class="pre">bool</span></tt>            copy the objects if True</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>objs</strong> &#8211; <tt class="docutils literal"><span class="pre">BaseObject</span></tt>      can be a single object or a list of objects</li>
+<li><strong>grp</strong> &#8211; <tt class="docutils literal"><span class="pre">BaseObject</span></tt>      the group to place the objects under
+(if None a new null object will be created)</li>
+<li><strong>name</strong> &#8211; <tt class="docutils literal"><span class="pre">str</span></tt>             name for the new group</li>
+<li><strong>copy</strong> &#8211; <tt class="docutils literal"><span class="pre">bool</span></tt>            copy the objects if True</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
 </dd></dl>
 
 <dl class="function">
@@ -326,7 +303,7 @@ to that of the new parent.</p>
 <tt class="descname">setGlobalRotation</tt><big>(</big><em>obj</em>, <em>rot</em><big>)</big><a class="headerlink" href="#setGlobalRotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Please remember, like most 3D engines
 CINEMA 4D handles rotation in radians.</p>
-<p>Example for H=10, P=20, B=30:</p>
+<p>Example for <tt class="docutils literal"><span class="pre">H=10,</span> <span class="pre">P=20,</span> <span class="pre">B=30</span></tt>:</p>
 <blockquote>
 <div><div class="code highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">c4d</span>
 <span class="kn">from</span> <span class="nn">c4d</span> <span class="kn">import</span> <span class="n">utils</span>
@@ -347,20 +324,19 @@ CINEMA 4D handles rotation in radians.</p>
 <dt id="setAxisRotation">
 <tt class="descname">setAxisRotation</tt><big>(</big><em>obj</em>, <em>rot</em>, <em>local=False</em><big>)</big><a class="headerlink" href="#setAxisRotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the rotation of the object axis (i.e. keeping points in place).</p>
-<blockquote>
-<div><table class="docutils field-list" frame="void" rules="none">
+<table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">param obj:</th><td class="field-body">object</td>
-</tr>
-<tr class="field-even field"><th class="field-name">param rot:</th><td class="field-body">vector</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>obj</strong> &#8211; object</li>
+<li><strong>rot</strong> &#8211; vector</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
-</div></blockquote>
-<p>Courtesy of Scott Ayers, source:
-<a class="reference external" href="http://www.plugincafe.com/forum/forum_posts.asp?TID=5663&amp;PID=23480#23480">http://www.plugincafe.com/forum/forum_posts.asp?TID=5663&amp;PID=23480#23480</a></p>
+<p>Courtesy of Scott Ayers (<a class="reference external" href="http://www.plugincafe.com/forum/forum_posts.asp?TID=5663&amp;PID=23480#23480">source</a>)</p>
 </dd></dl>
 
 <dl class="function">
@@ -416,7 +392,7 @@ CINEMA 4D handles rotation in radians.</p>
         <li class="right" >
           <a href="mesh.html" title="Mesh"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.2 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>

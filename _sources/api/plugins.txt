@@ -36,30 +36,25 @@ Plugins
          >>> print defaults.get('does-not-exist', default='use default instead')
          use default instead
    
-      :param filepath: usually ``res/settings.ini`` relative to the 
-          source code file of the plugin, that uses the config store.
-      :type filepath: ``str``
-      :param defaults: default values to be used if the config
-          file needs to be created.
-      :type defaults: ``dict``
-      :param header: the name for a section in the .ini file.
-          Usually you can get away with leaving it at the default.
-          This will add a header "[Settings]" under which your
-          settings will appear. If you have more advanced uses
-          you are advised to modify the config parser state 
-          directly through ``self.state``.
-      :type header: ``str``
+   :param filepath: ``str`` 
+       usually ``res/settings.ini`` relative to the 
+       source code file of the plugin, that uses the config store.
+   :param defaults: ``dict`` default values to be used if the config
+       file needs to be created.
+   :param header: ``str``  the name for a section in the .ini file.
+       Usually you can get away with leaving it at the default.
+       This will add a header "[Settings]" under which your
+       settings will appear. If you have more advanced uses
+       you are advised to modify the config parser state 
+       directly through ``self.state``.
    
    .. function:: get(self, name, section=None, default=None)
       
       Retrieve a previously stored value from the config object.
 
-      :param name: name of the setting
-      :type name: ``str``
-      :param section: the section name. ``self.default_section`` if None.
-      :type section: ``str``
-      :param default: a default value to use in case name wasn't found.
-      :type default: any
+      :param name: ``str``  name of the setting
+      :param section: ``str`` the section name. ``self.default_section`` if None.
+      :param default: ``any`` a default value to use in case name wasn't found.
       :return: ``str`` on success, None or 'default' on failure.
           this will always return a string even if the value was
           stored as another type previously. So the caller is
@@ -69,12 +64,9 @@ Plugins
       
       Store a value in the config object for later retrieval.
 
-      :param name: name of the setting
-      :type name: ``str``
-      :param value: value to set.
-      :type value: any
-      :param section: the section name. ``self.default_section`` if None.
-      :type section: ``str``
+      :param name: ``str`` name of the setting
+      :param value: ``any`` value to set.
+      :param section: ``str`` the section name. ``self.default_section`` if None.
       :return: True if successful, False otherwise.
       
    .. function:: read(self)
@@ -88,15 +80,13 @@ Plugins
       
       Save settings to a configuration file.
       
-      :param config: 
+      :param config: ``ConfigParser``
           the config object to save. 
           If None, uses ``self.config`` instead.
-      :type config: ``ConfigParser``
-      :param filepath: 
+      :param filepath: ``str``
           allows for specifying another path
           than ``self.filepath`` in order to save a copy
           of the config object.
-      :type filepath: ``str``
       :return: True if successful, False otherwise.
       
       
