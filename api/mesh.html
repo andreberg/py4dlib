@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Mesh &mdash; py4dlib 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="py4dlib 0.1 documentation" href="../index.html" />
+    <link rel="up" title="API docs" href="../api.html" />
+    <link rel="next" title="Objects" href="objects.html" />
+    <link rel="prev" title="Math" href="math.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="objects.html" title="Objects"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="math.html" title="Math"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">py4dlib 0.1 documentation</a> &raquo;</li>
+          <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="mesh">
+<h1>Mesh<a class="headerlink" href="#mesh" title="Permalink to this headline">¶</a></h1>
+<p>Functions for working with CINEMA 4D&#8217;s point and polygon objects.</p>
+<dl class="function">
+<dt id="togglePolySelection">
+<tt class="descname">togglePolySelection</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#togglePolySelection" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="selectAllPolys">
+<tt class="descname">selectAllPolys</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#selectAllPolys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="getSelectedPoints">
+<tt class="descname">getSelectedPoints</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#getSelectedPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns list of selected point indices.</p>
+<p>To get the actual point(s) do something like</p>
+<blockquote>
+<div><div class="code highlight-python"><div class="highlight"><pre><span class="n">allpoints</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">GetAllPoints</span><span class="p">()</span>
+<span class="n">point</span> <span class="o">=</span> <span class="n">allpoints</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="getSelectedPolys">
+<tt class="descname">getSelectedPolys</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#getSelectedPolys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns list of selected polygons indices.</p>
+<p>To get the actual polygon(s) do something like</p>
+<blockquote>
+<div><div class="code highlight-python"><div class="highlight"><pre><span class="n">allpolys</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">GetAllPolygons</span><span class="p">()</span>
+<span class="n">poly</span> <span class="o">=</span> <span class="n">allpolys</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="polyToList">
+<tt class="descname">polyToList</tt><big>(</big><em>p</em><big>)</big><a class="headerlink" href="#polyToList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="listToPoly">
+<tt class="descname">listToPoly</tt><big>(</big><em>l</em><big>)</big><a class="headerlink" href="#listToPoly" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="calcPolyCentroid">
+<tt class="descname">calcPolyCentroid</tt><big>(</big><em>p</em>, <em>obj</em><big>)</big><a class="headerlink" href="#calcPolyCentroid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the centroid of a polygon by averaging its vertices.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="calcPolyNormal">
+<tt class="descname">calcPolyNormal</tt><big>(</big><em>p</em>, <em>obj</em><big>)</big><a class="headerlink" href="#calcPolyNormal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the orientation of face normal by using Newell&#8217;s method.</p>
+<p>See <a class="reference internal" href="#calcVertexNormal" title="calcVertexNormal"><tt class="xref py py-func docutils literal"><span class="pre">calcVertexNormal()</span></tt></a> for an example of usage within the calling context.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="calcVertexNormal">
+<tt class="descname">calcVertexNormal</tt><big>(</big><em>v</em>, <em>idx</em>, <em>obj</em><big>)</big><a class="headerlink" href="#calcVertexNormal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the vertex normal by averaging surrounding face normals.</p>
+<p>Usually called from a construct like the following:</p>
+<blockquote>
+<div><div class="code highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">GetAllPoints</span><span class="p">()):</span>
+   <span class="n">vn</span> <span class="o">=</span> <span class="n">calcVertexNormal</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+</dd></dl>
+
+<dl class="function">
+<dt id="calcThreePointNormal">
+<tt class="descname">calcThreePointNormal</tt><big>(</big><em>v1</em>, <em>v2</em>, <em>v3</em><big>)</big><a class="headerlink" href="#calcThreePointNormal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the surface normal of a three point plane.</p>
+<p>Doesn&#8217;t take orientation of neighboring polygons into account.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="math.html"
+                        title="previous chapter">Math</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="objects.html"
+                        title="next chapter">Objects</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/api/mesh.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="objects.html" title="Objects"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="math.html" title="Math"
+             >previous</a> |</li>
+        <li><a href="../index.html">py4dlib 0.1 documentation</a> &raquo;</li>
+          <li><a href="../api.html" >API docs</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, André Berg.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Utils &mdash; py4dlib 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="py4dlib 0.1 documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">py4dlib 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="utils">
+<h1>Utils<a class="headerlink" href="#utils" title="Permalink to this headline">¶</a></h1>
+<p>Utility toolbelt for great convenience.</p>
+<dl class="function">
+<dt id="clearConsole">
+<tt class="descname">clearConsole</tt><big>(</big><big>)</big><a class="headerlink" href="#clearConsole" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the console across multiple CINEMA 4D versions.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="fuzzyCompareStrings">
+<tt class="descname">fuzzyCompareStrings</tt><big>(</big><em>a</em>, <em>b</em>, <em>limit=20</em><big>)</big><a class="headerlink" href="#fuzzyCompareStrings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fuzzy string comparison.</p>
+<p>Two strings are deemed equal if they have
+the same byte sequence for up to &#8216;limit&#8217; chars.</p>
+<p>Limit can be an int or a percentage string
+like for example &#8216;60%&#8217; in which case 2 strings
+are deemed equal if at least &#8216;60%&#8217; relative to
+the longest string match.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="versionString">
+<tt class="descname">versionString</tt><big>(</big><em>versionTuple</em><big>)</big><a class="headerlink" href="#versionString" title="Permalink to this definition">¶</a></dt>
+<dd><p><tt class="docutils literal"><span class="pre">(x,y,z</span> <span class="pre">..</span> <span class="pre">n)</span> <span class="pre">-&gt;</span> <span class="pre">'x.y.z...n'</span></tt></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="system">
+<tt class="descname">system</tt><big>(</big><em>cmd</em>, <em>args=None</em><big>)</big><a class="headerlink" href="#system" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function for firing off commands to
+the system console. Used instead of <a href="#id1"><span class="problematic" id="id2">`subprocess.call`_</span></a>
+so that shell variables will be expanded properly.</p>
+<p>Not the same as <a href="#id3"><span class="problematic" id="id4">`os.system`_</span></a> as here it captures
+returns <tt class="docutils literal"><span class="pre">stdout</span></tt> and <tt class="docutils literal"><span class="pre">stderr</span></tt> in a tuple in
+Python 2.5 and lower or a <tt class="docutils literal"><span class="pre">namedtuple</span></tt> in 2.6
+and higher. So you can use <tt class="docutils literal"><span class="pre">result[0]</span></tt> in the
+first case and <tt class="docutils literal"><span class="pre">result.out</span></tt> in the second.</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">param cmd:</th><td class="field-body">a console command line</td>
+</tr>
+<tr class="field-even field"><th class="field-name">type cmd:</th><td class="field-body"><tt class="docutils literal"><span class="pre">string</span></tt></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">param args:</th><td class="field-body">a list of arguments that
+will be expanded in cmd
+starting with <tt class="docutils literal"><span class="pre">$0</span></tt></td>
+</tr>
+<tr class="field-even field"><th class="field-name">type args:</th><td class="field-body"><tt class="docutils literal"><span class="pre">list</span></tt></td>
+</tr>
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body"><tt class="docutils literal"><span class="pre">tuple</span></tt> or <tt class="docutils literal"><span class="pre">namedtuple</span></tt></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="decorators">
+<h1>Decorators<a class="headerlink" href="#decorators" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="benchmark">
+<tt class="descname">benchmark</tt><big>(</big><em>func=None</em>, <em>prec=3</em>, <em>unit='auto'</em>, <em>name_width=0</em>, <em>time_width=8</em><big>)</big><a class="headerlink" href="#benchmark" title="Permalink to this definition">¶</a></dt>
+<dd><p>A decorator that prints the time a function takes
+to execute per call and cumulative total.</p>
+<p>Accepts the following keyword arguments</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>unit</strong> &#8211; <tt class="docutils literal"><span class="pre">str</span></tt>     time unit for display. one of <cite>[auto, us, ms, s, m]</cite>.</li>
+<li><strong>prec</strong> &#8211; <tt class="docutils literal"><span class="pre">int</span></tt>     radix point precision.</li>
+<li><strong>name_width</strong> &#8211; <tt class="docutils literal"><span class="pre">int</span></tt>     width of the right-aligned function name field.</li>
+<li><strong>time_width</strong> &#8211; <tt class="docutils literal"><span class="pre">int</span></tt>     width of the right-aligned time value field.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>For convenience you can also set attributes on the benchmark
+function itself with the same name as the keyword arguments
+and the value of those will be used instead. This saves you
+from having to call the decorator with the same arguments each
+time you use it. Just set, for example, <tt class="docutils literal"><span class="pre">benchmark.prec</span> <span class="pre">=</span> <span class="pre">5</span></tt>
+after the import and before you use it for the first time.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="require">
+<tt class="descname">require</tt><big>(</big><em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#require" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator that enforces types for function/method args.</p>
+<p>Two ways to specify which types are required for each arg.</p>
+<ol class="arabic simple">
+<li>2-tuples, where first member specifies arg index or arg name,
+second member specifies a type or a tuple of types.</li>
+<li>kwargs style, e.g. <cite>argname`=`types</cite> where <cite>types</cite> again can
+be a type or a tuple of types.</li>
+</ol>
+<p>None is always a valid type, to allow for optional args.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="cache">
+<tt class="descname">cache</tt><big>(</big><em>func</em><big>)</big><a class="headerlink" href="#cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Classic cache decorator.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="memoize">
+<tt class="descname">memoize</tt><big>(</big><em>func</em><big>)</big><a class="headerlink" href="#memoize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Classic memoization decorator.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Utils</a></li>
+<li><a class="reference internal" href="#decorators">Decorators</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/utils.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">py4dlib 0.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, André Berg.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b1.
+    </div>
+  </body>
+</html>
