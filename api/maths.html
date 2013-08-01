@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Math &mdash; py4dlib 0.2 documentation</title>
+    <title>Maths &mdash; py4dlib 0.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.2',
+        VERSION:     '0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.2 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.3 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="next" title="Mesh" href="mesh.html" />
     <link rel="prev" title="API docs" href="../api.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="../api.html" title="API docs"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.2 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.3 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -51,16 +51,16 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="math">
-<h1>Math<a class="headerlink" href="#math" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="maths">
+<h1>Maths<a class="headerlink" href="#maths" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="BBox">
 <em class="property">class </em><tt class="descname">BBox</tt><a class="headerlink" href="#BBox" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate various area metrics from a list of points,
 such as min, max, midpoint, radius and size.</p>
 <dl class="classmethod">
-<dt id="BBox.fromSelectedPoints">
-<em class="property">classmethod </em><tt class="descname">fromSelectedPoints</tt><big>(</big><em>cls</em>, <em>obj</em><big>)</big><a class="headerlink" href="#BBox.fromSelectedPoints" title="Permalink to this definition">¶</a></dt>
+<dt id="BBox.FromSelectedPoints">
+<em class="property">classmethod </em><tt class="descname">FromSelectedPoints</tt><big>(</big><em>cls</em>, <em>obj</em><big>)</big><a class="headerlink" href="#BBox.FromSelectedPoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a new BBox object with the
 number of points currently selected
 added, or None if there are no points
@@ -77,8 +77,8 @@ or obj doesn&#8217;t exist.</p>
 </dd></dl>
 
 <dl class="classmethod">
-<dt id="BBox.fromPoints">
-<em class="property">classmethod </em><tt class="descname">fromPoints</tt><big>(</big><em>cls</em>, <em>obj</em><big>)</big><a class="headerlink" href="#BBox.fromPoints" title="Permalink to this definition">¶</a></dt>
+<dt id="BBox.FromPoints">
+<em class="property">classmethod </em><tt class="descname">FromPoints</tt><big>(</big><em>cls</em>, <em>obj</em><big>)</big><a class="headerlink" href="#BBox.FromPoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns a new BBox object with all
 points of obj added.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -93,88 +93,88 @@ points of obj added.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="BBox.addPoint">
-<tt class="descname">addPoint</tt><big>(</big><em>p</em><big>)</big><a class="headerlink" href="#BBox.addPoint" title="Permalink to this definition">¶</a></dt>
+<dt id="BBox.AddPoint">
+<tt class="descname">AddPoint</tt><big>(</big><em>p</em><big>)</big><a class="headerlink" href="#BBox.AddPoint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add metrics from point p.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="BBox.addPoints">
-<tt class="descname">addPoints</tt><big>(</big><em>lst</em><big>)</big><a class="headerlink" href="#BBox.addPoints" title="Permalink to this definition">¶</a></dt>
+<dt id="BBox.AddPoints">
+<tt class="descname">AddPoints</tt><big>(</big><em>lst</em><big>)</big><a class="headerlink" href="#BBox.AddPoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Add metrics from a list of points.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="BBox.getMax">
-<tt class="descname">getMax</tt><big>(</big><big>)</big><a class="headerlink" href="#BBox.getMax" title="Permalink to this definition">¶</a></dt>
+<dt id="BBox.GetMax">
+<tt class="descname">GetMax</tt><big>(</big><big>)</big><a class="headerlink" href="#BBox.GetMax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return max bounds vector.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="BBox.getMin">
-<tt class="descname">getMin</tt><big>(</big><big>)</big><a class="headerlink" href="#BBox.getMin" title="Permalink to this definition">¶</a></dt>
+<dt id="BBox.GetMin">
+<tt class="descname">GetMin</tt><big>(</big><big>)</big><a class="headerlink" href="#BBox.GetMin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return min bounds vector.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="BBox.getMp">
-<tt class="descname">getMp</tt><big>(</big><big>)</big><a class="headerlink" href="#BBox.getMp" title="Permalink to this definition">¶</a></dt>
+<dt id="BBox.GetMp">
+<tt class="descname">GetMp</tt><big>(</big><big>)</big><a class="headerlink" href="#BBox.GetMp" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return midpoint vector.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="BBox.getRad">
-<tt class="descname">getRad</tt><big>(</big><big>)</big><a class="headerlink" href="#BBox.getRad" title="Permalink to this definition">¶</a></dt>
+<dt id="BBox.GetRad">
+<tt class="descname">GetRad</tt><big>(</big><big>)</big><a class="headerlink" href="#BBox.GetRad" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return radius vector.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="BBox.getSize">
-<tt class="descname">getSize</tt><big>(</big><big>)</big><a class="headerlink" href="#BBox.getSize" title="Permalink to this definition">¶</a></dt>
+<dt id="BBox.GetSize">
+<tt class="descname">GetSize</tt><big>(</big><big>)</big><a class="headerlink" href="#BBox.GetSize" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return size vector.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="function">
-<dt id="mAbs">
-<tt class="descname">mAbs</tt><big>(</big><em>m</em><big>)</big><a class="headerlink" href="#mAbs" title="Permalink to this definition">¶</a></dt>
+<dt id="MAbs">
+<tt class="descname">MAbs</tt><big>(</big><em>m</em><big>)</big><a class="headerlink" href="#MAbs" title="Permalink to this definition">¶</a></dt>
 <dd><p><tt class="docutils literal"><span class="pre">abs()</span></tt> each component vector of matrix m.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="vDeg">
-<tt class="descname">vDeg</tt><big>(</big><em>v</em>, <em>isHPB=False</em><big>)</big><a class="headerlink" href="#vDeg" title="Permalink to this definition">¶</a></dt>
+<dt id="VDeg">
+<tt class="descname">VDeg</tt><big>(</big><em>v</em>, <em>isHPB=False</em><big>)</big><a class="headerlink" href="#VDeg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert each component of vector v to degrees.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="vRad">
-<tt class="descname">vRad</tt><big>(</big><em>v</em>, <em>isHPB=False</em><big>)</big><a class="headerlink" href="#vRad" title="Permalink to this definition">¶</a></dt>
+<dt id="VRad">
+<tt class="descname">VRad</tt><big>(</big><em>v</em>, <em>isHPB=False</em><big>)</big><a class="headerlink" href="#VRad" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert each component of vector v to radians.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="vAvg">
-<tt class="descname">vAvg</tt><big>(</big><em>lst</em><big>)</big><a class="headerlink" href="#vAvg" title="Permalink to this definition">¶</a></dt>
+<dt id="VAvg">
+<tt class="descname">VAvg</tt><big>(</big><em>lst</em><big>)</big><a class="headerlink" href="#VAvg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the average of a list of vectors.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="vAbsMin">
-<tt class="descname">vAbsMin</tt><big>(</big><em>v</em><big>)</big><a class="headerlink" href="#vAbsMin" title="Permalink to this definition">¶</a></dt>
+<dt id="VAbsMin">
+<tt class="descname">VAbsMin</tt><big>(</big><em>v</em><big>)</big><a class="headerlink" href="#VAbsMin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return min component of a vector using <tt class="docutils literal"><span class="pre">abs(x)</span> <span class="pre">&lt;</span> <span class="pre">abs(y)</span></tt> comparisons.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="buildMatrix">
-<tt class="descname">buildMatrix</tt><big>(</big><em>v</em>, <em>off=c4d.Vector(0)</em>, <em>order=&quot;zyx&quot;</em><big>)</big><a class="headerlink" href="#buildMatrix" title="Permalink to this definition">¶</a></dt>
+<dt id="BuildMatrix">
+<tt class="descname">BuildMatrix</tt><big>(</big><em>v</em>, <em>off=c4d.Vector(0)</em>, <em>order=&quot;zyx&quot;</em><big>)</big><a class="headerlink" href="#BuildMatrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Builds a new orthonormal basis from a direction and (optionally) an offset vector using John F. Hughes and Thomas Möller&#8217;s method.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="buildMatrix2">
-<tt class="descname">buildMatrix2</tt><big>(</big><em>v</em>, <em>off=c4d.Vector(0)</em>, <em>base=&quot;z&quot;</em><big>)</big><a class="headerlink" href="#buildMatrix2" title="Permalink to this definition">¶</a></dt>
+<dt id="BuildMatrix2">
+<tt class="descname">BuildMatrix2</tt><big>(</big><em>v</em>, <em>off=c4d.Vector(0)</em>, <em>base=&quot;z&quot;</em><big>)</big><a class="headerlink" href="#BuildMatrix2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Builds a new orthonormal basis from a direction and (optionally) an offset vector using base aligned cross products.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -187,60 +187,103 @@ points of obj added.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="getMulP">
-<tt class="descname">getMulP</tt><big>(</big><em>m</em>, <em>v</em><big>)</big><a class="headerlink" href="#getMulP" title="Permalink to this definition">¶</a></dt>
+<dt id="GetMulP">
+<tt class="descname">GetMulP</tt><big>(</big><em>m</em>, <em>v</em><big>)</big><a class="headerlink" href="#GetMulP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiply a matrix with a vector representing a point.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="getMulV">
-<tt class="descname">getMulV</tt><big>(</big><em>m</em>, <em>v</em><big>)</big><a class="headerlink" href="#getMulV" title="Permalink to this definition">¶</a></dt>
+<dt id="GetMulV">
+<tt class="descname">GetMulV</tt><big>(</big><em>m</em>, <em>v</em><big>)</big><a class="headerlink" href="#GetMulV" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiply a matrix with a vector representing a direction.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="det">
-<tt class="descname">det</tt><big>(</big><em>m</em><big>)</big><a class="headerlink" href="#det" title="Permalink to this definition">¶</a></dt>
+<dt id="Det">
+<tt class="descname">Det</tt><big>(</big><em>m</em><big>)</big><a class="headerlink" href="#Det" title="Permalink to this definition">¶</a></dt>
 <dd><p>Determinant of a <tt class="docutils literal"><span class="pre">n</span> <span class="pre">x</span> <span class="pre">n</span></tt> matrix where <tt class="docutils literal"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">3</span></tt>.
 m can be of type <tt class="docutils literal"><span class="pre">c4d.Matrix</span></tt> or <tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt>.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="polyToList">
-<tt class="descname">polyToList</tt><big>(</big><em>p</em><big>)</big><a class="headerlink" href="#polyToList" title="Permalink to this definition">¶</a></dt>
+<dt id="PolyToList">
+<tt class="descname">PolyToList</tt><big>(</big><em>p</em><big>)</big><a class="headerlink" href="#PolyToList" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="polyToListList">
-<tt class="descname">polyToListList</tt><big>(</big><em>p</em>, <em>obj</em><big>)</big><a class="headerlink" href="#polyToListList" title="Permalink to this definition">¶</a></dt>
+<dt id="PolyToListList">
+<tt class="descname">PolyToListList</tt><big>(</big><em>p</em>, <em>obj</em><big>)</big><a class="headerlink" href="#PolyToListList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt> to a list of lists.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="listToPoly">
-<tt class="descname">listToPoly</tt><big>(</big><em>l</em><big>)</big><a class="headerlink" href="#listToPoly" title="Permalink to this definition">¶</a></dt>
+<dt id="ListToPoly">
+<tt class="descname">ListToPoly</tt><big>(</big><em>l</em><big>)</big><a class="headerlink" href="#ListToPoly" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="listListToPoly">
-<tt class="descname">listListToPoly</tt><big>(</big><em>l</em><big>)</big><a class="headerlink" href="#listListToPoly" title="Permalink to this definition">¶</a></dt>
+<dt id="ListListToPoly">
+<tt class="descname">ListListToPoly</tt><big>(</big><em>l</em><big>)</big><a class="headerlink" href="#ListListToPoly" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a list of lists to <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt>.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="listListToMatrix">
-<tt class="descname">listListToMatrix</tt><big>(</big><em>l</em><big>)</big><a class="headerlink" href="#listListToMatrix" title="Permalink to this definition">¶</a></dt>
+<dt id="ListListToMatrix">
+<tt class="descname">ListListToMatrix</tt><big>(</big><em>l</em><big>)</big><a class="headerlink" href="#ListListToMatrix" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="matrixToListList">
-<tt class="descname">matrixToListList</tt><big>(</big><em>m</em>, <em>includeOffset=False</em><big>)</big><a class="headerlink" href="#matrixToListList" title="Permalink to this definition">¶</a></dt>
+<dt id="MatrixToListList">
+<tt class="descname">MatrixToListList</tt><big>(</big><em>m</em>, <em>includeOffset=False</em><big>)</big><a class="headerlink" href="#MatrixToListList" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="unitNormal">
-<tt class="descname">unitNormal</tt><big>(</big><em>a</em>, <em>b</em>, <em>c</em><big>)</big><a class="headerlink" href="#unitNormal" title="Permalink to this definition">¶</a></dt>
+<dt id="UnitNormal">
+<tt class="descname">UnitNormal</tt><big>(</big><em>a</em>, <em>b</em>, <em>c</em><big>)</big><a class="headerlink" href="#UnitNormal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate unit normal of a planar surface.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IsPointInTriangle">
+<tt class="descname">IsPointInTriangle</tt><big>(</big><em>p</em>, <em>a</em>, <em>b</em>, <em>c</em><big>)</big><a class="headerlink" href="#IsPointInTriangle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the point p is inside the triangle given by points a, b, and c.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IsZeroVector">
+<tt class="descname">IsZeroVector</tt><big>(</big><em>v</em><big>)</big><a class="headerlink" href="#IsZeroVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Uses float tolerant component comparison to check if v is a zero vector.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="LineLineDistance">
+<tt class="descname">LineLineDistance</tt><big>(</big><em>p1a</em>, <em>p1b</em>, <em>p2a</em>, <em>p2b</em><big>)</big><a class="headerlink" href="#LineLineDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Computes the smallest distance between two 3D lines.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">tuple</span></tt> of two <tt class="docutils literal"><span class="pre">c4d.Vectors</span></tt>
+which are the points on each of the two input lines that,
+when connected, form a segment which represents the shortest
+distance between the two lines.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="WrapPi">
+<tt class="descname">WrapPi</tt><big>(</big><em>theta</em><big>)</big><a class="headerlink" href="#WrapPi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wraps an angle theta in range <tt class="docutils literal"><span class="pre">-pi..pi</span></tt> by adding the correct multiple of 2 pi.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="SafeAcos">
+<tt class="descname">SafeAcos</tt><big>(</big><em>x</em><big>)</big><a class="headerlink" href="#SafeAcos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as <tt class="docutils literal"><span class="pre">math.acos(x)</span></tt> but if x is out of range, it is <em>clamped</em> to the
+nearest valid value. The value returned is in range <tt class="docutils literal"><span class="pre">0..pi</span></tt>, the same as
+the standard <a class="reference external" href="http://docs.python.org/2/library/math.html?highlight=math.acos#math.acos">math.acos</a> function.</p>
 </dd></dl>
 
 </div>
@@ -259,7 +302,7 @@ m can be of type <tt class="docutils literal"><span class="pre">c4d.Matrix</span
                         title="next chapter">Mesh</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
-    <li><a href="../_sources/api/math.txt"
+    <li><a href="../_sources/api/maths.txt"
            rel="nofollow">Show Source</a></li>
   </ul>
 <div id="searchbox" style="display: none">
@@ -291,7 +334,7 @@ m can be of type <tt class="docutils literal"><span class="pre">c4d.Matrix</span
         <li class="right" >
           <a href="../api.html" title="API docs"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.2 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.3 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>

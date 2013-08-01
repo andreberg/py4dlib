@@ -3,11 +3,11 @@ Utils
 
 Utility toolbelt for great convenience.
 
-.. function:: clearConsole()
+.. function:: ClearConsole()
    
    Clears the console across multiple CINEMA 4D versions.
    
-.. function:: fuzzyCompareStrings(a, b, limit=20)
+.. function:: FuzzyCompareStrings(a, b, limit=20)
    
    Fuzzy string comparison. 
    
@@ -15,29 +15,29 @@ Utility toolbelt for great convenience.
    the same byte sequence for up to 'limit' chars.
    
    Limit can be an int or a percentage string
-   like for example '60%' in which case 2 strings
-   are deemed equal if at least '60%' relative to 
+   like for example ``60%`` in which case 2 strings
+   are deemed equal if at least ``60%`` relative to 
    the longest string match.
    
-.. function:: versionString(versionTuple)
+.. function:: VersionString(versionTuple)
    
    ``(x,y,z, .. n) -> 'x.y.z...n'``
 
-.. function:: ppllString(ll)
+.. function:: PPLLString(ll)
 
    Returns a pretty-printed string of a ``list<list>`` structure.
 
-.. function:: system(cmd, args=None)
+.. function:: System(cmd, args=None)
    
    Convenience function for firing off commands to 
-   the system console. Used insteads of `subprocess.call`_ 
+   the system console. Used instead of `subprocess.call`_ 
    so that shell variables will be expanded properly.
    
    Not the same as `os.system`_ as here it captures 
-   returns ``stdout`` and ``stderr`` in a tuple in
-   Python 2.5 and lower or a ``namedtuple`` in 2.6
-   and higher. So you can use ``result[0]`` in the
-   first case and ``result.out`` in the second.
+   ``stdout`` and ``stderr`` in a tuple for Python 2.5 
+   and lower or a ``namedtuple`` in 2.6 and higher. 
+   So you can use ``result[0]`` in the first case and 
+   ``result.out`` in the second.
 
    :param cmd: ``string`` a console command line
    :param args: ``list`` a list of arguments that 
@@ -67,12 +67,31 @@ Decorators
    time you use it. Just set, for example, ``benchmark.prec = 5``
    after the import and before you use it for the first time.
    
-   Sample output:
+   Usage example:
    
-      .. code::
+   .. code::
+   
+      @benchmark
+      def factorial(x):
+          ''' Return factorial of x. '''
+          result = 1
+          for i in range(x):
+              result = result * (i + 1)
+          return result
+   
+   Output:
+   
+   .. code::
 
-         -> factorial() @ 001: 8.000 us, total: 8.000 us
-         -> factorial() @ 002: 22.000 us, total: 30.000 us
+      -> factorial() @ 001: 10.000 us, total: 10.000 us
+      -> factorial() @ 002: 22.000 us, total: 32.000 us
+   
+   Output for ``@benchmark(unit='ms', time_width=6)``:
+   
+   .. code::
+   
+      -> factorial() @ 001:  0.009 ms, total:  0.009 ms
+      -> factorial() @ 002:  0.023 ms, total:  0.032 ms
    
 .. function:: require(*args, **kwargs)
    
@@ -89,11 +108,11 @@ Decorators
    
    Usage example:
    
-      .. code::
-         
-         @require(x=int, y=float)
-         def func(x, y):
-            return  x / y
+   .. code::
+      
+      @require(x=int, y=float)
+      def func(x, y):
+         return  x / y
    
 
 .. function:: cache(func)

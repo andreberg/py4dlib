@@ -2,7 +2,7 @@ Math
 ----
 
 
-.. class:: class BBox()
+.. class:: BBox
    
    Calculate various area metrics from a list of points,
    such as min, max, midpoint, radius and size.
@@ -24,18 +24,33 @@ Math
       :raise ValueError: if the object has no points.
 
    .. function:: addPoint(p)
+   
+      Add metrics from point p.
 
    .. function:: addPoints(lst)
+      
+      Add metrics from a list of points.
             
    .. function:: getMax()
    
+      Return max bounds vector.
+   
    .. function:: getMin()
+      
+      Return min bounds vector.
 
    .. function:: getMp()
+   
+      Return midpoint vector.
 
    .. function:: getRad()
+   
+      Return radius vector.
 
    .. function:: getSize()
+   
+      Return size vector.
+
       
 .. function:: mAbs(m)
 

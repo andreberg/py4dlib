@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Plugins &mdash; py4dlib 0.2 documentation</title>
+    <title>Plugins &mdash; py4dlib 0.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.2',
+        VERSION:     '0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.2 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.3 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="next" title="Utils" href="utils.html" />
     <link rel="prev" title="Objects" href="objects.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="objects.html" title="Objects"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.2 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.3 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -63,27 +63,23 @@ for UI elements of a plugin.</p>
 <p>Examples:</p>
 <p>Initialize a new config object, modify and
 then save it:</p>
-<blockquote>
-<div><div class="code highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s">&quot;res&quot;</span><span class="p">,</span> <span class="s">&quot;settings.ini&quot;</span><span class="p">)</span>
+<div class="code highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s">&quot;res&quot;</span><span class="p">,</span> <span class="s">&quot;settings.ini&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span> <span class="o">=</span> <span class="n">UserDefaults</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">filepath</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;key&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 </pre></div>
 </div>
-</div></blockquote>
 <p>If filepath points to an existing file, it will
 use that file and initializing a new config object
 by reading from it.</p>
 <p>If you later want to read in the config file:</p>
-<blockquote>
-<div><div class="code highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+<div class="code highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">defaults</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;setting&#39;</span><span class="p">)</span>
 <span class="go">value</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">defaults</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;does-not-exist&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;use default instead&#39;</span><span class="p">)</span>
 <span class="go">use default instead</span>
 </pre></div>
 </div>
-</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -96,7 +92,7 @@ source code file of the plugin, that uses the config store.</li>
 file needs to be created.</li>
 <li><strong>header</strong> &#8211; <tt class="docutils literal"><span class="pre">str</span></tt>  the name for a section in the .ini file.
 Usually you can get away with leaving it at the default.
-This will add a header &#8220;[Settings]&#8221; under which your
+This will add a header <tt class="docutils literal"><span class="pre">[Settings]</span></tt> under which your
 settings will appear. If you have more advanced uses
 you are advised to modify the config parser state
 directly through <tt class="docutils literal"><span class="pre">self.state</span></tt>.</li>
@@ -106,8 +102,8 @@ directly through <tt class="docutils literal"><span class="pre">self.state</span
 </tbody>
 </table>
 <dl class="function">
-<dt id="UserDefaults.get">
-<tt class="descname">get</tt><big>(</big><em>self</em>, <em>name</em>, <em>section=None</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#UserDefaults.get" title="Permalink to this definition">¶</a></dt>
+<dt id="UserDefaults.Get">
+<tt class="descname">Get</tt><big>(</big><em>self</em>, <em>name</em>, <em>section=None</em>, <em>default=None</em><big>)</big><a class="headerlink" href="#UserDefaults.Get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Retrieve a previously stored value from the config object.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -131,8 +127,8 @@ responsible for the convertion to the wanted data type.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="UserDefaults.set">
-<tt class="descname">set</tt><big>(</big><em>self</em>, <em>name</em>, <em>value</em>, <em>section=None</em><big>)</big><a class="headerlink" href="#UserDefaults.set" title="Permalink to this definition">¶</a></dt>
+<dt id="UserDefaults.Set">
+<tt class="descname">Set</tt><big>(</big><em>self</em>, <em>name</em>, <em>value</em>, <em>section=None</em><big>)</big><a class="headerlink" href="#UserDefaults.Set" title="Permalink to this definition">¶</a></dt>
 <dd><p>Store a value in the config object for later retrieval.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -153,8 +149,8 @@ responsible for the convertion to the wanted data type.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="UserDefaults.read">
-<tt class="descname">read</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#UserDefaults.read" title="Permalink to this definition">¶</a></dt>
+<dt id="UserDefaults.Read">
+<tt class="descname">Read</tt><big>(</big><em>self</em><big>)</big><a class="headerlink" href="#UserDefaults.Read" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read state from configuration file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -169,8 +165,8 @@ responsible for the convertion to the wanted data type.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="UserDefaults.save">
-<tt class="descname">save</tt><big>(</big><em>self</em>, <em>config=None</em>, <em>filepath=None</em><big>)</big><a class="headerlink" href="#UserDefaults.save" title="Permalink to this definition">¶</a></dt>
+<dt id="UserDefaults.Save">
+<tt class="descname">Save</tt><big>(</big><em>self</em>, <em>config=None</em>, <em>filepath=None</em><big>)</big><a class="headerlink" href="#UserDefaults.Save" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save settings to a configuration file.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -244,7 +240,7 @@ of the config object.</li>
         <li class="right" >
           <a href="objects.html" title="Objects"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.2 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.3 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>

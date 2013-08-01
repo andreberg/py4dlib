@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Mesh &mdash; py4dlib 0.2 documentation</title>
+    <title>Mesh &mdash; py4dlib 0.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.2',
+        VERSION:     '0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,10 +23,10 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.2 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.3 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="next" title="Objects" href="objects.html" />
-    <link rel="prev" title="Math" href="math.html" /> 
+    <link rel="prev" title="Maths" href="maths.html" /> 
   </head>
   <body>
     <div class="related">
@@ -39,9 +39,9 @@
           <a href="objects.html" title="Objects"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="math.html" title="Math"
+          <a href="maths.html" title="Maths"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.2 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.3 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -55,90 +55,86 @@
 <h1>Mesh<a class="headerlink" href="#mesh" title="Permalink to this headline">¶</a></h1>
 <p>Functions for working with CINEMA 4D&#8217;s point and polygon objects.</p>
 <dl class="function">
-<dt id="togglePolySelection">
-<tt class="descname">togglePolySelection</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#togglePolySelection" title="Permalink to this definition">¶</a></dt>
+<dt id="TogglePolySelection">
+<tt class="descname">TogglePolySelection</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#TogglePolySelection" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="selectAllPolys">
-<tt class="descname">selectAllPolys</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#selectAllPolys" title="Permalink to this definition">¶</a></dt>
+<dt id="SelectAllPolys">
+<tt class="descname">SelectAllPolys</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#SelectAllPolys" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="getSelectedPoints">
-<tt class="descname">getSelectedPoints</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#getSelectedPoints" title="Permalink to this definition">¶</a></dt>
+<dt id="GetSelectedPoints">
+<tt class="descname">GetSelectedPoints</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#GetSelectedPoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns list of selected point indices.</p>
-<p>To get the actual point(s) do something like</p>
-<blockquote>
-<div><div class="code highlight-python"><div class="highlight"><pre><span class="n">allpoints</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">GetAllPoints</span><span class="p">()</span>
+<p>To get the actual point(s), using an <tt class="docutils literal"><span class="pre">index</span></tt>
+from the returned list do something like</p>
+<div class="code highlight-python"><div class="highlight"><pre><span class="n">allpoints</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">GetAllPoints</span><span class="p">()</span>
 <span class="n">point</span> <span class="o">=</span> <span class="n">allpoints</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 </pre></div>
 </div>
-</div></blockquote>
 </dd></dl>
 
 <dl class="function">
-<dt id="getSelectedPolys">
-<tt class="descname">getSelectedPolys</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#getSelectedPolys" title="Permalink to this definition">¶</a></dt>
+<dt id="GetSelectedPolys">
+<tt class="descname">GetSelectedPolys</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#GetSelectedPolys" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns list of selected polygons indices.</p>
-<p>To get the actual polygon(s) do something like</p>
-<blockquote>
-<div><div class="code highlight-python"><div class="highlight"><pre><span class="n">allpolys</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">GetAllPolygons</span><span class="p">()</span>
+<p>To get the actual polygon(s), using an <tt class="docutils literal"><span class="pre">index</span></tt>
+from the returned list do something like</p>
+<div class="code highlight-python"><div class="highlight"><pre><span class="n">allpolys</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">GetAllPolygons</span><span class="p">()</span>
 <span class="n">poly</span> <span class="o">=</span> <span class="n">allpolys</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 </pre></div>
 </div>
-</div></blockquote>
 </dd></dl>
 
 <dl class="function">
-<dt id="calcPolyCentroid">
-<tt class="descname">calcPolyCentroid</tt><big>(</big><em>p</em>, <em>obj</em><big>)</big><a class="headerlink" href="#calcPolyCentroid" title="Permalink to this definition">¶</a></dt>
+<dt id="CalcPolyCentroid">
+<tt class="descname">CalcPolyCentroid</tt><big>(</big><em>p</em>, <em>obj</em><big>)</big><a class="headerlink" href="#CalcPolyCentroid" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the centroid of a polygon by averaging its vertices.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="calcPolyNormal">
-<tt class="descname">calcPolyNormal</tt><big>(</big><em>p</em>, <em>obj</em><big>)</big><a class="headerlink" href="#calcPolyNormal" title="Permalink to this definition">¶</a></dt>
+<dt id="CalcPolyNormal">
+<tt class="descname">CalcPolyNormal</tt><big>(</big><em>p</em>, <em>obj</em><big>)</big><a class="headerlink" href="#CalcPolyNormal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the orientation of face normal using Newell&#8217;s method.</p>
-<p>See <a class="reference internal" href="#calcVertexNormal" title="calcVertexNormal"><tt class="xref py py-func docutils literal"><span class="pre">calcVertexNormal()</span></tt></a> for an example of usage within the calling context.</p>
+<p>See <a class="reference internal" href="#CalcVertexNormal" title="CalcVertexNormal"><tt class="xref py py-func docutils literal"><span class="pre">CalcVertexNormal()</span></tt></a> for an example of usage within the calling context.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="calcVertexNormal">
-<tt class="descname">calcVertexNormal</tt><big>(</big><em>v</em>, <em>idx</em>, <em>obj</em><big>)</big><a class="headerlink" href="#calcVertexNormal" title="Permalink to this definition">¶</a></dt>
+<dt id="CalcVertexNormal">
+<tt class="descname">CalcVertexNormal</tt><big>(</big><em>v</em>, <em>idx</em>, <em>obj</em><big>)</big><a class="headerlink" href="#CalcVertexNormal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the vertex normal by averaging surrounding face normals.</p>
 <p>Usually called from a construct like the following:</p>
-<blockquote>
-<div><div class="code highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">GetAllPoints</span><span class="p">()):</span>
-   <span class="n">vn</span> <span class="o">=</span> <span class="n">calcVertexNormal</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
+<div class="code highlight-python"><div class="highlight"><pre><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">GetAllPoints</span><span class="p">()):</span>
+   <span class="n">vn</span> <span class="o">=</span> <span class="n">CalcVertexNormal</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">obj</span><span class="p">)</span>
 </pre></div>
 </div>
-</div></blockquote>
 </dd></dl>
 
 <dl class="function">
-<dt id="calcThreePointNormal">
-<tt class="descname">calcThreePointNormal</tt><big>(</big><em>v1</em>, <em>v2</em>, <em>v3</em><big>)</big><a class="headerlink" href="#calcThreePointNormal" title="Permalink to this definition">¶</a></dt>
+<dt id="CalcThreePointNormal">
+<tt class="descname">CalcThreePointNormal</tt><big>(</big><em>a</em>, <em>b</em>, <em>c</em><big>)</big><a class="headerlink" href="#CalcThreePointNormal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the surface normal of a three point plane.</p>
 <p>Doesn&#8217;t take orientation of neighboring polygons into account.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="calcTriangleArea">
-<tt class="descname">calcTriangleArea</tt><big>(</big><em>p</em>, <em>obj</em><big>)</big><a class="headerlink" href="#calcTriangleArea" title="Permalink to this definition">¶</a></dt>
+<dt id="CalcTriangleArea">
+<tt class="descname">CalcTriangleArea</tt><big>(</big><em>p</em>, <em>obj</em><big>)</big><a class="headerlink" href="#CalcTriangleArea" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate area of a triangle using <tt class="docutils literal"><span class="pre">|(v3</span> <span class="pre">-</span> <span class="pre">v1)</span> <span class="pre">x</span> <span class="pre">(v3</span> <span class="pre">-</span> <span class="pre">v2)|/2</span></tt>.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="calcPolyArea">
-<tt class="descname">calcPolyArea</tt><big>(</big><em>p</em>, <em>obj</em>, <em>normalized=False</em><big>)</big><a class="headerlink" href="#calcPolyArea" title="Permalink to this definition">¶</a></dt>
+<dt id="CalcPolyArea">
+<tt class="descname">CalcPolyArea</tt><big>(</big><em>p</em>, <em>obj</em>, <em>normalized=False</em><big>)</big><a class="headerlink" href="#CalcPolyArea" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the area of a planar polygon.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="calcBBox">
-<tt class="descname">calcBBox</tt><big>(</big><em>e</em><big>)</big><a class="headerlink" href="#calcBBox" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct a <tt class="xref py py-class docutils literal"><span class="pre">BBox</span></tt> for a <tt class="docutils literal"><span class="pre">c4d.PointObject</span></tt> - using selected points only or all points if no selection -  or for a <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt>.</p>
+<dt id="CalcBBox">
+<tt class="descname">CalcBBox</tt><big>(</big><em>e</em><big>)</big><a class="headerlink" href="#CalcBBox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a <a class="reference internal" href="maths.html#BBox" title="BBox"><tt class="xref py py-class docutils literal"><span class="pre">BBox</span></tt></a> for a <tt class="docutils literal"><span class="pre">c4d.PointObject</span></tt> - using selected points only or all points if no selection -  or for a <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt>.</p>
 </dd></dl>
 
 </div>
@@ -150,8 +146,8 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="math.html"
-                        title="previous chapter">Math</a></p>
+  <p class="topless"><a href="maths.html"
+                        title="previous chapter">Maths</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="objects.html"
                         title="next chapter">Objects</a></p>
@@ -187,9 +183,9 @@
           <a href="objects.html" title="Objects"
              >next</a> |</li>
         <li class="right" >
-          <a href="math.html" title="Math"
+          <a href="maths.html" title="Maths"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.2 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.3 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>

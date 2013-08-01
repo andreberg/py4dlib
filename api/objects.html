@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Objects &mdash; py4dlib 0.2 documentation</title>
+    <title>Objects &mdash; py4dlib 0.3 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.2',
+        VERSION:     '0.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.2 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.3 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="next" title="Plugins" href="plugins.html" />
     <link rel="prev" title="Mesh" href="mesh.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="mesh.html" title="Mesh"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.2 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.3 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -113,7 +113,7 @@ concatenation of its parent names. The concat character is a
 forward slash, which forms a Unix like filepath as seen with
 the object manager&#8217;s address bar widget.</p>
 <p>Additionally, a small subset of X-Path like functionality is
-provided with the <tt class="docutils literal"><span class="pre">get()</span></tt> function, namely the subset that
+provided with the <tt class="docutils literal"><span class="pre">Get()</span></tt> function, namely the subset that
 coincides with syntax for wildcard and regular epxression
 expansion. This makes it easy to select a subset of objects,
 based on parent-name relationships.</p>
@@ -126,51 +126,51 @@ based on parent-name relationships.</p>
 </tbody>
 </table>
 <dl class="function">
-<dt id="ObjectHierarchy.pprint">
-<tt class="descname">pprint</tt><big>(</big><em>stopobj=None</em>, <em>filtertype=None</em>, <em>tabsize=4</em><big>)</big><a class="headerlink" href="#ObjectHierarchy.pprint" title="Permalink to this definition">¶</a></dt>
+<dt id="ObjectHierarchy.PPrint">
+<tt class="descname">PPrint</tt><big>(</big><em>stopobj=None</em>, <em>filtertype=None</em>, <em>tabsize=4</em><big>)</big><a class="headerlink" href="#ObjectHierarchy.PPrint" title="Permalink to this definition">¶</a></dt>
 <dd><p>Print an indented, tree-like representation of an object manager hierarchy.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="ObjectHierarchy.get">
-<tt class="descname">get</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#ObjectHierarchy.get" title="Permalink to this definition">¶</a></dt>
+<dt id="ObjectHierarchy.Get">
+<tt class="descname">Get</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#ObjectHierarchy.Get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a list of <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> for the key path given by &#8216;path&#8217;.</p>
 <p>Key path can contain wildcards (<tt class="docutils literal"><span class="pre">*</span></tt> or <tt class="docutils literal"><span class="pre">?</span></tt>) or regular expression
-syntax. Prepend a &#8216;!&#8217; to &#8216;path&#8217; if you want to forego wildcard expansion
+syntax. Prepend a <tt class="docutils literal"><span class="pre">!</span></tt> to <tt class="docutils literal"><span class="pre">path</span></tt> if you want to forego wildcard expansion
 and thus ensure it is used as a verbatim regular expression pattern instead.</p>
-<p>Note that &#8216;path&#8217; must match the whole key it is tested against.</p>
-<p>Returns a list of all objects for which &#8216;path&#8217;, expanded, matches a
+<p>Note that <tt class="docutils literal"><span class="pre">path</span></tt> must match the whole key it is tested against.</p>
+<p>Returns a list of all objects for which <tt class="docutils literal"><span class="pre">path</span></tt>, expanded, matches a
 concatenated parent path.</p>
-<p>Returns an empty list if no objects could be located for &#8216;path&#8217;.</p>
+<p>Returns an empty list if no objects could be located for <tt class="docutils literal"><span class="pre">path</span></tt>.</p>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="function">
-<dt id="select">
-<tt class="descname">select</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#select" title="Permalink to this definition">¶</a></dt>
+<dt id="Select">
+<tt class="descname">Select</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#Select" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="selectAdd">
-<tt class="descname">selectAdd</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#selectAdd" title="Permalink to this definition">¶</a></dt>
-<dd><p>Same as <a class="reference internal" href="#select" title="select"><tt class="xref py py-func docutils literal"><span class="pre">select()</span></tt></a> but uses a slightly different mechanism.</p>
+<dt id="SelectAdd">
+<tt class="descname">SelectAdd</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#SelectAdd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as <a class="reference internal" href="#Select" title="Select"><tt class="xref py py-func docutils literal"><span class="pre">Select()</span></tt></a> but uses a slightly different mechanism.</p>
 <p>See also <tt class="docutils literal"><span class="pre">BaseDocument.SetSelection(sel,</span> <span class="pre">mode)</span></tt>.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="selectGroupMembers">
-<tt class="descname">selectGroupMembers</tt><big>(</big><em>grp</em><big>)</big><a class="headerlink" href="#selectGroupMembers" title="Permalink to this definition">¶</a></dt>
+<dt id="SelectGroupMembers">
+<tt class="descname">SelectGroupMembers</tt><big>(</big><em>grp</em><big>)</big><a class="headerlink" href="#SelectGroupMembers" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="selectObjects">
-<tt class="descname">selectObjects</tt><big>(</big><em>objs</em><big>)</big><a class="headerlink" href="#selectObjects" title="Permalink to this definition">¶</a></dt>
+<dt id="SelectObjects">
+<tt class="descname">SelectObjects</tt><big>(</big><em>objs</em><big>)</big><a class="headerlink" href="#SelectObjects" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="deselectAll">
-<tt class="descname">deselectAll</tt><big>(</big><em>inObjMngr=False</em><big>)</big><a class="headerlink" href="#deselectAll" title="Permalink to this definition">¶</a></dt>
+<dt id="DeselectAll">
+<tt class="descname">DeselectAll</tt><big>(</big><em>inObjMngr=False</em><big>)</big><a class="headerlink" href="#DeselectAll" title="Permalink to this definition">¶</a></dt>
 <dd><p>Not the same as <tt class="docutils literal"><span class="pre">BaseSelect.DeselectAll()</span></tt>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -184,29 +184,29 @@ else the general one for the editor viewport.</td>
 </dd></dl>
 
 <dl class="function">
-<dt id="groupObjects">
-<tt class="descname">groupObjects</tt><big>(</big><em>objs</em>, <em>name=&quot;Group&quot;</em><big>)</big><a class="headerlink" href="#groupObjects" title="Permalink to this definition">¶</a></dt>
+<dt id="GroupObjects">
+<tt class="descname">GroupObjects</tt><big>(</big><em>objs</em>, <em>name=&quot;Group&quot;</em><big>)</big><a class="headerlink" href="#GroupObjects" title="Permalink to this definition">¶</a></dt>
 <dd><p><tt class="docutils literal"><span class="pre">CallCommand</span></tt> based grouping of objects from a list.
 Generally unreliable, because selection state matters.</p>
-<p>Use <a class="reference internal" href="#insertUnderNull" title="insertUnderNull"><tt class="xref py py-func docutils literal"><span class="pre">insertUnderNull()</span></tt></a> for better effect.</p>
+<p>Use <a class="reference internal" href="#InsertUnderNull" title="InsertUnderNull"><tt class="xref py py-func docutils literal"><span class="pre">InsertUnderNull()</span></tt></a> for better effect.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="groupSelected">
-<tt class="descname">groupSelected</tt><big>(</big><em>name=&quot;Group&quot;</em><big>)</big><a class="headerlink" href="#groupSelected" title="Permalink to this definition">¶</a></dt>
+<dt id="GroupSelected">
+<tt class="descname">GroupSelected</tt><big>(</big><em>name=&quot;Group&quot;</em><big>)</big><a class="headerlink" href="#GroupSelected" title="Permalink to this definition">¶</a></dt>
 <dd><p><tt class="docutils literal"><span class="pre">CallCommand</span></tt> based grouping of selected objects.
 Generally unreliable, because selection state matters.</p>
-<p>Use <a class="reference internal" href="#insertUnderNull" title="insertUnderNull"><tt class="xref py py-func docutils literal"><span class="pre">insertUnderNull()</span></tt></a> for better effect.</p>
+<p>Use <a class="reference internal" href="#InsertUnderNull" title="InsertUnderNull"><tt class="xref py py-func docutils literal"><span class="pre">InsertUnderNull()</span></tt></a> for better effect.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="recurseBranch">
-<tt class="descname">recurseBranch</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#recurseBranch" title="Permalink to this definition">¶</a></dt>
+<dt id="RecurseBranch">
+<tt class="descname">RecurseBranch</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#RecurseBranch" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="getNextObject">
-<tt class="descname">getNextObject</tt><big>(</big><em>obj</em>, <em>stopobjs=None</em><big>)</big><a class="headerlink" href="#getNextObject" title="Permalink to this definition">¶</a></dt>
+<dt id="GetNextObject">
+<tt class="descname">GetNextObject</tt><big>(</big><em>obj</em>, <em>stopobjs=None</em><big>)</big><a class="headerlink" href="#GetNextObject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the next object in the hierarchy using a depth-first traversal scheme.</p>
 <p>If stopobjs is a <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> or a list of <tt class="docutils literal"><span class="pre">c4d.BaseObjects</span></tt> and the next
 operation would encounter this object (or the first object in the list) None
@@ -214,15 +214,15 @@ will be returned. This is so that this function can be used in a while loop.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="getActiveObjects">
-<tt class="descname">getActiveObjects</tt><big>(</big><em>doc</em><big>)</big><a class="headerlink" href="#getActiveObjects" title="Permalink to this definition">¶</a></dt>
+<dt id="GetActiveObjects">
+<tt class="descname">GetActiveObjects</tt><big>(</big><em>doc</em><big>)</big><a class="headerlink" href="#GetActiveObjects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Same as <tt class="docutils literal"><span class="pre">BaseDocument.GetSelection()</span></tt>, while
 GetSelection also selects tags and materials.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="findObject">
-<tt class="descname">findObject</tt><big>(</big><em>name</em>, <em>start=None</em>, <em>matchfunc=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#findObject" title="Permalink to this definition">¶</a></dt>
+<dt id="FindObject">
+<tt class="descname">FindObject</tt><big>(</big><em>name</em>, <em>start=None</em>, <em>matchfunc=None</em>, <em>*args</em>, <em>**kwargs</em><big>)</big><a class="headerlink" href="#FindObject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find object with name &#8216;name&#8217;.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -243,21 +243,21 @@ remaining args. It should return True or False.</li>
 </dd></dl>
 
 <dl class="function">
-<dt id="findObjects">
-<tt class="descname">findObjects</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#findObjects" title="Permalink to this definition">¶</a></dt>
+<dt id="FindObjects">
+<tt class="descname">FindObjects</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#FindObjects" title="Permalink to this definition">¶</a></dt>
 <dd><p>Find all objects in the scene with the name &#8216;name&#8217;</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="createObject">
-<tt class="descname">createObject</tt><big>(</big><em>typ</em>, <em>name</em>, <em>undo=True</em><big>)</big><a class="headerlink" href="#createObject" title="Permalink to this definition">¶</a></dt>
+<dt id="CreateObject">
+<tt class="descname">CreateObject</tt><big>(</big><em>typ</em>, <em>name</em>, <em>undo=True</em><big>)</big><a class="headerlink" href="#CreateObject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a object of type &#8216;typ&#8217;, with name &#8216;name&#8217;.
 This calls <tt class="docutils literal"><span class="pre">c4d.StopAllThreads()</span></tt> internally.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="insertUnderNull">
-<tt class="descname">insertUnderNull</tt><big>(</big><em>objs</em>, <em>grp=None</em>, <em>name=&quot;Group&quot;</em>, <em>copy=False</em><big>)</big><a class="headerlink" href="#insertUnderNull" title="Permalink to this definition">¶</a></dt>
+<dt id="InsertUnderNull">
+<tt class="descname">InsertUnderNull</tt><big>(</big><em>objs</em>, <em>grp=None</em>, <em>name=&quot;Group&quot;</em>, <em>copy=False</em><big>)</big><a class="headerlink" href="#InsertUnderNull" title="Permalink to this definition">¶</a></dt>
 <dd><p>Inserts objects under a group (null) object, optionally creating the group.</p>
 <p>Note: currently does not reset obj&#8217;s coordinate frame
 to that of the new parent.</p>
@@ -266,8 +266,8 @@ to that of the new parent.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>objs</strong> &#8211; <tt class="docutils literal"><span class="pre">BaseObject</span></tt>      can be a single object or a list of objects</li>
-<li><strong>grp</strong> &#8211; <tt class="docutils literal"><span class="pre">BaseObject</span></tt>      the group to place the objects under
+<li><strong>objs</strong> &#8211; <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt>  can be a single object or a list of objects</li>
+<li><strong>grp</strong> &#8211; <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt>  the group to place the objects under
 (if None a new null object will be created)</li>
 <li><strong>name</strong> &#8211; <tt class="docutils literal"><span class="pre">str</span></tt>             name for the new group</li>
 <li><strong>copy</strong> &#8211; <tt class="docutils literal"><span class="pre">bool</span></tt>            copy the objects if True</li>
@@ -279,50 +279,48 @@ to that of the new parent.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="getGlobalPosition">
-<tt class="descname">getGlobalPosition</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#getGlobalPosition" title="Permalink to this definition">¶</a></dt>
+<dt id="GetGlobalPosition">
+<tt class="descname">GetGlobalPosition</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#GetGlobalPosition" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="getGlobalRotation">
-<tt class="descname">getGlobalRotation</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#getGlobalRotation" title="Permalink to this definition">¶</a></dt>
+<dt id="GetGlobalRotation">
+<tt class="descname">GetGlobalRotation</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#GetGlobalRotation" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="getGlobalScale">
-<tt class="descname">getGlobalScale</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#getGlobalScale" title="Permalink to this definition">¶</a></dt>
+<dt id="GetGlobalScale">
+<tt class="descname">GetGlobalScale</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#GetGlobalScale" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="setGlobalPosition">
-<tt class="descname">setGlobalPosition</tt><big>(</big><em>obj</em>, <em>pos</em><big>)</big><a class="headerlink" href="#setGlobalPosition" title="Permalink to this definition">¶</a></dt>
+<dt id="SetGlobalPosition">
+<tt class="descname">SetGlobalPosition</tt><big>(</big><em>obj</em>, <em>pos</em><big>)</big><a class="headerlink" href="#SetGlobalPosition" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="setGlobalRotation">
-<tt class="descname">setGlobalRotation</tt><big>(</big><em>obj</em>, <em>rot</em><big>)</big><a class="headerlink" href="#setGlobalRotation" title="Permalink to this definition">¶</a></dt>
+<dt id="SetGlobalRotation">
+<tt class="descname">SetGlobalRotation</tt><big>(</big><em>obj</em>, <em>rot</em><big>)</big><a class="headerlink" href="#SetGlobalRotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Please remember, like most 3D engines
 CINEMA 4D handles rotation in radians.</p>
 <p>Example for <tt class="docutils literal"><span class="pre">H=10,</span> <span class="pre">P=20,</span> <span class="pre">B=30</span></tt>:</p>
-<blockquote>
-<div><div class="code highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">c4d</span>
+<div class="code highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">c4d</span>
 <span class="kn">from</span> <span class="nn">c4d</span> <span class="kn">import</span> <span class="n">utils</span>
 <span class="c"># ...</span>
 <span class="n">hpb</span> <span class="o">=</span> <span class="n">c4d</span><span class="o">.</span><span class="n">Vector</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">Rad</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">utils</span><span class="o">.</span><span class="n">Rad</span><span class="p">(</span><span class="mi">20</span><span class="p">),</span> <span class="n">utils</span><span class="o">.</span><span class="n">Rad</span><span class="p">(</span><span class="mi">30</span><span class="p">))</span>
 <span class="n">SetGlobalRotation</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="n">hpb</span><span class="p">)</span> <span class="c"># object&#39;s rotation is 10, 20, 30</span>
 </pre></div>
 </div>
-</div></blockquote>
 </dd></dl>
 
 <dl class="function">
-<dt id="setGlobalScale">
-<tt class="descname">setGlobalScale</tt><big>(</big><em>obj</em>, <em>scale</em><big>)</big><a class="headerlink" href="#setGlobalScale" title="Permalink to this definition">¶</a></dt>
+<dt id="SetGlobalScale">
+<tt class="descname">SetGlobalScale</tt><big>(</big><em>obj</em>, <em>scale</em><big>)</big><a class="headerlink" href="#SetGlobalScale" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="setAxisRotation">
-<tt class="descname">setAxisRotation</tt><big>(</big><em>obj</em>, <em>rot</em>, <em>local=False</em><big>)</big><a class="headerlink" href="#setAxisRotation" title="Permalink to this definition">¶</a></dt>
+<dt id="SetAxisRotation">
+<tt class="descname">SetAxisRotation</tt><big>(</big><em>obj</em>, <em>rot</em>, <em>local=False</em><big>)</big><a class="headerlink" href="#SetAxisRotation" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set the rotation of the object axis (i.e. keeping points in place).</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -340,8 +338,8 @@ CINEMA 4D handles rotation in radians.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="centerObjectAxis">
-<tt class="descname">centerObjectAxis</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#centerObjectAxis" title="Permalink to this definition">¶</a></dt>
+<dt id="CenterObjectAxis">
+<tt class="descname">CenterObjectAxis</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#CenterObjectAxis" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -392,7 +390,7 @@ CINEMA 4D handles rotation in radians.</p>
         <li class="right" >
           <a href="mesh.html" title="Mesh"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.2 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.3 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>
