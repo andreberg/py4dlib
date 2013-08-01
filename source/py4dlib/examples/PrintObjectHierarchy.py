@@ -17,7 +17,7 @@ import os
 __all__ = []
 __version__ = (0, 1)
 __date__ = '2013-07-29'
-__updated__ = '2013-07-29'
+__updated__ = '2013-08-02'
 
 
 DEBUG = 1 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -37,7 +37,7 @@ except ImportError:
         pass
 
 from py4dlib.objects import ObjectHierarchy
-from py4dlib.utils import clearConsole
+from py4dlib.utils import ClearConsole
 
 
 def main(doc):  # IGNORE:W0621
@@ -55,16 +55,16 @@ def main(doc):  # IGNORE:W0621
     print("printing hierarchy starting from %r" % root.GetName())
 
     oh = ObjectHierarchy(root)
-    oh.pprint()
+    oh.PPrint()
     
     print("printing Null objects starting from %r" % root.GetName())
     
-    oh.pprint(filtertype=c4d.Onull)
+    oh.PPrint(filtertype=c4d.Onull)
         
     PP(oh)
     print(oh)
     
-    filteredObjs = oh.get('*/*')
+    filteredObjs = oh.Get('*/*')
     for obj in filteredObjs:
         print obj.GetName()
 
@@ -74,7 +74,7 @@ def main(doc):  # IGNORE:W0621
 
         
 if __name__ == '__main__':
-    clearConsole()
+    ClearConsole()
     doc = documents.GetActiveDocument()
     main(doc)
 

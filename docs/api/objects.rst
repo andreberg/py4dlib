@@ -43,45 +43,45 @@ Functions for working with CINEMA 4D's objects.
    the object manager's address bar widget.
    
    Additionally, a small subset of X-Path like functionality is 
-   provided with the ``get()`` function, namely the subset that
+   provided with the ``Get()`` function, namely the subset that
    coincides with syntax for wildcard and regular epxression 
    expansion. This makes it easy to select a subset of objects,
    based on parent-name relationships.
    
    :param filtertype:    only recognize objects of this c4d type
    
-   .. function:: pprint(stopobj=None, filtertype=None, tabsize=4)
+   .. function:: PPrint(stopobj=None, filtertype=None, tabsize=4)
    
       Print an indented, tree-like representation of an object manager hierarchy.
       
-   .. function:: get(path)
+   .. function:: Get(path)
       
       Get a list of ``c4d.BaseObject`` for the key path given by 'path'.
 
       Key path can contain wildcards (``*`` or ``?``) or regular expression
-      syntax. Prepend a '!' to 'path' if you want to forego wildcard expansion
+      syntax. Prepend a ``!`` to ``path`` if you want to forego wildcard expansion
       and thus ensure it is used as a verbatim regular expression pattern instead.
       
-      Note that 'path' must match the whole key it is tested against.
+      Note that ``path`` must match the whole key it is tested against.
       
-      Returns a list of all objects for which 'path', expanded, matches a 
+      Returns a list of all objects for which ``path``, expanded, matches a 
       concatenated parent path. 
       
-      Returns an empty list if no objects could be located for 'path'.
+      Returns an empty list if no objects could be located for ``path``.
 
-.. function:: select(obj)
+.. function:: Select(obj)
 
-.. function:: selectAdd(obj)
+.. function:: SelectAdd(obj)
 
-   Same as :py:func:`select` but uses a slightly different mechanism.
+   Same as :py:func:`Select` but uses a slightly different mechanism.
    
    See also ``BaseDocument.SetSelection(sel, mode)``.
    
-.. function:: selectGroupMembers(grp)
+.. function:: SelectGroupMembers(grp)
    
-.. function:: selectObjects(objs)
+.. function:: SelectObjects(objs)
    
-.. function:: deselectAll(inObjMngr=False)
+.. function:: DeselectAll(inObjMngr=False)
 
    Not the same as ``BaseSelect.DeselectAll()``.
 
@@ -89,23 +89,23 @@ Functions for working with CINEMA 4D's objects.
                         else the general one for the editor viewport.
    
    
-.. function:: groupObjects(objs, name="Group")
+.. function:: GroupObjects(objs, name="Group")
    
    ``CallCommand`` based grouping of objects from a list. 
    Generally unreliable, because selection state matters.
     
-   Use :py:func:`insertUnderNull` for better effect.
+   Use :py:func:`InsertUnderNull` for better effect.
 
-.. function:: groupSelected(name="Group")
+.. function:: GroupSelected(name="Group")
    
    ``CallCommand`` based grouping of selected objects. 
    Generally unreliable, because selection state matters.
    
-   Use :py:func:`insertUnderNull` for better effect.
+   Use :py:func:`InsertUnderNull` for better effect.
 
-.. function:: recurseBranch(obj)
+.. function:: RecurseBranch(obj)
    
-.. function:: getNextObject(obj, stopobjs=None)
+.. function:: GetNextObject(obj, stopobjs=None)
    
    Return the next object in the hierarchy using a depth-first traversal scheme.
    
@@ -113,12 +113,12 @@ Functions for working with CINEMA 4D's objects.
    operation would encounter this object (or the first object in the list) None
    will be returned. This is so that this function can be used in a while loop.
 
-.. function:: getActiveObjects(doc)
+.. function:: GetActiveObjects(doc)
 
    Same as ``BaseDocument.GetSelection()``, while 
    GetSelection also selects tags and materials.
    
-.. function:: findObject(name, start=None, matchfunc=None, *args, **kwargs)
+.. function:: FindObject(name, start=None, matchfunc=None, *args, **kwargs)
 
    Find object with name 'name'.
 
@@ -129,55 +129,55 @@ Functions for working with CINEMA 4D's objects.
        will be passed a potential candidate object plus any 
        remaining args. It should return True or False.
    
-.. function:: findObjects(name)
+.. function:: FindObjects(name)
    
    Find all objects in the scene with the name 'name'
    
-.. function:: createObject(typ, name, undo=True)
+.. function:: CreateObject(typ, name, undo=True)
 
    Create a object of type 'typ', with name 'name'.
    This calls ``c4d.StopAllThreads()`` internally.
 
-.. function:: insertUnderNull(objs, grp=None, name="Group", copy=False)
+.. function:: InsertUnderNull(objs, grp=None, name="Group", copy=False)
 
    Inserts objects under a group (null) object, optionally creating the group.
 
    Note: currently does not reset obj's coordinate frame 
    to that of the new parent.
    
-   :param objs:  ``BaseObject``      can be a single object or a list of objects
-   :param grp:   ``BaseObject``      the group to place the objects under 
+   :param objs:  ``c4d.BaseObject``  can be a single object or a list of objects
+   :param grp:   ``c4d.BaseObject``  the group to place the objects under 
                                      (if None a new null object will be created)
    :param name:  ``str``             name for the new group
    :param copy:  ``bool``            copy the objects if True
    
-.. function:: getGlobalPosition(obj)
+.. function:: GetGlobalPosition(obj)
 
-.. function:: getGlobalRotation(obj)
+.. function:: GetGlobalRotation(obj)
 
-.. function:: getGlobalScale(obj)
+.. function:: GetGlobalScale(obj)
 
-.. function:: setGlobalPosition(obj, pos)
+.. function:: SetGlobalPosition(obj, pos)
 
-.. function:: setGlobalRotation(obj, rot)
+.. function:: SetGlobalRotation(obj, rot)
    
    Please remember, like most 3D engines 
    CINEMA 4D handles rotation in radians.
 
    Example for ``H=10, P=20, B=30``:
 
-      .. code:: 
-      
-         import c4d
-         from c4d import utils
-         # ...
-         hpb = c4d.Vector(utils.Rad(10), utils.Rad(20), utils.Rad(30))
-         SetGlobalRotation(obj, hpb) # object's rotation is 10, 20, 30
+   .. code:: 
+   
+      import c4d
+      from c4d import utils
+      # ...
+      hpb = c4d.Vector(utils.Rad(10), utils.Rad(20), utils.Rad(30))
+      SetGlobalRotation(obj, hpb) # object's rotation is 10, 20, 30
    
       
-.. function:: setGlobalScale(obj, scale)
+.. function:: SetGlobalScale(obj, scale)
 
-.. function:: setAxisRotation(obj, rot, local=False)
+.. function:: SetAxisRotation(obj, rot, local=False)
 
    Set the rotation of the object axis (i.e. keeping points in place).
     
@@ -187,5 +187,5 @@ Functions for working with CINEMA 4D's objects.
    Courtesy of Scott Ayers (`source <http://www.plugincafe.com/forum/forum_posts.asp?TID=5663&PID=23480#23480>`_)
    
    
-.. function:: centerObjectAxis(obj)
+.. function:: CenterObjectAxis(obj)
 

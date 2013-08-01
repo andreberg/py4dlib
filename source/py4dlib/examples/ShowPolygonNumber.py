@@ -25,7 +25,7 @@ import os
 __all__ = []
 __version__ = (0, 1)
 __date__ = '2013-07-29'
-__updated__ = '2013-07-31'
+__updated__ = '2013-08-02'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -38,11 +38,11 @@ except ImportError:
     if TESTRUN == 1:
         pass
     
-from py4dlib.math import buildMatrix2, polyToListList
-from py4dlib.mesh import calcPolyNormal, calcPolyCentroid, calcPolyArea, calcBBox
-from py4dlib.mesh import getSelectedPoints, getSelectedPolys
-from py4dlib.objects import createObject, insertUnderNull
-from py4dlib.utils import clearConsole, ppllString
+from py4dlib.maths import BuildMatrix2, PolyToListList
+from py4dlib.mesh import CalcPolyNormal, CalcPolyCentroid, CalcPolyArea, CalcBBox
+from py4dlib.mesh import GetSelectedPoints, GetSelectedPolys
+from py4dlib.objects import CreateObject, InsertUnderNull
+from py4dlib.utils import ClearConsole, PPLLString
 
 
 # group text spline objects under op else insert at root
@@ -79,8 +79,8 @@ def main(doc):  # IGNORE:W0621
         
         print("number of selected polygons = %s (%s total)" % (polyselcnt, polycnt))
 
-        pnts = getSelectedPoints(op)
-        plys = getSelectedPolys(op)
+        pnts = GetSelectedPoints(op)
+        plys = GetSelectedPolys(op)
 
         if len(plys) == 0:
             # nothing selected? use all polys
@@ -98,15 +98,15 @@ def main(doc):  # IGNORE:W0621
             poly = allpolys[ply]
             if DEBUG: 
                 print("%d: %s, points as list<list>:" % (ply, poly))
-                print("%s" % (ppllString(polyToListList(poly, op))))
+                print("%s" % (PPLLString(PolyToListList(poly, op))))
             
             # calculate polygon normals
-            pnormal = calcPolyNormal(poly, op)
+            pnormal = CalcPolyNormal(poly, op)
             if DEBUG: print("normal: %s" % (pnormal))
 
             # calculate polygon area and bounding box 
-            parea = calcPolyArea(poly, op)
-            pbb = calcBBox(op)
+            parea = CalcPolyArea(poly, op)
+            pbb = CalcBBox(op)
             parea = (parea / pbb.size.GetLength()) * TEXT_SIZE
             if DEBUG: print("area: %s" % (parea))
             
@@ -115,7 +115,7 @@ def main(doc):  # IGNORE:W0621
             pmark = doc.SearchObject(pname)
             if pmark:
                 pmark.Remove()
-            pmark = createObject(c4d.Osplinetext, pname)
+            pmark = CreateObject(c4d.Osplinetext, pname)
             pmark[c4d.PRIM_TEXT_TEXT] = pname    # Text
             pmark[c4d.PRIM_TEXT_HEIGHT] = parea  # Font Height
             pmark[c4d.PRIM_PLANE] = 1            # Plane ZY
@@ -124,15 +124,15 @@ def main(doc):  # IGNORE:W0621
             op_rr = c4d.utils.HPBToMatrix(op.GetRelRot())
             
             if GROUP_UNDER:
-                ppos = calcPolyCentroid(poly, op)
+                ppos = CalcPolyCentroid(poly, op)
                 prot = pnormal 
             else:
                 # put in scene globally and don't group under op
-                ppos = calcPolyCentroid(poly, op) * op_mg
+                ppos = CalcPolyCentroid(poly, op) * op_mg
                 prot = (op_rr * pnormal)
 
             # match position and orientation
-            pmg = buildMatrix2(prot, off=ppos, base="x")
+            pmg = BuildMatrix2(prot, off=ppos, base="x")
             pmg.v2 = -pmg.v2
             pmark.SetMg(pmg)
             
@@ -143,7 +143,7 @@ def main(doc):  # IGNORE:W0621
         pgrp = doc.SearchObject(pgrp_name)
         if pgrp:
             pgrp.Remove()
-        pgrp = insertUnderNull(pmarks, name=pgrp_name)
+        pgrp = InsertUnderNull(pmarks, name=pgrp_name)
 
         if GROUP_UNDER:
             pgrp.InsertUnder(op)
@@ -154,7 +154,7 @@ def main(doc):  # IGNORE:W0621
 
         
 if __name__ == '__main__':
-    clearConsole()
+    ClearConsole()
     doc = documents.GetActiveDocument()
     main(doc)
 

@@ -16,7 +16,7 @@ import pprint
 
 __version__ = (0, 1)
 __date__ = '2012-09-28'
-__updated__ = '2013-07-29'
+__updated__ = '2013-08-01'
 
 
 try:
@@ -114,19 +114,19 @@ class ObjectsTest(unittest.TestCase):
     def testGetFullyQualifiedKeyPath(self):
         expected = ['Sweep-NURBS']
         path = 'Target/Group1/Group1A/Group1AB/Group1ABA'
-        actual = self.mockobj.get(path)
+        actual = self.mockobj.Get(path)
         self.assertEqual(actual, expected, 'actual should equal %r, but is %r' % (expected, actual))
         
     def testGetWildcardExpandedKeyPath1(self):
         expected = ['Kreis', 'Heart', 'Sweep-NURBS', 'Kegel1', 'Kegel2', 'Polygons1']
         path = 'Target/Group1/Group1A/Group1AB/*'
-        actual = self.mockobj.get(path)
+        actual = self.mockobj.Get(path)
         self.assertEqual(actual, expected, 'actual should equal %r, but is %r' % (expected, actual))
         
     def testGetWildcardExpandedKeyPath2(self):
         expected = ['Kreis', 'Heart', 'Sweep-NURBS', 'Kegel1', 'Kegel2', 'Polygons1']
         path = 'Target/*/*/*/*'
-        actual = self.mockobj.get(path)
+        actual = self.mockobj.Get(path)
         self.assertEqual(actual, expected, 'actual should equal %r, but is %r' % (expected, actual))
         
     def testGetWildcardExpandedKeyPath3(self):
@@ -135,25 +135,25 @@ class ObjectsTest(unittest.TestCase):
         # can evaluate to nothing
         expected = ['Kreis', 'Heart', 'Cube3', 'W\ürfel3', 'Group1ABA', 'Group1ABB', 'Sweep-NURBS', 'Kegel1', 'Kegel2', 'Polygons1']
         path = 'Target/Group1/Group1A/Group1AB*' 
-        actual = self.mockobj.get(path)
+        actual = self.mockobj.Get(path)
         self.assertEqual(actual, expected, 'actual should equal %r, but is %r' % (expected, actual))
 
     def testGetPatternExpandedKeyPath(self):
         expected = ['Target', 'Group1', 'Kegel1', 'Kegel2', 'Polygons1']
         path = '(Source/Group1ABB|Target)' 
-        actual = self.mockobj.get(path)
+        actual = self.mockobj.Get(path)
         self.assertEqual(actual, expected, 'actual should equal %r, but is %r' % (expected, actual))
         
     def testGetRePatternExpandedKeyPath(self):
         expected = ['Kegel1', 'Kegel2', 'Polygons1']
         path = '!(?!\T)(Source/Group1ABB|Target)' 
-        actual = self.mockobj.get(path)
+        actual = self.mockobj.Get(path)
         self.assertEqual(actual, expected, 'actual should equal %r, but is %r' % (expected, actual))
 
     def testGetRelativeExpandedKeyPath(self):
         expected = ['Cube3', 'W\ürfel3', 'Group1ABA', 'Group1ABB']
         path = 'Target/Group1/Group1A/Group1AB/Group1ABA/..'
-        actual = self.mockobj.get(path)
+        actual = self.mockobj.Get(path)
         self.assertEqual(actual, expected, 'actual should equal %r, but is %r' % (expected, actual))
 
 

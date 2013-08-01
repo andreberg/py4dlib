@@ -14,9 +14,9 @@
 
 import os
 
-__version__ = (0, 2)
+__version__ = (0, 3)
 __date__ = '2012-09-27'
-__updated__ = '2013-07-31'
+__updated__ = '2013-08-02'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -33,7 +33,7 @@ except ImportError:
         pass
 
 
-def clearConsole():
+def ClearConsole():
     version = c4d.GetC4DVersion()
     if version > 12999:
         cmd = 13957 # R14 (and R13?)
@@ -42,7 +42,7 @@ def clearConsole():
     c4d.CallCommand(cmd)
 
 
-def fuzzyCompareStrings(a, b, limit=20):
+def FuzzyCompareStrings(a, b, limit=20):
     """ Fuzzy string comparison. 
     
     Two strings are deemed equal if they have 
@@ -76,23 +76,23 @@ def fuzzyCompareStrings(a, b, limit=20):
     return result
 
 
-def versionString(versionTuple):
-    """(x,y,z .. n) -> 'x.y.z...n'"""
+def VersionString(versionTuple):
+    """ (x,y,z .. n) -> 'x.y.z...n' """
     return '.'.join(str(x) for x in versionTuple)
 
 
-def ppllString(ll):
-    """Returns a pretty-printed string of a list<list> structure."""
+def PPLLString(ll):
+    """ Returns a pretty-printed string of a ``list<list>`` structure. """
     s = repr(ll)[1:-2]
     lines = s.split('],')
     result = '],\n'.join(lines)
     return result + ']'
 
 
-def system(cmd, args=None):
+def System(cmd, args=None):
     '''
     Convenience function for firing off commands to 
-    the system console. Used instead of `subprocess.call`_
+    the System console. Used instead of `subprocess.call`_
     so that shell variables will be expanded properly.
     
     Not the same as `os.system`_ as here it captures 
@@ -116,8 +116,8 @@ def system(cmd, args=None):
                                .replace("'", r"\'")) for s in args]
         fullcmd = "%s %s" % (cmd, ' '.join(args))
     out, err = Popen(fullcmd, stdout=PIPE, shell=True).communicate()
-    system.out = out
-    system.err = err
+    System.out = out
+    System.err = err
     try:
         from collections import namedtuple
         StdStreams = namedtuple('StdStreams', ['out', 'err'])

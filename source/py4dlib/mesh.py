@@ -14,9 +14,9 @@
 
 import os
 
-__version__ = (0, 2)
+__version__ = (0, 3)
 __date__ = '2013-07-29'
-__updated__ = '2013-07-31'
+__updated__ = '2013-08-01'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -29,10 +29,10 @@ except ImportError:
     if TESTRUN == 1:
         pass
 
-from py4dlib.math import vAvg, polyToList, unitNormal, BBox
+from py4dlib.maths import VAvg, PolyToList, UnitNormal, BBox
 
 
-def togglePolySelection(obj):
+def TogglePolySelection(obj):
     result = False
     if not isinstance(obj, c4d.PointObject):
         return result
@@ -46,7 +46,7 @@ def togglePolySelection(obj):
     return result
 
 
-def selectAllPolys(obj):
+def SelectAllPolys(obj):
     result = False
     if not isinstance(obj, c4d.PointObject):
         return result
@@ -60,7 +60,7 @@ def selectAllPolys(obj):
     return result
 
 
-def getSelectedPoints(obj):
+def GetSelectedPoints(obj):
     """ Returns list of selected point indices. 
 
     To get the actual point(s) do something like 
@@ -82,7 +82,7 @@ def getSelectedPoints(obj):
         return result
 
 
-def getSelectedPolys(obj):
+def GetSelectedPolys(obj):
     """ Returns list of selected polygons indices. 
 
     To get the actual polygon(s) do something like 
@@ -104,28 +104,28 @@ def getSelectedPolys(obj):
         return result
 
 
-def calcPolyCentroid(p, obj):
+def CalcPolyCentroid(p, obj):
     """ Calculate the centroid of a polygon by averaging its vertices. """
     if not isinstance(obj, c4d.PointObject):
         return None
     if not isinstance(p, c4d.CPolygon):
         raise TypeError("E: expected c4d.CPolygon, got %s" % type(p))
-    lst = polyToList(p)
+    lst = PolyToList(p)
     allp = obj.GetAllPoints()
     vlst = []
     for i in lst:
         vlst.append(allp[i])
-    return vAvg(vlst)
+    return VAvg(vlst)
 
 
-def calcPolyNormal(p, obj):
+def CalcPolyNormal(p, obj):
     """ Calculate the orientation of face normal by using Newell's method.
-        See calcVertexNormal for an example of usage within the calling context.
+        See CalcVertexNormal for an example of usage within the calling context.
     """
     if not isinstance(p, c4d.CPolygon):
         raise TypeError("E: expected c4d.CPolygon, got %s" % type(p))
     N = c4d.Vector(0,0,0)
-    lst = polyToList(p)
+    lst = PolyToList(p)
     llen = len(lst)
     allp = obj.GetAllPoints()
     for i in range(llen):
@@ -139,12 +139,12 @@ def calcPolyNormal(p, obj):
     return N.GetNormalized()
     
 
-def calcVertexNormal(v, idx, obj):
+def CalcVertexNormal(v, idx, obj):
     """ Calculate the vertex normal by averaging surrounding face normals.
         Usually called from a construct like the following:
     
         for i, point in enumerate(obj.GetAllPoints()):
-            vn = calcVertexNormal(point, i, obj)
+            vn = CalcVertexNormal(point, i, obj)
     """
     if not isinstance(v, c4d.Vector):
         raise TypeError("E: expected c4d.Vector, got %s" % type(v))
@@ -158,7 +158,7 @@ def calcVertexNormal(v, idx, obj):
     for poly in pntpolys:
         poly = allp[poly]
         polys.append(poly)
-        normal = calcPolyNormal(poly, obj)
+        normal = CalcPolyNormal(poly, obj)
         normals.append(normal)
     ln = len(normals)
     if ln == 0: return N # beware of div by zero
@@ -168,7 +168,7 @@ def calcVertexNormal(v, idx, obj):
     return N.GetNormalized()
 
 
-def calcThreePointNormal(v1, v2, v3):
+def CalcThreePointNormal(v1, v2, v3):
     """ Calculate the surface normal of a three point plane.
         Doesn't take orientation of neighboring polygons into account.
     """
@@ -181,12 +181,12 @@ def calcThreePointNormal(v1, v2, v3):
     return result
 
 
-def calcTriangleArea(p, obj):
+def CalcTriangleArea(p, obj):
     if not isinstance(obj, c4d.PointObject):
         return None
     if not isinstance(p, c4d.CPolygon):
         raise TypeError("E: expected c4d.CPolygon, got %s" % type(p))
-    lst = polyToList(p)
+    lst = PolyToList(p)
     llen = len(lst)
     if llen != 3:
         raise ValueError("E: expected triangle, but got n-gon with n = %d" % llen)
@@ -205,9 +205,9 @@ def calcTriangleArea(p, obj):
     return result
 
 
-def calcPolyArea(p, obj, normalized=False):
+def CalcPolyArea(p, obj, normalized=False):
     total = c4d.Vector(0, 0, 0)
-    ply = polyToList(p)
+    ply = PolyToList(p)
     lply = len(ply)
     if lply < 3:
         return 0
@@ -224,24 +224,24 @@ def calcPolyArea(p, obj, normalized=False):
         total.x += prod.x
         total.y += prod.y
         total.z += prod.z
-    normal = unitNormal(allp[ply[0]], allp[ply[1]], allp[ply[2]])
+    normal = UnitNormal(allp[ply[0]], allp[ply[1]], allp[ply[2]])
     result = total.Dot(normal)
     return abs(result / 2)
 
 
-def calcBBox(e):
+def CalcBBox(e):
     """ Construct a :py:class:`BBox` for a ``c4d.PointObject`` - 
         using selected points only or all points if no selection -  
         or for a ``c4d.CPolygon``. 
     """
     if isinstance(e, c4d.PointObject):
-        bb = BBox.fromPoints(e)
+        bb = BBox.FromPoints(e)
         return bb
     elif isinstance(e, c4d.CPolygon):
         if e.c == e.d:
-            bb = BBox.fromPoints([e.a, e.b, e.c])
+            bb = BBox.FromPoints([e.a, e.b, e.c])
         else:
-            bb = BBox.fromPoints([e.a, e.b, e.c, e.d])
+            bb = BBox.FromPoints([e.a, e.b, e.c, e.d])
         return bb
     else:
         raise TypeError("E: expected c4d.PointObject or c4d.CPolygon, but got %r" % (type(e)))

@@ -15,7 +15,7 @@ import unittest
 
 __version__ = (0, 1)
 __date__ = '2012-09-26'
-__updated__ = '2013-07-29'
+__updated__ = '2013-08-01'
 
 from py4dlib.plugins import UserDefaults
 
@@ -64,10 +64,10 @@ mode = quads
     def testUserDefaultsModificationAndSaving(self):
         settings = UserDefaults(filepath=FILEPATH)
         self.assertTrue(os.path.exists(settings.filepath))
-        settings.set('string', 'some string')
-        settings.set('int', 1)
-        settings.set('float', 2.0)
-        settings.save()
+        settings.Set('string', 'some string')
+        settings.Set('int', 1)
+        settings.Set('float', 2.0)
+        settings.Save()
         expected_contents = """[Settings]
 string = some string
 int = 1
@@ -80,15 +80,15 @@ float = 2.0
 
     def testUserDefaultsReadingAndRetrieving(self):
         settings = UserDefaults(filepath=FILEPATH)
-        settings.set('string', 'some string')
-        settings.set('int', 1)
-        settings.set('float', 2.0)
-        settings.save()
+        settings.Set('string', 'some string')
+        settings.Set('int', 1)
+        settings.Set('float', 2.0)
+        settings.Save()
         settings2 = UserDefaults(filepath=FILEPATH)
         self.assertTrue(os.path.exists(settings2.filepath))
-        strval = settings2.get('string')
-        intval = settings2.get('int')
-        floatval = settings2.get('float')
+        strval = settings2.Get('string')
+        intval = settings2.Get('int')
+        floatval = settings2.Get('float')
         expected_strval = 'some string'
         expected_intval = '1'
         expected_floatval = '2.0'

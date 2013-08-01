@@ -15,9 +15,9 @@
 import os
 import ConfigParser
 
-__version__ = (0, 2)
+__version__ = (0, 3)
 __date__ = '2012-09-26'
-__updated__ = '2013-07-31'
+__updated__ = '2013-08-01'
 
 
 class UserDefaults(object):
@@ -35,8 +35,8 @@ class UserDefaults(object):
     
         >>> filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "res", "settings.ini")
         >>> defaults = UserDefaults(filepath=filepath)
-        >>> defaults.set('key', 'value')
-        >>> defaults.save()
+        >>> defaults.Set('key', 'value')
+        >>> defaults.Save()
     
     If filepath points to an existing file, it will 
     use that file and initializing a new config object 
@@ -44,10 +44,10 @@ class UserDefaults(object):
     
     If you later want to read in the config file:
     
-        >>> defaults.read()
-        >>> print defaults.get('setting')
+        >>> defaults.Read()
+        >>> print defaults.Get('setting')
         value
-        >>> print defaults.get('does-not-exist', default='use default instead')
+        >>> print defaults.Get('does-not-exist', default='use default instead')
         use default instead
     """
        
@@ -83,12 +83,12 @@ class UserDefaults(object):
         self.filepath = filepath
         self.header = header
         if os.path.exists(filepath):
-            self.read()
+            self.Read()
         else:
             self.state.add_section(header)
-            self.save(config, filepath)
+            self.Save(config, filepath)
     
-    def get(self, name, section=None, default=None):
+    def Get(self, name, section=None, default=None):
         """
         Retrieve a previously stored value from the config object.
          
@@ -105,13 +105,13 @@ class UserDefaults(object):
         result = default
         try:
             result = self.state.get(section, name)
-        except ConfigParser.NoOptionError, noe: # IGNORE:W0612 @UnusedVariable
+        except ConfigParser.NoOptionError, noe:  # IGNORE:W0612 @UnusedVariable
             pass
         except Exception, e:
             print("*** Caught exception while getting %r: %s" % (name, e))
         return result
     
-    def set(self, name, value, section=None): #@ReservedAssignment
+    def Set(self, name, value, section=None):  #@ReservedAssignment
         """
         Store a value in the config object for later retrieval.
         
@@ -126,11 +126,11 @@ class UserDefaults(object):
         try:
             self.state.set(section, name, value)
             result = True
-        except Exception, e: # IGNORE:W0703
+        except Exception, e:  # IGNORE:W0703
             print("*** Caught exception while setting %r to %r: %s" % (name, value, e))
         return result
         
-    def read(self):
+    def Read(self):
         """
         Read state from configuration file.
         
@@ -142,7 +142,7 @@ class UserDefaults(object):
             raise OSError("could not read config file at path %r" % self.filepath)
         return True
         
-    def save(self, config=None, filepath=None):
+    def Save(self, config=None, filepath=None):
         """
         Save settings to a configuration file.
         

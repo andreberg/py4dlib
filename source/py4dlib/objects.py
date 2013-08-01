@@ -9,16 +9,15 @@
 #  andre.bergmedia@googlemail.com
 # 
 # pylint: disable-msg=F0401
-from py4dlib.math import BBox
 
 '''py4dlib.objects -- components for working with CINEMA 4D's objects.'''
 
 import os
 import re
 
-__version__ = (0, 2)
+__version__ = (0, 3)
 __date__ = '2012-09-27'
-__updated__ = '2013-07-31'
+__updated__ = '2013-08-01'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -234,7 +233,7 @@ class ObjectHierarchy(object):
     def __repr__(self):
         return repr(self.entries)
     
-    def pprint(self, stopobj=None, filtertype=None, tabsize=4):
+    def PPrint(self, stopobj=None, filtertype=None, tabsize=4):
         """Print an indented, tree-like representation of an object manager hierarchy."""
         lvl = 0
         total = handled = 0
@@ -256,8 +255,8 @@ class ObjectHierarchy(object):
         else:
             fstr = ""
         print("processed %d object%s%s" % (handled, s, fstr))
-    
-    def get(self, path):
+        
+    def Get(self, path):
         """
         Get a list of ``c4d.BaseObject``s for the key path given by 'path'.
         
@@ -310,13 +309,13 @@ class ObjectHierarchy(object):
         return results
  
           
-def select(obj):
+def Select(obj):
     if not obj.GetBit(c4d.BIT_ACTIVE):
         obj.ToggleBit(c4d.BIT_ACTIVE)
     return obj.GetBit(c4d.BIT_ACTIVE)
 
 
-def selectAdd(obj):
+def SelectAdd(obj):
     """ Same as select(obj) but uses a slightly different mechanism.
         See also BaseDocument.SetSelection(sel, mode).
     """
@@ -324,7 +323,7 @@ def selectAdd(obj):
     doc.SetActiveObject(obj, c4d.SELECTION_ADD)
     
 
-def selectGroupMembers(grp):
+def SelectGroupMembers(grp):
     doc = documents.GetActiveDocument()
     for obj in grp:
         # add each group member to the selection 
@@ -333,12 +332,12 @@ def selectGroupMembers(grp):
         doc.SetActiveObject(obj, c4d.SELECTION_ADD)
 
 
-def selectObjects(objs):
+def SelectObjects(objs):
     for obj in objs:
-        select(obj)
+        Select(obj)
     
 
-def deselectAll(inObjMngr=False):
+def DeselectAll(inObjMngr=False):
     """ Not the same as BaseSelect.DeselectAll().
         
     inObjMngr  bool  if True, run the deselect command from Object Manager, 
@@ -350,13 +349,13 @@ def deselectAll(inObjMngr=False):
         c4d.CallCommand(12113) # deselect all
 
 
-def groupObjects(objs, name="Group"):
+def GroupObjects(objs, name="Group"):
     """ CallCommand based grouping of objects from a list. 
         
     Generally unreliable, because selection state matters.
     Use insertUnderNull for better effect.
     """
-    deselectAll(True)
+    DeselectAll(True)
     result = None
     if objs is None: 
         return result
@@ -365,7 +364,7 @@ def groupObjects(objs, name="Group"):
     else:
         return result
     for o in objs:
-        select(o)
+        Select(o)
     if DEBUG: print("creating group %s" % name)
     c4d.CallCommand(100004772) # group objects
     doc = documents.GetActiveDocument()
@@ -375,7 +374,7 @@ def groupObjects(objs, name="Group"):
     return result
 
 
-def groupSelected(name="Group"):
+def GroupSelected(name="Group"):
     """ CallCommand based grouping of selected objects. 
         
     Generally unreliable, because selection state matters.
@@ -390,14 +389,14 @@ def groupSelected(name="Group"):
     return result
 
 
-def recurseBranch(obj):
+def RecurseBranch(obj):
     child = obj.GetDown()
     while child:
         child = child.GetNext()
-        return recurseBranch(child)
+        return RecurseBranch(child)
     
 
-def getNextObject(obj, stopobjs=None):
+def GetNextObject(obj, stopobjs=None):
     """ Return the next object in the hierarchy using a depth-first traversal scheme.
     
     If stopobjs is a c4d.BaseObject or a list of c4d.BaseObjects and the next
@@ -431,7 +430,7 @@ def getNextObject(obj, stopobjs=None):
         return obj.GetNext()
 
 
-def getActiveObjects(doc):
+def GetActiveObjects(doc):
     """ Same as BaseDocument.GetSelection(), where 
         GetSelection also selects tags and materials. 
     """
@@ -440,11 +439,11 @@ def getActiveObjects(doc):
     while obj:
         if obj.GetBit(c4d.BIT_ACTIVE) == True: 
             lst.append(obj)
-        obj = getNextObject(obj)
+        obj = GetNextObject(obj)
     return lst
 
 
-def findObject(name, start=None, matchfunc=None, *args, **kwargs):
+def FindObject(name, start=None, matchfunc=None, *args, **kwargs):
     """ Find object with name 'name'.
     
     :param start: a c4d.BaseObject or a str representing the name
@@ -481,18 +480,18 @@ def findObject(name, start=None, matchfunc=None, *args, **kwargs):
             return startop
         elif curname == name: 
             return startop
-    obj = getNextObject(startop, startop)
+    obj = GetNextObject(startop, startop)
     while obj:
         curname = obj.GetName()
         if matchfunc and matchfunc(curname, name, *args, **kwargs):
             return obj
         elif curname == name: 
             return obj
-        obj = getNextObject(obj, startop)
+        obj = GetNextObject(obj, startop)
     return result
 
 
-def findObjects(name):
+def FindObjects(name):
     """Find all objects in the scene with the name 'name'"""
     if name is None: return None
     if not isinstance(name, str):
@@ -506,11 +505,11 @@ def findObjects(name):
         curname = obj.GetName()
         if curname == name: 
             result.append(obj)
-        obj = getNextObject(obj)
+        obj = GetNextObject(obj)
     return result
 
 
-def createObject(typ, name, undo=True):
+def CreateObject(typ, name, undo=True):
     """ Create a object of type 'typ', with name 'name'.
         This calls c4d.StopAllThreads() internally.
     """
@@ -530,7 +529,7 @@ def createObject(typ, name, undo=True):
     return obj
 
 
-def insertUnderNull(objs, grp=None, name="Group", copy=False):
+def InsertUnderNull(objs, grp=None, name="Group", copy=False):
     """
     Inserts objects under a group (null) object, optionally creating the group.
     
@@ -546,7 +545,7 @@ def insertUnderNull(objs, grp=None, name="Group", copy=False):
     Returns the modyfied/created group on success, None on failure.
     """
     if grp is None:
-        grp = createObject(c4d.Onull, name)
+        grp = CreateObject(c4d.Onull, name)
     if copy == True: 
         objs = [i.GetClone() for i in objs]
     if DEBUG: print("inserting objs into group '%s'" % grp.GetName())
@@ -561,7 +560,7 @@ def insertUnderNull(objs, grp=None, name="Group", copy=False):
     return grp
 
 
-def recursiveInsertGroups(entry, parent, root, tree, pmatch="90%"):
+def RecursiveInsertGroups(entry, parent, root, tree, pmatch="90%"):
     print("processing %s..." % PF(entry))
     if isinstance(entry, dict):
         print("... as dict (1)")
@@ -572,10 +571,10 @@ def recursiveInsertGroups(entry, parent, root, tree, pmatch="90%"):
                 if op.GetName() == node.name:
                     nodeobj = op
             if not nodeobj:
-                nodeobj = createObject(c4d.Onull, node.name)
+                nodeobj = CreateObject(c4d.Onull, node.name)
                 print("inserting nodeobj %r under parent.op %r" % (nodeobj, parent.op))
                 nodeobj.InsertUnder(parent.op)
-            return recursiveInsertGroups(node, node, root, entry, pmatch)
+            return RecursiveInsertGroups(node, node, root, entry, pmatch)
     elif isinstance(entry, list):
         print("... as list (1)")
         print("parent = %r, root = %r" % (parent, root))
@@ -586,45 +585,45 @@ def recursiveInsertGroups(entry, parent, root, tree, pmatch="90%"):
             if isinstance(child, dict):
                 print("... as dict (2)")
                 print("parent = %r, root = %r" % (parent, root))
-                return recursiveInsertGroups(child, parent, root, tree, pmatch)
+                return RecursiveInsertGroups(child, parent, root, tree, pmatch)
             else:
                 print("... as object (2)")
                 print("parent = %r, root = %r" % (parent, root))
-                childobj = findObject(child.name, start=root.op, matchfunc=utils.fuzzyCompareStrings, limit=pmatch)
+                childobj = FindObject(child.name, start=root.op, matchfunc=utils.fuzzyCompareStrings, limit=pmatch)
                 if not childobj:
                     print("creating childobj %r" % (child.name))
-                    childobj = createObject(c4d.Onull, child.name)
+                    childobj = CreateObject(c4d.Onull, child.name)
                     print("child parents: %r, lvl = %d" % (child.parents, child.lvl))
                 print("inserting childobj %r under parent.op %r" % (childobj, parent.op))
                 childobj.InsertUnder(parent.op)
         print("done children of %s" % parent.name)
     else:
         children = tree[entry]
-        return recursiveInsertGroups(children, entry, root, tree, pmatch)
+        return RecursiveInsertGroups(children, entry, root, tree, pmatch)
 
 
-def getGlobalPosition(obj):
+def GetGlobalPosition(obj):
     return obj.GetMg().off
 
 
-def getGlobalRotation(obj):
+def GetGlobalRotation(obj):
     return c4d.utils.MatrixToHPB(obj.GetMg())
 
 
-def getGlobalScale(obj):
+def GetGlobalScale(obj):
     m = obj.GetMg()
     return c4d.Vector(m.v1.GetLength(),
                       m.v2.GetLength(),
                       m.v3.GetLength())
 
 
-def setGlobalPosition(obj, pos):
+def SetGlobalPosition(obj, pos):
     m = obj.GetMg()
     m.off = pos
     obj.SetMg(m)
 
 
-def setGlobalRotation(obj, rot):
+def SetGlobalRotation(obj, rot):
     """
     Please remember, like most 3D engines 
     CINEMA 4D handles rotation in radians.
@@ -653,7 +652,7 @@ def setGlobalRotation(obj, rot):
     obj.SetMg(m)
 
 
-def setGlobalScale(obj, scale):
+def SetGlobalScale(obj, scale):
     m = obj.GetMg()
     
     m.v1 = m.v1.GetNormalized() * scale.x
@@ -663,7 +662,7 @@ def setGlobalScale(obj, scale):
     obj.SetMg(m)
 
 
-def setAxisRotation(obj, rot, local=False):
+def SetAxisRotation(obj, rot, local=False):
     """
     Set the rotation of the object axis (i.e. keeping points in place).
     
@@ -692,7 +691,7 @@ def setAxisRotation(obj, rot, local=False):
     c4d.EventAdd()
 
 
-def centerObjectAxis(obj):
+def CenterObjectAxis(obj):
     # check object type
     if obj is None or not isinstance(obj, c4d.PointObject):
         return True

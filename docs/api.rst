@@ -3,7 +3,7 @@ API docs
 
 .. toctree:: 
    
-	api/math
+	api/maths
 	api/mesh
 	api/objects
 	api/plugins

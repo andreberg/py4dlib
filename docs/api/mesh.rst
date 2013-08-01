@@ -4,70 +4,72 @@ Mesh
 Functions for working with CINEMA 4D's point and polygon objects.
 
 
-.. function:: togglePolySelection(obj)
+.. function:: TogglePolySelection(obj)
    
-.. function:: selectAllPolys(obj)
+.. function:: SelectAllPolys(obj)
    
-.. function:: getSelectedPoints(obj)
+.. function:: GetSelectedPoints(obj)
    
    Returns list of selected point indices. 
    
-   To get the actual point(s) do something like 
+   To get the actual point(s), using an ``index``
+   from the returned list do something like
    
-      .. code::
-      
-         allpoints = op.GetAllPoints()
-         point = allpoints[index]
+   .. code::
    
-.. function:: getSelectedPolys(obj)
+      allpoints = op.GetAllPoints()
+      point = allpoints[index]
+   
+.. function:: GetSelectedPolys(obj)
 
    Returns list of selected polygons indices. 
    
-   To get the actual polygon(s) do something like 
+   To get the actual polygon(s), using an ``index``
+   from the returned list do something like 
    
-      .. code::
-      
-         allpolys = obj.GetAllPolygons()
-         poly = allpolys[index]
+   .. code::
 
-.. function:: calcPolyCentroid(p, obj)
+      allpolys = obj.GetAllPolygons()
+      poly = allpolys[index]
+
+.. function:: CalcPolyCentroid(p, obj)
     
    Calculate the centroid of a polygon by averaging its vertices.
 
-.. function:: calcPolyNormal(p, obj)
+.. function:: CalcPolyNormal(p, obj)
 
    Calculate the orientation of face normal using Newell's method.
    
-   See :py:func:`calcVertexNormal` for an example of usage within the calling context.
+   See :py:func:`CalcVertexNormal` for an example of usage within the calling context.
 
-.. function:: calcVertexNormal(v, idx, obj)
+.. function:: CalcVertexNormal(v, idx, obj)
 
    Calculate the vertex normal by averaging surrounding face normals.
    
    Usually called from a construct like the following:
    
-      .. code::
-      
-         for i, point in enumerate(obj.GetAllPoints()):
-            vn = calcVertexNormal(point, i, obj)
+   .. code::
+   
+      for i, point in enumerate(obj.GetAllPoints()):
+         vn = CalcVertexNormal(point, i, obj)
 
-.. function:: calcThreePointNormal(v1, v2, v3)
+.. function:: CalcThreePointNormal(a, b, c)
 
    Calculate the surface normal of a three point plane.
    
    Doesn't take orientation of neighboring polygons into account.
    
 
-.. function:: calcTriangleArea(p, obj)
+.. function:: CalcTriangleArea(p, obj)
 
    Calculate area of a triangle using ``|(v3 - v1) x (v3 - v2)|/2``.
    
-.. function:: calcPolyArea(p, obj, normalized=False)
+.. function:: CalcPolyArea(p, obj, normalized=False)
 
    Calculate the area of a planar polygon.
    
 
-.. function:: calcBBox(e)
+.. function:: CalcBBox(e)
 
    Construct a :py:class:`BBox` for a ``c4d.PointObject`` - using selected points only or all points if no selection -  or for a ``c4d.CPolygon``.
    
