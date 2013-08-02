@@ -1,0 +1,20 @@
+// C4D-DialogResource
+
+DIALOGSTRINGS IDD_DIALOG_SETTINGS
+{
+  IDS_BUTTON_CANCEL   "Cancel";
+  IDS_BUTTON_DOIT     "Do It!";
+  IDS_CHECK           "Optimize Unused Points";
+  IDS_CHECK1          "Hide Instead of Delete";
+  IDS_CHECK2          "Center Axis";
+  IDS_CHECK3          "Keep Normal Tags";
+  IDS_CHECK4          "Delete Original Polys";
+  IDS_CHECK5          "Try Re-Aligning Normals";
+  IDS_DIALOG_TITLE    "Dialog";
+  IDS_DUMMY           "Dummy";
+  IDS_GROUP_BUTTONS   "Buttons";
+  IDS_GROUP_SETTINGS  "Settings";
+  IDS_GROUP_WRAPPER   "Wrapper";
+  IDS_STATIC          "Group";
+  IDS_STATIC1         "Group";
+}

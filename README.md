@@ -71,6 +71,9 @@ The result should be something like this:
 ![result](http://andreberg.github.io/py4dlib/_images/ShowPolygonNumber.png "Show Polygon Number")
 
 
+See also the [Best Practices](http://andreberg.github.io/py4dlib/usage.html#best-practices "Best Practices") section in the online docs.
+
+
 Contributions
 =============
 
@@ -93,6 +96,7 @@ Adam Swaab
 NitroMan (Nitro4D)  
 Robert Leger  
 Niklas Rosenstein  
+Scott Ayers  
 
 Thanks for making some of your C.O.F.F.E.E. and Python scripts   
 free and for often not denying the ability to take a look.
