@@ -4,7 +4,7 @@ Maths
 
 .. class:: BBox
    
-   Calculate various area metrics from a list of points,
+   Calculate various bounding box metrics from a list of points,
    such as min, max, midpoint, radius and size.
       
    .. classmethod:: FromSelectedPoints(cls, obj)

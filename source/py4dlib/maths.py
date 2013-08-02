@@ -18,7 +18,7 @@ import math
 
 __version__ = (0, 3)
 __date__ = '2013-07-29'
-__updated__ = '2013-08-01'
+__updated__ = '2013-08-02'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -35,7 +35,7 @@ except ImportError:
 
 class BBox(object):
     """
-    Calculate various area metrics from a list of points,
+    Calculate various bounding box metrics from a list of points, 
     such as min, max, midpoint, radius and size.
     """
     def __init__(self):
