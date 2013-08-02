@@ -56,14 +56,19 @@ Open the Python script editor and run the following script:
     from c4d import gui
     #Welcome to the world of Python
     
-    from py4dlib.utils import clearConsole
+    from py4dlib.utils import ClearConsole
     from py4dlib.examples import ShowPolygonNumber
     
     
     if __name__=='__main__':
-        clearConsole()
+        ClearConsole()
         doc = c4d.documents.GetActiveDocument()
         ShowPolygonNumber.main(doc)
+
+
+The result should be something like this:
+
+![result](http://andreberg.github.io/py4dlib/_images/ShowPolygonNumber.png "Show Polygon Number")
 
 
 Contributions
