@@ -19,8 +19,8 @@ Plugins
    
       >>> filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), "res", "settings.ini")
       >>> defaults = UserDefaults(filepath=filepath)
-      >>> defaults.set('key', 'value')
-      >>> defaults.save()
+      >>> defaults.Set('key', 'value')
+      >>> defaults.Save()
    
    If filepath points to an existing file, it will 
    use that file and initializing a new config object 
@@ -30,10 +30,10 @@ Plugins
    
    .. code::
       
-      >>> defaults.read()
-      >>> print defaults.get('setting')
+      >>> defaults.Read()
+      >>> print defaults.Get('setting')
       value
-      >>> print defaults.get('does-not-exist', default='use default instead')
+      >>> print defaults.Get('does-not-exist', default='use default instead')
       use default instead
    
    :param filepath: ``str`` 
@@ -55,7 +55,7 @@ Plugins
       :param name: ``str``  name of the setting
       :param section: ``str`` the section name. ``self.default_section`` if None.
       :param default: ``any`` a default value to use in case name wasn't found.
-      :return: ``str`` on success, None or 'default' on failure.
+      :return: ``str`` on success, None or *default* on failure.
           this will always return a string even if the value was
           stored as another type previously. So the caller is
           responsible for the convertion to the wanted data type.

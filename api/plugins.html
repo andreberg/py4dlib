@@ -65,18 +65,18 @@ for UI elements of a plugin.</p>
 then save it:</p>
 <div class="code highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">__file__</span><span class="p">)),</span> <span class="s">&quot;res&quot;</span><span class="p">,</span> <span class="s">&quot;settings.ini&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span> <span class="o">=</span> <span class="n">UserDefaults</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="n">filepath</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="s">&#39;key&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">Set</span><span class="p">(</span><span class="s">&#39;key&#39;</span><span class="p">,</span> <span class="s">&#39;value&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">Save</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>If filepath points to an existing file, it will
 use that file and initializing a new config object
 by reading from it.</p>
 <p>If you later want to read in the config file:</p>
-<div class="code highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">defaults</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;setting&#39;</span><span class="p">)</span>
+<div class="code highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">defaults</span><span class="o">.</span><span class="n">Read</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">defaults</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">&#39;setting&#39;</span><span class="p">)</span>
 <span class="go">value</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">defaults</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s">&#39;does-not-exist&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;use default instead&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">defaults</span><span class="o">.</span><span class="n">Get</span><span class="p">(</span><span class="s">&#39;does-not-exist&#39;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s">&#39;use default instead&#39;</span><span class="p">)</span>
 <span class="go">use default instead</span>
 </pre></div>
 </div>
@@ -116,7 +116,7 @@ directly through <tt class="docutils literal"><span class="pre">self.state</span
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">str</span></tt> on success, None or &#8216;default&#8217; on failure.
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><tt class="docutils literal"><span class="pre">str</span></tt> on success, None or <em>default</em> on failure.
 this will always return a string even if the value was
 stored as another type previously. So the caller is
 responsible for the convertion to the wanted data type.</p>
