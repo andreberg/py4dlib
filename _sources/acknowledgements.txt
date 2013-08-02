@@ -9,6 +9,7 @@ In no particular order.
 *  NitroMan (Nitro4D)  
 *  Robert Leger  
 *  Niklas Rosenstein  
+*  Scott Ayers
 
 Thanks for making some of your C.O.F.F.E.E. and Python scripts   
 free and for often not denying the ability to take a look.

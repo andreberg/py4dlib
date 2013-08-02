@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Usage &mdash; py4dlib 0.3 documentation</title>
+    <title>Usage &mdash; py4dlib 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.3',
+        VERSION:     '0.3.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.3 documentation" href="index.html" />
+    <link rel="top" title="py4dlib 0.3.1 documentation" href="index.html" />
     <link rel="next" title="Contributions" href="contributions.html" />
     <link rel="prev" title="Installation" href="installation.html" /> 
   </head>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">py4dlib 0.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">py4dlib 0.3.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -79,6 +79,53 @@ the Object Manager.</p>
 <p>The result should be something like this:</p>
 <a class="reference internal image-reference" href="_images/ShowPolygonNumber.png"><img alt="ShowPolygonNumber" src="_images/ShowPolygonNumber.png" style="width: 422.25px; height: 351px;" /></a>
 </div>
+<div class="section" id="best-practices">
+<h1>Best Practices<a class="headerlink" href="#best-practices" title="Permalink to this headline">¶</a></h1>
+<p>What can you do if your plugin depends on <strong>py4dlib</strong> but
+the end user doesn&#8217;t have the library installed?</p>
+<p>Well, you could try downloading the library using Python
+itself, but I&#8217;d caution against it. Running a plugin
+shouldn&#8217;t start a connection to some random website to
+download stuff on the end user&#8217;s computer.</p>
+<p>The only sensible thing you can do, is check for a prerequisite
+dependency check at the time the plugin is actually executed
+and if dependencies are missing display a message to the user
+and politely ask to download the library.</p>
+<p>You can find a complete example in the <a class="reference internal" href="examples.html#extract"><em>Extract</em></a> plugin
+included in the <a class="reference internal" href="examples.html#py4dlib-examples"><em>Examples</em></a>, but I shall give a
+brief overview here.</p>
+<p>At the top of your plugin set a constant indicating the state
+of the dependency prerequisite and wrap any py4dlib imports in
+a try/except block, catching <tt class="docutils literal"><span class="pre">ImportError</span></tt>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">PY4DLIB_FOUND</span> <span class="o">=</span> <span class="bp">False</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">py4dlib.objects</span> <span class="kn">import</span> <span class="n">DeselectAll</span><span class="p">,</span> <span class="n">Select</span><span class="p">,</span> <span class="n">GetGlobalRotation</span>
+    <span class="c"># more dependency imports ...</span>
+    <span class="n">PY4DLIB_FOUND</span> <span class="o">=</span> <span class="bp">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p>Now, when the time comes to execute the plugin and do the bulk
+of the actual work, check if your prerequisite constant is True
+and if not display a message dialog, for example, like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">PY4DLIB_NOT_FOUND_MSG</span> <span class="o">=</span> <span class="s">&quot;&quot;&quot;This plugin needs py4dlib which is missing.</span>
+
+<span class="s">Please download and install it free of charge</span>
+<span class="s">from http://github.com/andreberg/py4dlib.</span>
+<span class="s">&quot;&quot;&quot;</span>
+
+<span class="c"># ...</span>
+
+<span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">PY4DLIB_FOUND</span><span class="p">:</span>
+        <span class="n">c4d</span><span class="o">.</span><span class="n">gui</span><span class="o">.</span><span class="n">MessageDialog</span><span class="p">(</span><span class="n">PY4DLIB_NOT_FOUND_MSG</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">False</span>
+   <span class="c"># ...</span>
+</pre></div>
+</div>
+</div>
 
 
           </div>
@@ -86,6 +133,12 @@ the Object Manager.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Usage</a></li>
+<li><a class="reference internal" href="#best-practices">Best Practices</a></li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="installation.html"
                         title="previous chapter">Installation</a></p>
@@ -126,7 +179,7 @@ the Object Manager.</p>
         <li class="right" >
           <a href="installation.html" title="Installation"
              >previous</a> |</li>
-        <li><a href="index.html">py4dlib 0.3 documentation</a> &raquo;</li> 
+        <li><a href="index.html">py4dlib 0.3.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

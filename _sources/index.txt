@@ -27,6 +27,7 @@ Contents:
 	acknowledgements
 	license
 	api
+	examples
 
 	
 Indices and tables
