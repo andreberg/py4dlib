@@ -340,13 +340,13 @@ def SelectObjects(objs):
         Select(obj)
     
 
-def DeselectAll(inObjMngr=False):
-    """ Not the same as BaseSelect.DeselectAll().
-        
-    inObjMngr  bool  if True, run the deselect command from Object Manager, 
-                     else the general one for editor viewport
+def DeselectAll(in_objmngr=False):
+    """ Not the same as ``BaseSelect.DeselectAll()``.
+
+       :param bool in_objmngr: if True, run the deselect command for the 
+          Object Manager, else the general one for the editor viewport.
     """
-    if inObjMngr is True:
+    if in_objmngr is True:
         c4d.CallCommand(100004767) # deselect all (Object Manager)
     else:
         c4d.CallCommand(12113) # deselect all
@@ -533,6 +533,9 @@ def CreateObject(typ, name, undo=True):
 
 
 def CreateReplaceObject(typ, name):
+    """ Create object with name 'name' removing and 
+        replacing any object with the same name. 
+    """
     doc = c4d.documents.GetActiveDocument()
     if doc is None:
         return False
@@ -706,11 +709,12 @@ def SetAxisRotation(obj, rot, local=False):
 
 
 def CenterObjectAxis(obj, center="midpoint"):
-    """ Center the object's axis. This is equivalent to moving the 
-        object to the new center and then moving all the points back 
-        to the old spot.
+    """ Center the object's axis. 
+    
+        This is equivalent to moving the object to the new center 
+        and then moving all the points back to the old spot.
         
-        :param center: ``str`` - can be ``midpoint`` to use the center 
+        :param str center: can be ``midpoint`` to use the center 
             of the object's bounding box, or ``gravity`` to use the 
             object's center of gravity. The difference is that in the
             latter case single points at extreme distances from the

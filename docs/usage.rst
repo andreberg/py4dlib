@@ -87,5 +87,17 @@ and if not display a message dialog, for example, like so::
            return False
       # ...
 
+If you don't want to make the user install anything then you will have
+to copy and paste the py4dlib methods you are using into your plugin.
+
+In that case I recommend developing your plugin or script with the usual
+dependency imports until you have it just right. Then before you deliver
+the final version to your users, create a version with just the neccessary
+methods inlined. 
+
+Special care was given to make the py4dlib API not too self-entangled so 
+ripping stuff out to copy+paste it into your own scripts shouldn't prove
+too difficult.
+
 
 

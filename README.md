@@ -89,6 +89,8 @@ that I can include the code manually.
 Acknowledgements
 ================
 
+a.k.a. **The Hall of Fame**
+
 In no particular order.
 
 Lennart Wåhlin (TCA Studios)  
