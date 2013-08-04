@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # 
-#  objecthierarchy_tests.py
+#  object_hierarchy_tests.py
 #  py4dlib
 #  
 #  Created by André Berg on 2012-09-28.
@@ -35,7 +35,7 @@ from py4dlib.objects import ObjectHierarchy
 
 
 def main():
-    utils.clearConsole()
+    utils.ClearConsole()
     doc = documents.GetActiveDocument()
     if not doc:
         return None
@@ -44,12 +44,12 @@ def main():
     if not targetobj or not sourceobj:
         return None
     oh = ObjectHierarchy(targetobj)
-    oh.pprint()
-    oh.pprint(filtertype=c4d.Onull)
+    oh.PPrint()
+    oh.PPrint(filtertype=c4d.Onull)
     scene = ObjectHierarchy()
     PP(scene)
     print(scene)
-    filtered_objs = oh.get('Target/Source/../*')
+    filtered_objs = oh.Get('Target/Source/../*')
     for obj in filtered_objs:
         print(obj.GetName())
 

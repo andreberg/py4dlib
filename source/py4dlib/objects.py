@@ -15,9 +15,9 @@
 import os
 import re
 
-__version__ = (0, 3)
+__version__ = (0, 4)
 __date__ = '2012-09-27'
-__updated__ = '2013-08-01'
+__updated__ = '2013-08-04'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -37,6 +37,8 @@ except ImportError:
         pass
 
 from py4dlib import utils
+from py4dlib.maths import BBox
+from py4dlib.mesh import CalcGravityCenter
 
 
 class ObjectIterator(object):
@@ -80,7 +82,8 @@ class ObjectIterator(object):
     def __iter__(self):
         return self
     
-    def next(self):  # FIXME: next() becomes __next__() in later Pythons
+    # next() becomes __next__() in later Pythons
+    def next(self):
         op = self.curobj
         if self.init is True:
             self.init = False
@@ -529,6 +532,17 @@ def CreateObject(typ, name, undo=True):
     return obj
 
 
+def CreateReplaceObject(typ, name):
+    doc = c4d.documents.GetActiveDocument()
+    if doc is None:
+        return False
+    obj = doc.SearchObject(name)
+    if obj is not None:
+        obj.Remove()
+    obj = CreateObject(typ, name)
+    return obj
+
+
 def InsertUnderNull(objs, grp=None, name="Group", copy=False):
     """
     Inserts objects under a group (null) object, optionally creating the group.
@@ -589,7 +603,7 @@ def RecursiveInsertGroups(entry, parent, root, tree, pmatch="90%"):
             else:
                 print("... as object (2)")
                 print("parent = %r, root = %r" % (parent, root))
-                childobj = FindObject(child.name, start=root.op, matchfunc=utils.fuzzyCompareStrings, limit=pmatch)
+                childobj = FindObject(child.name, start=root.op, matchfunc=utils.FuzzyCompareStrings, limit=pmatch)
                 if not childobj:
                     print("creating childobj %r" % (child.name))
                     childobj = CreateObject(c4d.Onull, child.name)
@@ -691,39 +705,74 @@ def SetAxisRotation(obj, rot, local=False):
     c4d.EventAdd()
 
 
-def CenterObjectAxis(obj):
-    # check object type
-    if obj is None or not isinstance(obj, c4d.PointObject):
-        return True
+def CenterObjectAxis(obj, center="midpoint"):
+    """ Center the object's axis. This is equivalent to moving the 
+        object to the new center and then moving all the points back 
+        to the old spot.
+        
+        :param center: ``str`` - can be ``midpoint`` to use the center 
+            of the object's bounding box, or ``gravity`` to use the 
+            object's center of gravity. The difference is that in the
+            latter case single points at extreme distances from the
+            object's core aren't given as much weight. 
+    """ 
+    if not isinstance(obj, c4d.PointObject):
+        return False
     maxpoints = obj.GetPointCount()
     if maxpoints == 0:
         return False
     
-    # get center of gravity of object vertices in parent's coordinates
-    cg = c4d.Vector(0,0,0)
-    scale = 1.0 / maxpoints
-    for c in xrange(0, maxpoints):
-        cg += (obj.GetPoint(c) * scale)
     ml = obj.GetMl()
-    cg = ml * cg # GetMulP
+    rpos = obj.GetRelPos()
     
-    # get inverse of matrix of object and the translation vector to new position
-    inv = ml.__invert__()
-    trans = inv * (cg - obj.GetRelPos()) # GetMulV
+    if center == "midpoint":
+        # calculate the midpoint of object's bounding box
+        bb = BBox.FromObject(obj)
+        cg = bb.midpoint
+    elif center == "gravity":
+        # calculate center of gravity of object vertices 
+        # in parent's coordinates
+        cg = CalcGravityCenter(obj)
+    else:
+        raise ValueError("E: param 'center': expected one of ['midpoint', 'gravity'], got %r" % (center))
+    c = cg * ml
+    # invert the local object matrix and get the translation 
+    # vector to new position
+    inv = ~ml
+    trans = (c - rpos) ^ inv
+    # move object to new position and compensate vertex 
+    # positions
+    obj.SetRelPos(c)
     
-    # move object to new position and compensate vertex positions
-    obj.SetRelPos(cg)
-    for c in xrange(0, maxpoints):
-        obj.SetPoint(c, obj.GetPoint(c) - trans)
-    obj.Message(c4d.MSG_UPDATE)
-    
+    for p in xrange(0, maxpoints):
+        obj.SetPoint(p, obj.GetPoint(p) - trans)
     # compensate positions of child objects
     child = obj.GetDown()
     while child:
-        child = child.GetNext()
         child.SetRelPos(child.GetRelPos() - trans)
+        child = child.GetNext()
+    
+    obj.Message(c4d.MSG_UPDATE)
     
     return True
+
+
+def MakeEditable(obj):
+    """ Run the Make Editible command on obj. """
+    if not isinstance(obj, c4d.BaseObject):
+        raise TypeError("E: expected c4d.BaseObject, got %r" % (type(obj)))
+    # Need to select the object so we can call doc.GetActiveObject()
+    # in order to update the object's new type. Otherwise obj will still
+    # be a c4d.BaseObject. Tried sending various update messages using 
+    # C4DAtom.Message() but couldn't get the object's new type to be
+    # recognized without re-selecting it.
+    Select(obj)
+    c4d.CallCommand(12236)  # Make Editable
+    obj.SetDirty(c4d.DIRTY_CACHE)
+    obj.Message(c4d.MSG_CHANGE)
+    doc = obj.GetDocument()
+    obj = doc.GetActiveObject()
+    return obj
 
 
 #  Licensed under the Apache License, Version 2.0 (the "License");

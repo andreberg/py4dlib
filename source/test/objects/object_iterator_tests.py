@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # 
-#  objectiterator_tests.py
+#  object_iterator_tests.py
 #  py4dlib
 #  
 #  Created by André Berg on 2012-09-26.
@@ -31,7 +31,7 @@ from py4dlib.objects import ObjectIterator
 
 
 def main():
-    utils.clearConsole()
+    utils.ClearConsole()
 
     doc = documents.GetActiveDocument()
     if not doc: 

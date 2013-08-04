@@ -7,24 +7,26 @@ Maths
    Calculate various bounding box metrics from a list of points,
    such as min, max, midpoint, radius and size.
       
-   .. classmethod:: FromSelectedPoints(cls, obj)
+   .. classmethod:: FromObject(cls, obj, sel_only=False)
       
-      Returns a new BBox object with the 
-      number of points currently selected 
-      added, or None if there are no points 
-      or obj doesn't exist.
-
-      :raise ValueError: if the object has no points.
-      
-   .. classmethod:: FromPoints(cls, obj)
-   
       Returns a new BBox object with all 
-      points of obj added.
+      points from the passed object.
+      
+      :param bool sel_only: use selected points only instead of all points.
       
       :raise ValueError: if the object has no points.
+      
+   .. classmethod:: FromPointList(cls, lst)
+      
+      Returns a new BBox object with all 
+      points from a list added.
+      
+      Elements of lst must be of type ``c4d.Vector``.
+      
+      :raise ValueError: if the list is empty.
 
    .. function:: AddPoint(p)
-   
+      
       Add metrics from point p.
 
    .. function:: AddPoints(lst)
@@ -32,7 +34,7 @@ Maths
       Add metrics from a list of points.
             
    .. function:: GetMax()
-   
+      
       Return max bounds vector.
    
    .. function:: GetMin()
@@ -72,48 +74,83 @@ Maths
    
    Return min component of a vector using ``abs(x) < abs(y)`` comparisons.
    
-.. function::  BuildMatrix(v, off=c4d.Vector(0), order="zyx")
+.. function:: BuildMatrix(v, off=None, order="zyx")
    
    Builds a new orthonormal basis from a direction and (optionally) an offset vector using John F. Hughes and Thomas Möller's method.
+   
+   If ``off`` is None, off will default to a zero vector.
 
-.. function::  BuildMatrix2(v, off=c4d.Vector(0), base="z")
+.. function:: BuildMatrix2(v, off=None, base="z")
    
    Builds a new orthonormal basis from a direction and (optionally) an offset vector using base aligned cross products.
    
-   :param base:  ``str`` the base component 'v' represents. Must be one of ``x, y, z, -x, -y, -z``
+   If ``off`` is None, off will default to a zero vector.
+   
+   :param str base: the base component 'v' represents. Must be one of ``x, y, z, -x, -y, -z``
 
 .. function:: GetMulP(m, v)
    
-   Multiply a matrix with a vector representing a point.
+   Multiply a matrix with a vector representing a point. 
+   
+   Same as ``c4d.Matrix.Mul(v)``.
 
 .. function:: GetMulV(m, v)
    
-   Multiply a matrix with a vector representing a direction.
+   Multiply a matrix with a vector representing a direction. 
+   
+   Same as ``c4d.Matrix.MulV(v)``
 
 .. function:: Det(m)
 
-   Determinant of a ``n x n`` matrix where ``n = 3``. 
-   m can be of type ``c4d.Matrix`` or ``list<list>``.
+   Determinant of an ``n x n`` matrix.
+
+   m can be of type ``c4d.Matrix`` when ``n = 3`` 
+   or ``list<list>`` when ``n = 3`` or ``n = 4`` .
+
+.. function:: Transpose(e)
    
+   Transpose matrix e in row-major format to column-major.
+   
+   ``e`` can be of type ``list<list>`` structure or ``c4d.Matrix``.
+
 .. function:: PolyToList(p)
 
 .. function:: PolyToListList(p, obj)
    
-   Convert a ``c4d.CPolygon`` to a list of lists.
+   Convert a ``c4d.CPolygon`` to a ``list<list>`` structure. 
+
+   ``list<list>`` represents a list of points comprised of a list of coordinate values.
    
 .. function:: ListToPoly(l)
 
 .. function:: ListListToPoly(l)
-
+   
    Convert a list of lists to ``c4d.CPolygon``.
+   
+   ``list<list>`` represents a list of points comprised of a list of coordinate values.
    
 .. function:: ListListToMatrix(l)
 
-.. function:: MatrixToListList(m, includeOffset=False)
+.. function:: MatrixToListList(m, incl_off=False)
+   
+   Convert a ``c4d.Matrix`` to a ``list<list>`` structure. 
+   
+   The structure layout is generally in row-major format, 
+   and the ordering the same as the order required for 
+   constructing a ``c4d.Matrix`` by hand:
 
+   .. code::
+   
+      [[off.x, off.y, off.z],
+       [v1.x,   v1.y,  v1.z], 
+       [v2.x,   v2.y,  v2.z],
+       [v3.x,   v3.y,  v3.z]]
+   
 .. function:: UnitNormal(a, b, c)
    
    Calculate unit normal of a planar surface.
+   
+   :raise ValueError: if magnitude <= 0.0
    
 .. function:: IsPointInTriangle(p, a, b, c)
    
@@ -127,10 +164,9 @@ Maths
    
    Computes the smallest distance between two 3D lines. 
 
-   :return: ``tuple`` of two ``c4d.Vectors`` 
-      which are the points on each of the two input lines that, 
-      when connected, form a segment which represents the shortest 
-      distance between the two lines.
+   :return: ``tuple`` of two ``c4d.Vectors`` which are the points on each of the 
+      two input lines that, when connected, form a segment which represents the 
+      shortest distance between the two lines.
       
 .. function:: WrapPi(theta)
 

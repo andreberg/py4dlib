@@ -16,20 +16,18 @@ import pprint
 
 __version__ = (0, 1)
 __date__ = '2012-09-28'
-__updated__ = '2013-08-01'
+__updated__ = '2013-08-02'
 
 
-try:
-    from py4dlib.objects import ObjectHierarchy
-except ImportError:
-    pass
+from py4dlib.objects import ObjectHierarchy
+
 
 pp = pprint.PrettyPrinter()
 PP = pp.pprint
 PF = pp.pformat
 
-DEBUG = 1 or (os.environ.has_key('DebugLevel') and os.environ['DebugLevel'] > 0)
-TESTRUN = 0 or (os.environ.has_key('TestRunLevel') and os.environ['TestRunLevel'] > 0)
+DEBUG = 1 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
+TESTRUN = 0 or ('TestRunLevel' in os.environ and os.environ['TestRunLevel'] > 0)
 
 
 DATA = {

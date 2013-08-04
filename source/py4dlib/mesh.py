@@ -14,9 +14,9 @@
 
 import os
 
-__version__ = (0, 3)
+__version__ = (0, 4)
 __date__ = '2013-07-29'
-__updated__ = '2013-08-01'
+__updated__ = '2013-08-04'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -34,7 +34,7 @@ from py4dlib.maths import VAvg, PolyToList, UnitNormal, BBox
 
 def TogglePolySelection(obj):
     result = False
-    if not isinstance(obj, c4d.PointObject):
+    if not isinstance(obj, c4d.PolygonObject):
         return result
     totalpolys = obj.GetPolygonCount()
     psel = obj.GetPolygonS()
@@ -48,7 +48,7 @@ def TogglePolySelection(obj):
 
 def SelectAllPolys(obj):
     result = False
-    if not isinstance(obj, c4d.PointObject):
+    if not isinstance(obj, c4d.PolygonObject):
         return result
     totalpolys = obj.GetPolygonCount()
     psel = obj.GetPolygonS()
@@ -90,7 +90,7 @@ def GetSelectedPolys(obj):
     allpolys = obj.GetAllPolygons()
     poly = allpolys[index]
     """
-    if not isinstance(obj, c4d.PointObject):
+    if not isinstance(obj, c4d.PolygonObject):
         return None
     else:
         result = []
@@ -106,8 +106,8 @@ def GetSelectedPolys(obj):
 
 def CalcPolyCentroid(p, obj):
     """ Calculate the centroid of a polygon by averaging its vertices. """
-    if not isinstance(obj, c4d.PointObject):
-        return None
+    if not isinstance(obj, c4d.PolygonObject):
+        raise TypeError("E: expected c4d.PolygonObject, got %s" % type(obj))
     if not isinstance(p, c4d.CPolygon):
         raise TypeError("E: expected c4d.CPolygon, got %s" % type(p))
     lst = PolyToList(p)
@@ -122,6 +122,8 @@ def CalcPolyNormal(p, obj):
     """ Calculate the orientation of face normal by using Newell's method.
         See CalcVertexNormal for an example of usage within the calling context.
     """
+    if not isinstance(obj, c4d.PolygonObject):
+        raise TypeError("E: expected c4d.PolygonObject, got %s" % type(obj))
     if not isinstance(p, c4d.CPolygon):
         raise TypeError("E: expected c4d.CPolygon, got %s" % type(p))
     N = c4d.Vector(0,0,0)
@@ -229,22 +231,42 @@ def CalcPolyArea(p, obj, normalized=False):
     return abs(result / 2)
 
 
-def CalcBBox(e):
-    """ Construct a :py:class:`BBox` for a ``c4d.PointObject`` - 
-        using selected points only or all points if no selection -  
-        or for a ``c4d.CPolygon``. 
+def CalcBBox(e, sel_only=False):
+    """ Construct a :py:class:`BBox` for a ``c4d.PointObject`` or a ``c4d.CPolygon``. 
+    
+        Note that if you are interested in the midpoint or radius only, you can
+        use the built-in ``c4d.BaseObject.GetMp()`` and ``GetRad()`` methods 
+        respectively.
+    
+        :param sel_only: ``bool`` - if True, use 
+        selected points only if e is a ``c4d.PointObject``.
+        Otherwise use all points of the object.  
     """
     if isinstance(e, c4d.PointObject):
-        bb = BBox.FromPoints(e)
+        bb = BBox.FromObject(e, sel_only=sel_only)
         return bb
     elif isinstance(e, c4d.CPolygon):
         if e.c == e.d:
-            bb = BBox.FromPoints([e.a, e.b, e.c])
+            bb = BBox.FromPointList([e.a, e.b, e.c])
         else:
-            bb = BBox.FromPoints([e.a, e.b, e.c, e.d])
+            bb = BBox.FromPointList([e.a, e.b, e.c, e.d])
         return bb
     else:
         raise TypeError("E: expected c4d.PointObject or c4d.CPolygon, but got %r" % (type(e)))
+
+
+def CalcGravityCenter(obj):
+    """ Calculate the center of gravity for obj. """
+    if not isinstance(obj, c4d.PointObject):
+        raise TypeError("E: expected c4d.PointObject, got %r" % (type(obj)))
+    maxpoints = obj.GetPointCount()
+    if maxpoints == 0:
+        return c4d.Vector(0)
+    cg = c4d.Vector(0)
+    scale = 1.0 / maxpoints
+    for c in xrange(0, maxpoints):
+        cg += (obj.GetPoint(c) * scale)
+    return cg
 
 
 #  Licensed under the Apache License, Version 2.0 (the "License");

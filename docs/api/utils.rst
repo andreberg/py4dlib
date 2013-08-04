@@ -39,10 +39,9 @@ Utility toolbelt for great convenience.
    So you can use ``result[0]`` in the first case and 
    ``result.out`` in the second.
 
-   :param cmd: ``string`` a console command line
-   :param args: ``list`` a list of arguments that 
-                will be expanded in cmd 
-                starting with ``$0``
+   :param str cmd: a console command line string
+   :param list args: a list of arguments that will be 
+      expanded in cmd starting with ``$0``
    :return: ``tuple`` or ``namedtuple``
        
 Decorators
@@ -55,10 +54,10 @@ Decorators
    
    Accepts the following keyword arguments
    
-   :param unit:         ``str``     time unit for display. one of ``[auto, us, ms, s, m]``.
-   :param prec:         ``int``     radix point precision. 
-   :param name_width:   ``int``     width of the right-aligned function name field.
-   :param time_width:   ``int``     width of the right-aligned time value field.
+   :param str unit:        time unit for display. one of ``[auto, us, ms, s, m]``.
+   :param int prec:        radix point precision. 
+   :param int name_width:  width of the right-aligned function name field.
+   :param int time_width:  width of the right-aligned time value field.
    
    For convenience you can also set attributes on the benchmark
    function itself with the same name as the keyword arguments

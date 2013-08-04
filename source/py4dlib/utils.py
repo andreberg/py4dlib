@@ -14,9 +14,9 @@
 
 import os
 
-__version__ = (0, 3)
+__version__ = (0, 4)
 __date__ = '2012-09-27'
-__updated__ = '2013-08-02'
+__updated__ = '2013-08-03'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -83,7 +83,7 @@ def VersionString(versionTuple):
 
 def PPLLString(ll):
     """ Returns a pretty-printed string of a ``list<list>`` structure. """
-    s = repr(ll)[1:-2]
+    s = " " + repr(ll)[1:-2]
     lines = s.split('],')
     result = '],\n'.join(lines)
     return result + ']'

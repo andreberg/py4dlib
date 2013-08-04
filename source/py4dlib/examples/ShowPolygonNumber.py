@@ -25,7 +25,7 @@ import os
 __all__ = []
 __version__ = (0, 1)
 __date__ = '2013-07-29'
-__updated__ = '2013-08-02'
+__updated__ = '2013-08-03'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -60,7 +60,9 @@ def main(doc):  # IGNORE:W0621
     
     # loop through all objects
     for op in sel:
-        if not isinstance(op, c4d.PointObject):
+        if not isinstance(op, c4d.PolygonObject):
+            if DEBUG:
+                print("%s: not a polygon object. Skipping..." % str(op.GetName()))
             continue
         print("object name: %s" % op.GetName())
         
