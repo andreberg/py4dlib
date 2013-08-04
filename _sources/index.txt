@@ -6,7 +6,7 @@
 Welcome to py4dlib's documentation!
 ===================================
 
-The `py4dlib` library is a collection of Python modules to ease development
+**py4dlib** is a collection of Python modules to ease development
 of scripts and plugins for MAXON's `CINEMA 4D <http://www.maxon.net>`_ 3D application.
 
 It's goal is to provide essentials and convenience functions   

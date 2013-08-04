@@ -69,8 +69,17 @@ Functions for working with CINEMA 4D's point and polygon objects.
    Calculate the area of a planar polygon.
    
 
-.. function:: CalcBBox(e)
+.. function:: CalcBBox(e, sel_only=False)
 
-   Construct a :py:class:`BBox` for a ``c4d.PointObject`` - using selected points only or all points if no selection -  or for a ``c4d.CPolygon``.
+   Construct a :py:class:`BBox` for a ``c4d.PointObject`` or a ``c4d.CPolygon``. 
+
+   Note that if you are interested in the midpoint or radius only, you can
+   use the built-in ``c4d.BaseObject.GetMp()`` and ``GetRad()`` methods 
+   respectively.
    
+   :param bool sel_only: if True and ``e`` is a ``c4d.PointObject``, 
+      use selected points only. Otherwise use all points.
    
+.. function:: CalcGravityCenter(obj)
+
+   Calculate the center of gravity for obj.

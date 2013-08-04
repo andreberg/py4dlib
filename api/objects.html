@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Objects &mdash; py4dlib 0.3.1 documentation</title>
+    <title>Objects &mdash; py4dlib 0.4 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.3.1',
+        VERSION:     '0.4',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.3.1 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.4 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="next" title="Plugins" href="plugins.html" />
     <link rel="prev" title="Mesh" href="mesh.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="mesh.html" title="Mesh"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.3.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.4 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -66,14 +66,14 @@ object and lvl is an integer indicating the current depth level.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>startobj</strong> &#8211; the object whose hierarchy should be iterated over</li>
-<li><strong>stopobj</strong> &#8211; an object or a list of objects at which traversal
+<li><strong>startobj</strong> (<em>c4d.BaseObject</em>) &#8211; the object whose hierarchy should be iterated over</li>
+<li><strong>stopobj</strong> (<em>c4d.BaseObject</em>) &#8211; an object or a list of objects at which traversal
 should stop (optional)</li>
-<li><strong>children_only</strong> &#8211; if True, iterate through the sub-hierarchy under
+<li><strong>children_only</strong> (<em>bool</em>) &#8211; if True, iterate through the sub-hierarchy under
 startobj and stop as soon as startobj&#8217;s parent or
 stopobj (if given) is reached. This excludes startobj
 from the iteration.</li>
-<li><strong>startlvl</strong> &#8211; base indentation level</li>
+<li><strong>startlvl</strong> (<em>int</em>) &#8211; base indentation level</li>
 </ul>
 </td>
 </tr>
@@ -91,9 +91,9 @@ so they can be used as keys in dictionaries.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>op</strong> &#8211; the object to wrap.</li>
-<li><strong>lvl</strong> &#8211; the depth level within the hierarchy.</li>
-<li><strong>parents</strong> &#8211; a list of parent objects</li>
+<li><strong>op</strong> (<em>c4d.BaseObject</em>) &#8211; the object to wrap.</li>
+<li><strong>lvl</strong> (<em>int</em>) &#8211; the depth level within the hierarchy.</li>
+<li><strong>parents</strong> (<em>list</em>) &#8211; a list of parent objects</li>
 </ul>
 </td>
 </tr>
@@ -121,7 +121,7 @@ based on parent-name relationships.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filtertype</strong> &#8211; only recognize objects of this c4d type</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filtertype</strong> (<em>c4d.Otype</em>) &#8211; only recognize objects of this c4d type</td>
 </tr>
 </tbody>
 </table>
@@ -170,14 +170,14 @@ concatenated parent path.</p>
 
 <dl class="function">
 <dt id="DeselectAll">
-<tt class="descname">DeselectAll</tt><big>(</big><em>inObjMngr=False</em><big>)</big><a class="headerlink" href="#DeselectAll" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">DeselectAll</tt><big>(</big><em>in_objmngr=False</em><big>)</big><a class="headerlink" href="#DeselectAll" title="Permalink to this definition">¶</a></dt>
 <dd><p>Not the same as <tt class="docutils literal"><span class="pre">BaseSelect.DeselectAll()</span></tt>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>inObjMngr</strong> &#8211; if True, run the deselect command for the Object Manager,
-else the general one for the editor viewport.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>in_objmngr</strong> (<em>bool</em>) &#8211; if True, run the deselect command for the
+Object Manager, else the general one for the editor viewport.</td>
 </tr>
 </tbody>
 </table>
@@ -229,9 +229,9 @@ GetSelection also selects tags and materials.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>start</strong> &#8211; a <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> or a str representing the name
-of a <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> from where the search should begin.</li>
-<li><strong>matchfunc</strong> &#8211; can be used to customize the matching logic
+<li><strong>start</strong> (<em>c4d.BaseObject</em>) &#8211; object from where the search should begin.
+Can also be a <tt class="docutils literal"><span class="pre">str</span></tt> representing the name of a <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt>.</li>
+<li><strong>matchfunc</strong> (<em>function</em>) &#8211; can be used to customize the matching logic
 by providing the name of a custom function. This function
 will be passed a potential candidate object plus any
 remaining args. It should return True or False.</li>
@@ -251,8 +251,15 @@ remaining args. It should return True or False.</li>
 <dl class="function">
 <dt id="CreateObject">
 <tt class="descname">CreateObject</tt><big>(</big><em>typ</em>, <em>name</em>, <em>undo=True</em><big>)</big><a class="headerlink" href="#CreateObject" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create a object of type &#8216;typ&#8217;, with name &#8216;name&#8217;.
-This calls <tt class="docutils literal"><span class="pre">c4d.StopAllThreads()</span></tt> internally.</p>
+<dd><p>Create a object of type &#8216;typ&#8217;, with name &#8216;name&#8217;.</p>
+<p>This calls <tt class="docutils literal"><span class="pre">c4d.StopAllThreads()</span></tt> internally.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="CreateReplaceObject">
+<tt class="descname">CreateReplaceObject</tt><big>(</big><em>typ</em>, <em>name</em><big>)</big><a class="headerlink" href="#CreateReplaceObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create object with name &#8216;name&#8217; removing and replacing any object with the same name.</p>
+<p>This calls <a class="reference internal" href="#CreateObject" title="CreateObject"><tt class="xref py py-func docutils literal"><span class="pre">CreateObject()</span></tt></a> internally.</p>
 </dd></dl>
 
 <dl class="function">
@@ -266,11 +273,11 @@ to that of the new parent.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>objs</strong> &#8211; <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt>  can be a single object or a list of objects</li>
-<li><strong>grp</strong> &#8211; <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt>  the group to place the objects under
-(if None a new null object will be created)</li>
-<li><strong>name</strong> &#8211; <tt class="docutils literal"><span class="pre">str</span></tt>             name for the new group</li>
-<li><strong>copy</strong> &#8211; <tt class="docutils literal"><span class="pre">bool</span></tt>            copy the objects if True</li>
+<li><strong>objs</strong> (<em>c4d.BaseObject</em>) &#8211; can be a single object or a list of objects</li>
+<li><strong>grp</strong> (<em>c4d.BaseObject</em>) &#8211; the group to place the objects under. If None
+a new null object will be created.</li>
+<li><strong>name</strong> (<em>str</em>) &#8211; name for the new group</li>
+<li><strong>copy</strong> (<em>bool</em>) &#8211; copy the objects if True</li>
 </ul>
 </td>
 </tr>
@@ -339,8 +346,31 @@ CINEMA 4D handles rotation in radians.</p>
 
 <dl class="function">
 <dt id="CenterObjectAxis">
-<tt class="descname">CenterObjectAxis</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#CenterObjectAxis" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">CenterObjectAxis</tt><big>(</big><em>obj</em>, <em>center=&quot;midpoint&quot;</em><big>)</big><a class="headerlink" href="#CenterObjectAxis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Center the object&#8217;s axis.</p>
+<p>This is equivalent to moving the object to the new center
+and then moving all the points back to the old spot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>center</strong> (<em>str</em>) &#8211; can be <tt class="docutils literal"><span class="pre">midpoint</span></tt> to use the center
+of the object&#8217;s bounding box, or <tt class="docutils literal"><span class="pre">gravity</span></tt> to use the
+object&#8217;s center of gravity. The difference is that in the
+latter case single points at extreme distances from the
+object&#8217;s core aren&#8217;t given as much weight.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="MakeEditable">
+<tt class="descname">MakeEditable</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#MakeEditable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run the Make Editible command on obj.</p>
+<p>Note that the scene selection state will be changed
+because the object is selected after the conversion.</p>
+</dd></dl>
 
 </div>
 
@@ -390,7 +420,7 @@ CINEMA 4D handles rotation in radians.</p>
         <li class="right" >
           <a href="mesh.html" title="Mesh"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.3.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.4 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>

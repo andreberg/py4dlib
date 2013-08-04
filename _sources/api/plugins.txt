@@ -31,17 +31,16 @@ Plugins
    .. code::
       
       >>> defaults.Read()
-      >>> print defaults.Get('setting')
+      >>> print(defaults.Get('setting'))
       value
-      >>> print defaults.Get('does-not-exist', default='use default instead')
+      >>> print(defaults.Get('does-not-exist', default='use default instead'))
       use default instead
    
-   :param filepath: ``str`` 
-       usually ``res/settings.ini`` relative to the 
+   :param str filepath: usually ``res/settings.ini`` relative to the 
        source code file of the plugin, that uses the config store.
-   :param defaults: ``dict`` default values to be used if the config
-       file needs to be created.
-   :param header: ``str``  the name for a section in the .ini file.
+   :param dict defaults: default values to be used if the config file 
+       needs to be created.
+   :param str header: the name for a section in the .ini file.
        Usually you can get away with leaving it at the default.
        This will add a header ``[Settings]`` under which your
        settings will appear. If you have more advanced uses
@@ -52,9 +51,9 @@ Plugins
       
       Retrieve a previously stored value from the config object.
 
-      :param name: ``str``  name of the setting
-      :param section: ``str`` the section name. ``self.default_section`` if None.
-      :param default: ``any`` a default value to use in case name wasn't found.
+      :param str name: name of the setting
+      :param str section: the section name. ``self.default_section`` if None.
+      :param any default: a default value to use in case name wasn't found.
       :return: ``str`` on success, None or *default* on failure.
           this will always return a string even if the value was
           stored as another type previously. So the caller is
@@ -64,9 +63,9 @@ Plugins
       
       Store a value in the config object for later retrieval.
 
-      :param name: ``str`` name of the setting
-      :param value: ``any`` value to set.
-      :param section: ``str`` the section name. ``self.default_section`` if None.
+      :param str name: name of the setting
+      :param any value: value to set.
+      :param str section: the section name. ``self.default_section`` if None.
       :return: True if successful, False otherwise.
       
    .. function:: Read(self)
@@ -80,11 +79,9 @@ Plugins
       
       Save settings to a configuration file.
       
-      :param config: ``ConfigParser``
-          the config object to save. 
+      :param ConfigParser config: the config object to save. 
           If None, uses ``self.config`` instead.
-      :param filepath: ``str``
-          allows for specifying another path
+      :param str filepath: allows for specifying another path
           than ``self.filepath`` in order to save a copy
           of the config object.
       :return: True if successful, False otherwise.
