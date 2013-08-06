@@ -19,6 +19,23 @@ Utility toolbelt for great convenience.
    are deemed equal if at least ``60%`` relative to 
    the longest string match.
    
+.. function:: EscapeUnicode(s)
+
+   CINEMA 4D's CPython integration stores high-order chars (``ord > 126``) 
+   as 4-byte unicode escape sequences with upper case hex letters.
+
+   For example the character ``ä`` (*LATIN SMALL LETTER A WITH DIAERESIS*)
+   would be stored as the byte sequence ``\u00E4``. This function replaces
+   high-order chars with a unicode escape sequence suitable for CINEMA 4D.
+
+.. function:: UnescapeUnicode(s)
+
+   CINEMA 4D's CPython integration stores high-order chars (``ord > 126``) 
+   as 4-byte unicode escape sequences with upper case hex letters.
+
+   This function converts unicode escape sequences used by CINEMA 4D to their
+   corresponding high-order characters.
+
 .. function:: VersionString(versionTuple)
    
    ``(x,y,z, .. n) -> 'x.y.z...n'``

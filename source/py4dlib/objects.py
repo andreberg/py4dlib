@@ -15,9 +15,9 @@
 import os
 import re
 
-__version__ = (0, 4)
+__version__ = (0, 5)
 __date__ = '2012-09-27'
-__updated__ = '2013-08-04'
+__updated__ = '2013-08-05'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -36,7 +36,7 @@ except ImportError:
     if TESTRUN == 1:
         pass
 
-from py4dlib import utils
+from py4dlib.utils import UnescapeUnicode, EscapeUnicode, FuzzyCompareStrings
 from py4dlib.maths import BBox
 from py4dlib.mesh import CalcGravityCenter
 
@@ -49,35 +49,35 @@ class ObjectIterator(object):
     (op, lvl), where op is a c4d.BaseObject representing the current 
     object and lvl is an integer indicating the current depth level.
         
-    :param startobj:        the object whose hierarchy should be iterated over
-    :param stopobj:         an object or a list of objects at which traversal 
+    :param start_obj:        the object whose hierarchy should be iterated over
+    :param stop_obj:         an object or a list of objects at which traversal 
                             should stop (optional)
     :param children_only:   if True, iterate through the sub-hierarchy under
-                            startobj and stop as soon as startobj's parent or
-                            stopobj (if given) is reached. This excludes startobj
+                            start_obj and stop as soon as start_obj's parent or
+                            stop_obj (if given) is reached. This excludes start_obj
                             from the iteration.
     :param startlvl:        base indentation level 
     """
-    def __init__(self, startobj, stopobj=None, children_only=True, startlvl=-1):
+    def __init__(self, start_obj, stop_obj=None, children_only=True, startlvl=-1):
         super(ObjectIterator, self).__init__()
-        self.curobj = startobj
-        # determine depth level within the hierarchy of startobj
-        op = startobj
+        self.curobj = start_obj
+        # determine depth level within the hierarchy of start_obj
+        op = start_obj
         while op:
             startlvl += 1
             op = op.GetUp()
         self.curlvl = startlvl
-        self.childrenonly = children_only
+        self.children_only = children_only
         if children_only:
-            self.stopobjs = [startobj]
+            self.stop_objs = [start_obj]
             self.init = False
         else:
-            self.stopobjs = []
+            self.stop_objs = []
             self.init = True
-        if stopobj and isinstance(stopobj, list):
-            self.stopobjs.extend(stopobj)
-        elif stopobj and isinstance(stopobj, c4d.BaseObject):
-            self.stopobjs.append(stopobj)
+        if stop_obj and isinstance(stop_obj, list):
+            self.stop_objs.extend(stop_obj)
+        elif stop_obj and isinstance(stop_obj, c4d.BaseObject):
+            self.stop_objs.append(stop_obj)
     
     def __iter__(self):
         return self
@@ -91,27 +91,27 @@ class ObjectIterator(object):
         if op == None:
             raise StopIteration
         if op.GetDown():
-            if op.GetNext() in self.stopobjs or \
-               op.GetDown() in self.stopobjs:
+            if op.GetNext() in self.stop_objs or \
+               op.GetDown() in self.stop_objs:
                 raise StopIteration
             self.curlvl += 1
             self.curobj = op.GetDown()
             return (self.curobj, self.curlvl)
-        if op in self.stopobjs:
+        if op in self.stop_objs:
             raise StopIteration
-        if self.stopobjs is None:
+        if self.stop_objs is None:
             while not op.GetNext() and op.GetUp():
                 self.curlvl -= 1
                 op = op.GetUp()
         else:
             while not op.GetNext() and op.GetUp():
-                if (op in self.stopobjs) or \
-                   (op.GetUp() in self.stopobjs):
+                if (op in self.stop_objs) or \
+                   (op.GetUp() in self.stop_objs):
                     raise StopIteration
                 self.curlvl -= 1
                 op = op.GetUp()
         if op.GetNext():
-            if op.GetNext() in self.stopobjs:
+            if op.GetNext() in self.stop_objs:
                 raise StopIteration
             self.curobj = op.GetNext()
             return (self.curobj, self.curlvl)            
@@ -180,25 +180,26 @@ class ObjectHierarchy(object):
     expansion. This makes it easy to select a subset of objects,
     based on parent-name relationships.
     
-    :param filtertype:    only recognize objects of this c4d type
+    :param filter_type:    only recognize objects of this c4d type
     """
-    def __init__(self, rootobj=None, filtertype=None):
+    def __init__(self, root_obj=None, filter_type=None):
         super(ObjectHierarchy, self).__init__()
         children_only = True
-        if rootobj is None:
+        if root_obj is None:
             doc = c4d.documents.GetActiveDocument()
-            rootobj = doc.GetFirstObject()
+            root_obj = doc.GetFirstObject()
             children_only = False
-        self.root = rootobj
+        self.children_only = children_only
+        self.root = root_obj
         self.maxlvl = -1
         sep = '/'
         hierarchy = {}
-        for op, lvl in ObjectIterator(rootobj, children_only=children_only):
-            if (filtertype is None or 
-                (filtertype and op.GetType() == filtertype)):
+        for op, lvl in ObjectIterator(root_obj, children_only=children_only):
+            if ((filter_type is None) or 
+                (filter_type and op.GetType() == filter_type)):
                 plist = []
                 opp = op
-                i = lvl # IGNORE:W0612
+                i = lvl  # IGNORE:W0612
                 while opp:
                     opp = opp.GetUp()
                     if opp:
@@ -236,18 +237,18 @@ class ObjectHierarchy(object):
     def __repr__(self):
         return repr(self.entries)
     
-    def PPrint(self, stopobj=None, filtertype=None, tabsize=4):
+    def PPrint(self, stop_obj=None, filter_type=None, tabsize=4):
         """Print an indented, tree-like representation of an object manager hierarchy."""
         lvl = 0
         total = handled = 0
-        print("%s%s" % (lvl * tabsize * ' ', self.root.GetName()))
-        if stopobj is None:
-            stopobj = self.root
-        for op, lvl in ObjectIterator(self.root, stopobj):
+        if stop_obj is None and self.children_only:
+            stop_obj = self.root
+        for op, lvl in ObjectIterator(self.root, stop_obj, children_only=self.children_only):
             total += 1
-            if not filtertype or (filtertype and op.GetType() == filtertype):
+            indent = lvl * tabsize * ' '
+            if not filter_type or (filter_type and op.GetType() == filter_type):
                 handled += 1
-                print("%s%s" % (lvl * tabsize * ' ', op.GetName()))
+                print("%s%s" % (indent, op.GetName()))
         filtered = (total - handled)
         if total == 1:
             s = ""
@@ -274,7 +275,10 @@ class ObjectHierarchy(object):
         located for 'path'.
         """
         results = []
-        path = path.strip()
+        try:
+            path = UnescapeUnicode(path.strip())
+        except UnicodeEncodeError:
+            path = path.strip()
         #if path[-1] == self.sep:
         #    path = path[:-1] 
         if '..' in path:
@@ -296,9 +300,13 @@ class ObjectHierarchy(object):
             pat = path[1:]
         else:
             # wildcard version
-            pat = path.replace('?', '.').replace('*', '.*?')
-        pat = '^%s$' % pat
-        keys = [key for key in list(self.entries.keys()) if re.match(pat, key)]
+            pat = re.escape(path)
+            # go back one escape level
+            pat = path.replace(r'\\', '\\')
+            pat = pat.replace('?', '.').replace('*', '.*?')
+        pat = '%s' % pat
+        keys = [key for key in list(self.entries.keys()) if 
+                re.match(pat, UnescapeUnicode(key), flags=re.UNICODE)]
         if DEBUG: 
             print("path = %r" % (path))
             print("pat = %r" % (pat))     
@@ -310,7 +318,7 @@ class ObjectHierarchy(object):
         except KeyError:
             pass
         return results
- 
+     
           
 def Select(obj):
     if not obj.GetBit(c4d.BIT_ACTIVE):
@@ -399,35 +407,35 @@ def RecurseBranch(obj):
         return RecurseBranch(child)
     
 
-def GetNextObject(obj, stopobjs=None):
+def GetNextObject(obj, stop_objs=None):
     """ Return the next object in the hierarchy using a depth-first traversal scheme.
     
-    If stopobjs is a c4d.BaseObject or a list of c4d.BaseObjects and the next
+    If stop_objs is a c4d.BaseObject or a list of c4d.BaseObjects and the next
     operation would encounter this object (or the first object in the list) None
     will be returned. This is so that this function can be used in a while loop.
     """
-    if stopobjs and not isinstance(stopobjs, list):
-        stopobjs = [stopobjs]
+    if stop_objs and not isinstance(stop_objs, list):
+        stop_objs = [stop_objs]
     if obj == None: return None
     if obj.GetDown(): 
-        if (obj.GetNext() in stopobjs or
-            obj.GetDown() in stopobjs):
+        if (obj.GetNext() in stop_objs or
+            obj.GetDown() in stop_objs):
             return None
         return obj.GetDown()
-    if obj in stopobjs:
+    if obj in stop_objs:
         return None
-    if stopobjs is None:
+    if stop_objs is None:
         while not obj.GetNext() and obj.GetUp():
             obj = obj.GetUp()
     else:
         while (not obj.GetNext() and 
                    obj.GetUp() and 
-                   obj.GetUp() not in stopobjs):
-            if (obj in stopobjs or
-                obj.GetUp() in stopobjs):
+                   obj.GetUp() not in stop_objs):
+            if (obj in stop_objs or
+                obj.GetUp() in stop_objs):
                 return None
             obj = obj.GetUp()
-    if obj.GetNext() and obj.GetNext() in stopobjs:
+    if obj.GetNext() and obj.GetNext() in stop_objs:
         return None
     else:
         return obj.GetNext()
@@ -459,8 +467,8 @@ def FindObject(name, start=None, matchfunc=None, *args, **kwargs):
     :type matchfunc: ``function``
     """
     if name is None: return None
-    if not isinstance(name, str):
-        raise TypeError("E: expected string, got %s" % type(name))
+    if not isinstance(name, (str, unicode)):
+        raise TypeError("E: expected string or unicode, got %s" % type(name))
     doc = documents.GetActiveDocument()
     if not doc: return None
     result = None
@@ -497,8 +505,8 @@ def FindObject(name, start=None, matchfunc=None, *args, **kwargs):
 def FindObjects(name):
     """Find all objects in the scene with the name 'name'"""
     if name is None: return None
-    if not isinstance(name, str):
-        raise TypeError("E: expected string, got %s" % type(name))
+    if not isinstance(name, (str, unicode)):
+        raise TypeError("E: expected string or unicode, got %s" % type(name))
     doc = documents.GetActiveDocument()
     if not doc: return None
     result = []
@@ -577,7 +585,7 @@ def InsertUnderNull(objs, grp=None, name="Group", copy=False):
     return grp
 
 
-def RecursiveInsertGroups(entry, parent, root, tree, pmatch="90%"):
+def RecursiveInsertGroups(entry, parent, root, tree, pmatch='90%'):
     print("processing %s..." % PF(entry))
     if isinstance(entry, dict):
         print("... as dict (1)")
@@ -606,7 +614,7 @@ def RecursiveInsertGroups(entry, parent, root, tree, pmatch="90%"):
             else:
                 print("... as object (2)")
                 print("parent = %r, root = %r" % (parent, root))
-                childobj = FindObject(child.name, start=root.op, matchfunc=utils.FuzzyCompareStrings, limit=pmatch)
+                childobj = FindObject(child.name, start=root.op, matchfunc=FuzzyCompareStrings, limit=pmatch)
                 if not childobj:
                     print("creating childobj %r" % (child.name))
                     childobj = CreateObject(c4d.Onull, child.name)
@@ -618,6 +626,46 @@ def RecursiveInsertGroups(entry, parent, root, tree, pmatch="90%"):
         children = tree[entry]
         return RecursiveInsertGroups(children, entry, root, tree, pmatch)
 
+
+def UniqueSequentialName(name_base, template=u'%(name)s.%(num)s'):
+    """ Return a new sequential name based on a naming template and a 
+        base name such that the name uniquely identifies an object in 
+        the scene.
+        
+        By default, mimicks the names generated by CINEMA 4D when 
+        multiple objects of the same type are created in quick succession.
+        
+        For example if the scene had the following objects::
+        
+            Cube
+            Cube.1
+            Cube.12
+            
+        the function would return ``Cube.13`` as a new name.
+    """
+    doc = c4d.documents.GetActiveDocument()
+    if doc is None:
+        return False
+    oh = ObjectHierarchy()
+    objs = oh.Get(r"!" + name_base + ".*?\d*")
+    nums = []
+    for obj in objs:
+        name = obj.GetName()
+        mat = re.search(ur'(\d+)$', UnescapeUnicode(name), flags=re.UNICODE)
+        if mat and mat.group(1):
+            try:
+                nums.append(int(mat.group(1), 10))
+            except ValueError:
+                pass
+    new_num = 1
+    if len(nums) == 0:
+        if doc.SearchObject(name_base) is None:
+            return name_base
+    else:
+        new_num = max(nums) + 1
+    new_name = template % ({'name': name_base, 'num': new_num})
+    return EscapeUnicode(new_name)
+    
 
 def GetGlobalPosition(obj):
     return obj.GetMg().off
@@ -761,22 +809,39 @@ def CenterObjectAxis(obj, center="midpoint"):
     return True
 
 
-def MakeEditable(obj):
-    """ Run the Make Editible command on obj. """
-    if not isinstance(obj, c4d.BaseObject):
-        raise TypeError("E: expected c4d.BaseObject, got %r" % (type(obj)))
-    # Need to select the object so we can call doc.GetActiveObject()
-    # in order to update the object's new type. Otherwise obj will still
-    # be a c4d.BaseObject. Tried sending various update messages using 
-    # C4DAtom.Message() but couldn't get the object's new type to be
-    # recognized without re-selecting it.
-    Select(obj)
-    c4d.CallCommand(12236)  # Make Editable
-    obj.SetDirty(c4d.DIRTY_CACHE)
-    obj.Message(c4d.MSG_CHANGE)
-    doc = obj.GetDocument()
-    obj = doc.GetActiveObject()
-    return obj
+def ObjectAxisFromVector(v):
+    if not isinstance(v, c4d.Vector):
+        raise TypeError("E: expected c4d.Vector, got %r" % (type(v)))
+    return c4d.utils.HPBToMatrix(c4d.utils.VectorToHPB(v))
+
+
+def MakeEditable(e):
+    """ Run the Make Editible command on obj or a list of objects. """
+    if isinstance(e, c4d.BaseObject):
+        objs = [e]
+    elif isinstance(e, list):
+        if not isinstance(e[0], c4d.BaseObject):
+            raise TypeError("E: expected list element to be c4d.BaseObject, got %r" % (type(e[0])))
+        objs = e
+    else:
+        raise TypeError("E: expected c4d.BaseObject or list of c4d.BaseObjects, got %r" % (type(e)))
+    
+    doc = objs[0].GetDocument()
+    if doc is None:
+        return False
+    
+    settings = c4d.BaseContainer() 
+    result = c4d.utils.SendModelingCommand(command=c4d.MCOMMAND_MAKEEDITABLE,
+                                           list=objs,
+                                           mode=c4d.MODELINGCOMMANDMODE_ALL, 
+                                           bc=settings, doc=doc, 
+                                           flags=c4d.MODELINGCOMMANDFLAGS_CREATEUNDO)
+    c4d.EventAdd()
+    doc.Message(c4d.MSG_UPDATE)
+    if isinstance(result, list) and len(result) == 1:
+        return result[0]
+    return result
+
 
 
 #  Licensed under the Apache License, Version 2.0 (the "License");

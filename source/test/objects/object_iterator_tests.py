@@ -79,7 +79,7 @@ def main():
     print("should stop before Cube2:\n")
     
     cur = []
-    for op, lvl in ObjectIterator(group1obj, stopobj=cube2obj):
+    for op, lvl in ObjectIterator(group1obj, stop_obj=cube2obj):
         print("%s%s" % (' ' * lvl * indent, op.GetName()))
         cur.append(op.GetName())
 
@@ -124,7 +124,7 @@ def main():
     print("stop after Group3AB\n")
 
     cur = []
-    for op, lvl in ObjectIterator(group3obj, stopobj=group3abobj, startlvl=4):
+    for op, lvl in ObjectIterator(group3obj, stop_obj=group3abobj, startlvl=4):
         print("%s%s" % (' ' * lvl * indent, op.GetName()))
         cur.append(op.GetName())
 

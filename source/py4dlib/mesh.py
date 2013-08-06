@@ -14,9 +14,9 @@
 
 import os
 
-__version__ = (0, 4)
+__version__ = (0, 5)
 __date__ = '2013-07-29'
-__updated__ = '2013-08-04'
+__updated__ = '2013-08-06'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -104,37 +104,66 @@ def GetSelectedPolys(obj):
         return result
 
 
-def CalcPolyCentroid(p, obj):
-    """ Calculate the centroid of a polygon by averaging its vertices. """
-    if not isinstance(obj, c4d.PolygonObject):
-        raise TypeError("E: expected c4d.PolygonObject, got %s" % type(obj))
-    if not isinstance(p, c4d.CPolygon):
-        raise TypeError("E: expected c4d.CPolygon, got %s" % type(p))
-    lst = PolyToList(p)
-    allp = obj.GetAllPoints()
-    vlst = []
-    for i in lst:
-        vlst.append(allp[i])
-    return VAvg(vlst)
-
-
-def CalcPolyNormal(p, obj):
-    """ Calculate the orientation of face normal by using Newell's method.
-        See CalcVertexNormal for an example of usage within the calling context.
+def CalcPolyCentroid(e, obj):
+    """ Calculate the centroid of a polygon by averaging its vertices.
+        
+        :param e: can be ``c4d.CPolygon``, ``list<int>`` representing 
+            point indices, or ``list<c4d.Vector>`` representing a list
+            of points.
     """
     if not isinstance(obj, c4d.PolygonObject):
         raise TypeError("E: expected c4d.PolygonObject, got %s" % type(obj))
-    if not isinstance(p, c4d.CPolygon):
-        raise TypeError("E: expected c4d.CPolygon, got %s" % type(p))
+    if isinstance(e, c4d.CPolygon):
+        lst = PolyToList(e)
+    elif isinstance(e, list):
+        lst = e
+    else:
+        raise TypeError("E: expected c4d.CPolygon or list of ints representing point indices, got %s" % type(e))
+    if isinstance(lst[0], int):
+        allp = obj.GetAllPoints()
+        vlst = []
+        for i in lst:
+            vlst.append(allp[i])
+    elif isinstance(lst[0], c4d.Vector):
+        vlst = lst
+    else:
+        raise TypeError("E: expected list<int> or list<c4d.Vector>, got %r" % (type(lst[0])))   
+    return VAvg(vlst)
+
+
+def CalcPolyNormal(e, obj):
+    """ Calculate the orientation of face normal by using Newell's method.
+    
+        See :py:func:`CalcVertexNormal` for an example of usage within the calling context.
+        
+        :param e: can be ``c4d.CPolygon``, ``list<int>`` representing 
+            point indices, or ``list<c4d.Vector>`` representing a list
+            of points.
+    """
+    if not isinstance(obj, c4d.PolygonObject):
+        raise TypeError("E: expected c4d.PolygonObject, got %s" % type(obj))
+    if isinstance(e, c4d.CPolygon):
+        vlst = PolyToList(e)
+    elif isinstance(e, list):
+        lst = e
+        if isinstance(lst[0], int):
+            allp = obj.GetAllPoints()
+            vlst = []
+            for i in lst:
+                vlst.append(allp[i])
+        elif isinstance(lst[0], c4d.Vector):
+            vlst = lst
+        else:
+            raise TypeError("E: expected list<int> or list<c4d.Vector>, got %r" % (type(lst[0])))   
+    else:
+        raise TypeError("E: expected c4d.CPolygon or list, got %s" % type(e))
     N = c4d.Vector(0,0,0)
-    lst = PolyToList(p)
-    llen = len(lst)
-    allp = obj.GetAllPoints()
+    llen = len(vlst)
     for i in range(llen):
         x = i
         n = ((i+1) % llen)
-        vtx = allp[lst[x]]
-        vtn = allp[lst[n]]
+        vtx = vlst[x]
+        vtn = vlst[n]
         N.x += (vtx.y - vtn.y) * (vtx.z + vtn.z)
         N.y += (vtx.z - vtn.z) * (vtx.x + vtn.x)
         N.z += (vtx.x - vtn.x) * (vtx.y + vtn.y)
@@ -145,8 +174,17 @@ def CalcVertexNormal(v, idx, obj):
     """ Calculate the vertex normal by averaging surrounding face normals.
         Usually called from a construct like the following:
     
-        for i, point in enumerate(obj.GetAllPoints()):
-            vn = CalcVertexNormal(point, i, obj)
+        .. code::
+        
+            # calculate the average normal of a selected points
+            vtx_normals = []
+            
+            for i, point in enumerate(obj.GetAllPoints()):
+                if pointsel.IsSelected(i):
+                    vn = CalcVertexNormal(point, i, obj)
+                    vtx_normals.append(vn)
+            
+            N = VAvg(vtx_normals)
     """
     if not isinstance(v, c4d.Vector):
         raise TypeError("E: expected c4d.Vector, got %s" % type(v))
@@ -168,6 +206,34 @@ def CalcVertexNormal(v, idx, obj):
         N += n
     N = c4d.Vector(N.x/ln, N.y/ln, N.z/ln)
     return N.GetNormalized()
+
+
+def CalcAverageVertexNormal(obj):
+    """ Calculate the average normal of a selection of points. 
+    
+        This gives the same normal as setting the modelling tool 
+        to "Normal" mode for an arbitrary point selection.
+        
+        :return: normal or zero vector if no points selected.
+    """
+    if not isinstance(obj, (c4d.PointObject, c4d.PolygonObject)):
+        raise TypeError("E: expected c4d.PointObject or c4d.PolygonObject, got %r" % (type(obj)))
+    
+    points = obj.GetAllPoints()
+    pointsel = obj.GetPointS()
+    
+    if len(pointsel) == 0:
+        return c4d.Vector(0)
+    
+    vtx_normals = []
+    for i, p in enumerate(points):
+        # calc average vertex normal
+        if pointsel.IsSelected(i):
+            vn = CalcVertexNormal(p, i, obj)
+            vtx_normals.append(vn)
+        
+    N = VAvg(vtx_normals)
+    return N
 
 
 def CalcThreePointNormal(v1, v2, v3):

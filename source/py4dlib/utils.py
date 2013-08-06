@@ -14,9 +14,9 @@
 
 import os
 
-__version__ = (0, 4)
+__version__ = (0, 5)
 __date__ = '2012-09-27'
-__updated__ = '2013-08-03'
+__updated__ = '2013-08-04'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -74,6 +74,37 @@ def FuzzyCompareStrings(a, b, limit=20):
             result = False
         idx += 1
     return result
+
+
+def EscapeUnicode(s):
+    ur""" CINEMA 4D's CPython integration stores high-order chars (``ord > 126``) 
+        as 4-byte unicode escape sequences with upper case hex letters.
+        
+        For example the character ``ä`` (LATIN SMALL LETTER A WITH DIAERESIS)
+        would be stored as the byte sequence ``\u00E4``. This function replaces
+        high-order chars with a unicode escape sequence suitable for CINEMA 4D.
+    """
+    result = ""
+    for b in s:
+        if ord(b) > 126:
+            result += r"\\u%04X" % (ord(b),)
+        else:
+            result += b
+    return result
+
+
+def UnescapeUnicode(s):
+    ur""" CINEMA 4D's CPython integration stores high-order chars (``ord > 126``) 
+        as 4-byte unicode escape sequences with upper case hex letters.
+        
+        This function converts unicode escape sequences used by CINEMA 4D to their
+        corresponding high-order characters.
+    """
+    try:
+        return s.decode('unicode_escape')
+    except UnicodeEncodeError:
+        # already unicode?
+        return s
 
 
 def VersionString(versionTuple):

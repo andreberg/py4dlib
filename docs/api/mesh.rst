@@ -32,26 +32,50 @@ Functions for working with CINEMA 4D's point and polygon objects.
       allpolys = obj.GetAllPolygons()
       poly = allpolys[index]
 
-.. function:: CalcPolyCentroid(p, obj)
+.. function:: CalcPolyCentroid(e, obj)
     
    Calculate the centroid of a polygon by averaging its vertices.
-
-.. function:: CalcPolyNormal(p, obj)
+        
+   :param e: can be ``c4d.CPolygon``, ``list<int>`` representing 
+       point indices, or ``list<c4d.Vector>`` representing a list
+       of points.
+   
+.. function:: CalcPolyNormal(e, obj)
 
    Calculate the orientation of face normal using Newell's method.
    
    See :py:func:`CalcVertexNormal` for an example of usage within the calling context.
+      
+   :param e: can be ``c4d.CPolygon``, ``list<int>`` representing 
+       point indices, or ``list<c4d.Vector>`` representing a list
+       of points.
 
 .. function:: CalcVertexNormal(v, idx, obj)
 
    Calculate the vertex normal by averaging surrounding face normals.
    
    Usually called from a construct like the following:
-   
+
    .. code::
-   
+
+      # calculate the average normal of a selected points
+      vtx_normals = []
+
       for i, point in enumerate(obj.GetAllPoints()):
-         vn = CalcVertexNormal(point, i, obj)
+          if pointsel.IsSelected(i):
+              vn = CalcVertexNormal(point, i, obj)
+              vtx_normals.append(vn)
+
+      N = VAvg(vtx_normals)
+      
+.. function:: CalcAverageVertexNormal(obj)
+
+   Calculate the average normal of a selection of points. 
+
+   This gives the same normal as setting the modelling tool 
+   to "Normal" mode for an arbitrary point selection.
+
+   :return: normal or zero vector if no points selected.
 
 .. function:: CalcThreePointNormal(a, b, c)
 

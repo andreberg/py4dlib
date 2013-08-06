@@ -1,0 +1,28 @@
+// C4D-DialogResource
+
+DIALOGSTRINGS IDD_DIALOG_SETTINGS
+{
+  IDS_BUTTON_CANCEL     "Cancel";
+  IDS_BUTTON_DOIT       "Project";
+  IDS_BUTTON_GETOBJ     "<";
+  IDS_DIALOG_TITLE      "Plane Projector";
+  IDS_DUMMY             "Dummy";
+  IDS_GROUP_BUTTONS     "Buttons";
+  IDS_GROUP_MANUAL      "Manual Edit Group";
+  IDS_GROUP_SETTINGS    "Settings";
+  IDS_GROUP_SETTINGS2   "Settings3";
+  IDS_GROUP_WRAPPER     "Wrapper";
+  IDS_MANUAL            "Manual";
+  IDS_NORMAL            "Vertex Normal";
+  IDS_STATIC_MANUAL     "Manual Dir ..";
+  IDS_STATIC_MODE       "Direction .....";
+  IDS_STATIC_SETTINGS4  "Settings4";
+  IDS_STATIC_TARGET     "Target ...............";
+  IDS_STATIC_UPAXIS     "Target Up Axis ..";
+  IDS_X                 "X";
+  IDS_X_LOCAL           "Local X";
+  IDS_Y                 "Y";
+  IDS_Y_LOCAL           "Local Y";
+  IDS_Z                 "Z";
+  IDS_Z_LOCAL           "Local Z";
+}

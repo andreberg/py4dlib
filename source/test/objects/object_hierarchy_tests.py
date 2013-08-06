@@ -45,7 +45,7 @@ def main():
         return None
     oh = ObjectHierarchy(targetobj)
     oh.PPrint()
-    oh.PPrint(filtertype=c4d.Onull)
+    oh.PPrint(filter_type=c4d.Onull)
     scene = ObjectHierarchy()
     PP(scene)
     print(scene)

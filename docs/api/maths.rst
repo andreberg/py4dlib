@@ -53,7 +53,60 @@ Maths
    
       Return size vector.
 
+.. class:: Plane(pos, n)
+   
+   Represents a plane defined by positional offset and normal direction.
+   
+   .. function:: SetN(self, new_n)
+   
+      Sets the normal of the plane to ``new_n``.
       
+   .. function:: SetPos(self, new_pos)
+      
+      Sets the positional offset of the plane to ``new_pos``.
+      
+   .. function:: SideAsString(self, d)
+      
+      Given distance ``d`` return a string indicating the residence
+      of the point that correlates to the given distance.
+      
+      Used together with :py:func:`PointResidence`::
+      
+         SideAsString(PointResidence(self, p))
+      
+      :return: either ``front``, ``back`` or ``onplane``
+   
+   .. function:: PointResidence(self, p)
+   
+      Define the resident direction of a point with respect
+      to the plane.
+      
+      The point can be either in front of the plane (+1), on the
+      plane (0) or at the back of the plane (-1).
+
+
+   .. function:: PointDistance(self, p, get_signed=True)
+      
+      Calculate distance from a point p to the plane.
+      
+      :param bool get_signed: set to True if you want the signed distance.
+      
+      A signed distance can be useful to determine if the point is located 
+      in the half space from the backside of the plane or in the half space 
+      on the front.
+      
+   .. function:: LineIntersection(self, p, d=None)
+   
+      Calculate intersection point with a line starting at position p
+      and pointing in the direction d. 
+              
+      :param c4d.Vector d: direction of the line. If None, the normal 
+         of the plane will be used instead.
+          
+      :return: ``c4d.Vector`` representing the intersection point, or 
+         None if an intersection isn't possible (parallel directions).
+      
+
 .. function:: MAbs(m)
 
    ``abs()`` each component vector of matrix m.
@@ -66,14 +119,44 @@ Maths
    
    Convert each component of vector v to radians.
 
-.. function:: VAvg(lst)
+.. function:: VAvg(lv)
 
    Calculate the average of a list of vectors.
    
 .. function:: VAbsMin(v)
    
    Return min component of a vector using ``abs(x) < abs(y)`` comparisons.
+
+.. function:: VAbsMax(v)
+
+   Return max component of a vector using ``abs(x) > abs(y)`` comparisons.
    
+.. function:: VBoundaryLerp(lv, t=0.5)
+   
+   Interpolate linearily between a list of vectors, such that 
+   the resulting vector points to the weighted midpoint in the
+   vector space defined by the boundaries max X to min X and 
+   max Y to min Y.
+
+   :param float t: the weighting coefficient.
+
+   :return: None if len(lst) is 0 or if the angle between 
+      the two max/min vectors is greater than 180 degrees.
+
+.. function:: VLerp(startv, endv, t=0.5)
+   
+   Linear interpolation between 2 vectors.
+   
+   Same as ``c4d.utils.VectorMix``.
+
+.. function:: VNLerp(startv, endv, t=0.5)
+   
+   Normalized linear interpolation between 2 vectors.
+   
+.. function:: VSLerp(startv, endv, t=0.5)
+   
+   Spherical linear interpolation between 2 vectors.
+
 .. function:: BuildMatrix(v, off=None, order="zyx")
    
    Builds a new orthonormal basis from a direction and (optionally) an offset vector using John F. Hughes and Thomas Möller's method.
@@ -114,6 +197,8 @@ Maths
    ``e`` can be of type ``list<list>`` structure or ``c4d.Matrix``.
 
 .. function:: PolyToList(p)
+   
+   Convert a ``c4d.CPolygon`` to a ``list`` of ``c4d.Vectors``, representing the points of the polygon.
 
 .. function:: PolyToListList(p, obj)
    
@@ -121,15 +206,27 @@ Maths
 
    ``list<list>`` represents a list of points comprised of a list of coordinate values.
    
-.. function:: ListToPoly(l)
+.. function:: ListToPoly(li)
 
-.. function:: ListListToPoly(l)
+   Convert a ``list`` of ``int`` representing indices into an object's point list to a ``c4d.CPolygon``.
+
+.. function:: ListListToPoly(lli)
    
-   Convert a list of lists to ``c4d.CPolygon``.
+   Convert a ``list<list>`` structure to ``c4d.CPolygon``. 
+
+   ``list<list>`` represents a list of indices that indentify points of an object.
+
+.. function:: ListToMatrix(lv)
+
+   Convert a list of 3 or 4 ``c4d.Vector`` to ``c4d.Matrix``.
    
-   ``list<list>`` represents a list of points comprised of a list of coordinate values.
-   
-.. function:: ListListToMatrix(l)
+.. function:: ListListToMatrix(lli)
+
+   Convert a ``list<list>`` structure, representing a list of list 
+   of coordinate values to a ``c4d.Matrix``. 
+
+   See :py:func:`MatrixToListList` to find out which list corresponds
+   to which matrix component.
 
 .. function:: MatrixToListList(m, incl_off=False)
    
@@ -155,7 +252,14 @@ Maths
 .. function:: IsPointInTriangle(p, a, b, c)
    
    Returns True if the point p is inside the triangle given by points a, b, and c.
-   
+
+.. function:: IsColinear(lv)
+
+   Given a list of vectors check if they all share the same coordinates 
+   in at least 2 dimensions. 
+        
+   :return: True if all the vectors in the list are co-linear.
+  
 .. function:: IsZeroVector(v)
 
    Uses float tolerant component comparison to check if v is a zero vector.
