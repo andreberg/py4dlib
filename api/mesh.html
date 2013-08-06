@@ -126,7 +126,7 @@ of points.</td>
 <tt class="descname">CalcVertexNormal</tt><big>(</big><em>v</em>, <em>idx</em>, <em>obj</em><big>)</big><a class="headerlink" href="#CalcVertexNormal" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the vertex normal by averaging surrounding face normals.</p>
 <p>Usually called from a construct like the following:</p>
-<div class="code highlight-python"><div class="highlight"><pre><span class="c"># calculate the average normal of a selected points</span>
+<div class="code highlight-python"><div class="highlight"><pre><span class="c"># calculate average vertex normal for point selection</span>
 <span class="n">vtx_normals</span> <span class="o">=</span> <span class="p">[]</span>
 
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">point</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">GetAllPoints</span><span class="p">()):</span>
@@ -149,7 +149,7 @@ to &#8220;Normal&#8221; mode for an arbitrary point selection.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">normal or zero vector if no points selected.</td>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">normal, or zero vector if no points selected.</td>
 </tr>
 </tbody>
 </table>
