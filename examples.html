@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Examples &mdash; py4dlib 0.4 documentation</title>
+    <title>Examples &mdash; py4dlib 0.5 documentation</title>
     
     <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.4 documentation" href="index.html" />
+    <link rel="top" title="py4dlib 0.5 documentation" href="index.html" />
     <link rel="prev" title="Utils" href="api/utils.html" /> 
   </head>
   <body>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="api/utils.html" title="Utils"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">py4dlib 0.4 documentation</a> &raquo;</li> 
+        <li><a href="index.html">py4dlib 0.5 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -65,6 +65,20 @@ into new polygon objects.</p>
 running Split, then deleting the inverse selection to keep
 only the selected polys. Plus a few extras.</p>
 </div>
+<div class="section" id="planeprojector">
+<h2>PlaneProjector<a class="headerlink" href="#planeprojector" title="Permalink to this headline">¶</a></h2>
+<p>Example plugin that shows how to project selected points along a direction vector
+onto a planar target.</p>
+<p>Can snap any number of points onto planar targets along local or global X, Y, Z, a manual
+direction or the averaged vertex normals (basically the direction of the modelling tool&#8217;s
+Normal setting for a group of selected points).</p>
+<p>Currently needs a working plane or a plane object as target. You can create a new working
+plane yourself and pick it up to be the target by pressing the pick target button (&lt;) or
+you can select any three points on any polygon or point object and it will create the
+working plane for you when you press the (&lt;) button.</p>
+<p>As a future improvement it shouldn&#8217;t be hard at all to use polygons of other objects as
+planar targets.</p>
+</div>
 </div>
 
 
@@ -79,6 +93,7 @@ only the selected polys. Plus a few extras.</p>
 <li><a class="reference internal" href="#showpolygonnumber">ShowPolygonNumber</a></li>
 <li><a class="reference internal" href="#printobjecthierarchy">PrintObjectHierarchy</a></li>
 <li><a class="reference internal" href="#extract">Extract</a></li>
+<li><a class="reference internal" href="#planeprojector">PlaneProjector</a></li>
 </ul>
 </li>
 </ul>
@@ -117,7 +132,7 @@ only the selected polys. Plus a few extras.</p>
         <li class="right" >
           <a href="api/utils.html" title="Utils"
              >previous</a> |</li>
-        <li><a href="index.html">py4dlib 0.4 documentation</a> &raquo;</li> 
+        <li><a href="index.html">py4dlib 0.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

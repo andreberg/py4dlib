@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Utils &mdash; py4dlib 0.4 documentation</title>
+    <title>Utils &mdash; py4dlib 0.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.4 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.5 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="next" title="Examples" href="../examples.html" />
     <link rel="prev" title="Plugins" href="plugins.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="plugins.html" title="Plugins"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.4 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.5 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -70,6 +70,25 @@ the same byte sequence for up to &#8216;limit&#8217; chars.</p>
 like for example <tt class="docutils literal"><span class="pre">60%</span></tt> in which case 2 strings
 are deemed equal if at least <tt class="docutils literal"><span class="pre">60%</span></tt> relative to
 the longest string match.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="EscapeUnicode">
+<tt class="descname">EscapeUnicode</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#EscapeUnicode" title="Permalink to this definition">¶</a></dt>
+<dd><p>CINEMA 4D&#8217;s CPython integration stores high-order chars (<tt class="docutils literal"><span class="pre">ord</span> <span class="pre">&gt;</span> <span class="pre">126</span></tt>)
+as 4-byte unicode escape sequences with upper case hex letters.</p>
+<p>For example the character <tt class="docutils literal"><span class="pre">ä</span></tt> (<em>LATIN SMALL LETTER A WITH DIAERESIS</em>)
+would be stored as the byte sequence <tt class="docutils literal"><span class="pre">\u00E4</span></tt>. This function replaces
+high-order chars with a unicode escape sequence suitable for CINEMA 4D.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="UnescapeUnicode">
+<tt class="descname">UnescapeUnicode</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#UnescapeUnicode" title="Permalink to this definition">¶</a></dt>
+<dd><p>CINEMA 4D&#8217;s CPython integration stores high-order chars (<tt class="docutils literal"><span class="pre">ord</span> <span class="pre">&gt;</span> <span class="pre">126</span></tt>)
+as 4-byte unicode escape sequences with upper case hex letters.</p>
+<p>This function converts unicode escape sequences used by CINEMA 4D to their
+corresponding high-order characters.</p>
 </dd></dl>
 
 <dl class="function">
@@ -248,7 +267,7 @@ be a type or a tuple of types.</li>
         <li class="right" >
           <a href="plugins.html" title="Plugins"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.4 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.5 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>

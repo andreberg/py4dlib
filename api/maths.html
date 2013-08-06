@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Maths &mdash; py4dlib 0.4 documentation</title>
+    <title>Maths &mdash; py4dlib 0.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.4 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.5 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="next" title="Mesh" href="mesh.html" />
     <link rel="prev" title="API docs" href="../api.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="../api.html" title="API docs"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.4 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.5 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -137,6 +137,88 @@ points from a list added.</p>
 
 </dd></dl>
 
+<dl class="class">
+<dt id="Plane">
+<em class="property">class </em><tt class="descname">Plane</tt><big>(</big><em>pos</em>, <em>n</em><big>)</big><a class="headerlink" href="#Plane" title="Permalink to this definition">¶</a></dt>
+<dd><p>Represents a plane defined by positional offset and normal direction.</p>
+<dl class="function">
+<dt id="Plane.SetN">
+<tt class="descname">SetN</tt><big>(</big><em>self</em>, <em>new_n</em><big>)</big><a class="headerlink" href="#Plane.SetN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the normal of the plane to <tt class="docutils literal"><span class="pre">new_n</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Plane.SetPos">
+<tt class="descname">SetPos</tt><big>(</big><em>self</em>, <em>new_pos</em><big>)</big><a class="headerlink" href="#Plane.SetPos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the positional offset of the plane to <tt class="docutils literal"><span class="pre">new_pos</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Plane.SideAsString">
+<tt class="descname">SideAsString</tt><big>(</big><em>self</em>, <em>d</em><big>)</big><a class="headerlink" href="#Plane.SideAsString" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given distance <tt class="docutils literal"><span class="pre">d</span></tt> return a string indicating the residence
+of the point that correlates to the given distance.</p>
+<p>Used together with <a class="reference internal" href="#Plane.PointResidence" title="Plane.PointResidence"><tt class="xref py py-func docutils literal"><span class="pre">PointResidence()</span></tt></a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">SideAsString</span><span class="p">(</span><span class="n">PointResidence</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">either <tt class="docutils literal"><span class="pre">front</span></tt>, <tt class="docutils literal"><span class="pre">back</span></tt> or <tt class="docutils literal"><span class="pre">onplane</span></tt></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="Plane.PointResidence">
+<tt class="descname">PointResidence</tt><big>(</big><em>self</em>, <em>p</em><big>)</big><a class="headerlink" href="#Plane.PointResidence" title="Permalink to this definition">¶</a></dt>
+<dd><p>Define the resident direction of a point with respect
+to the plane.</p>
+<p>The point can be either in front of the plane (+1), on the
+plane (0) or at the back of the plane (-1).</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Plane.PointDistance">
+<tt class="descname">PointDistance</tt><big>(</big><em>self</em>, <em>p</em>, <em>get_signed=True</em><big>)</big><a class="headerlink" href="#Plane.PointDistance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate distance from a point p to the plane.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>get_signed</strong> (<em>bool</em>) &#8211; set to True if you want the signed distance.</td>
+</tr>
+</tbody>
+</table>
+<p>A signed distance can be useful to determine if the point is located
+in the half space from the backside of the plane or in the half space
+on the front.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="Plane.LineIntersection">
+<tt class="descname">LineIntersection</tt><big>(</big><em>self</em>, <em>p</em>, <em>d=None</em><big>)</big><a class="headerlink" href="#Plane.LineIntersection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate intersection point with a line starting at position p
+and pointing in the direction d.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>c4d.Vector</em>) &#8211; direction of the line. If None, the normal
+of the plane will be used instead.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><tt class="docutils literal"><span class="pre">c4d.Vector</span></tt> representing the intersection point, or
+None if an intersection isn&#8217;t possible (parallel directions).</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
 <dl class="function">
 <dt id="MAbs">
 <tt class="descname">MAbs</tt><big>(</big><em>m</em><big>)</big><a class="headerlink" href="#MAbs" title="Permalink to this definition">¶</a></dt>
@@ -157,7 +239,7 @@ points from a list added.</p>
 
 <dl class="function">
 <dt id="VAvg">
-<tt class="descname">VAvg</tt><big>(</big><em>lst</em><big>)</big><a class="headerlink" href="#VAvg" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">VAvg</tt><big>(</big><em>lv</em><big>)</big><a class="headerlink" href="#VAvg" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the average of a list of vectors.</p>
 </dd></dl>
 
@@ -165,6 +247,51 @@ points from a list added.</p>
 <dt id="VAbsMin">
 <tt class="descname">VAbsMin</tt><big>(</big><em>v</em><big>)</big><a class="headerlink" href="#VAbsMin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return min component of a vector using <tt class="docutils literal"><span class="pre">abs(x)</span> <span class="pre">&lt;</span> <span class="pre">abs(y)</span></tt> comparisons.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="VAbsMax">
+<tt class="descname">VAbsMax</tt><big>(</big><em>v</em><big>)</big><a class="headerlink" href="#VAbsMax" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return max component of a vector using <tt class="docutils literal"><span class="pre">abs(x)</span> <span class="pre">&gt;</span> <span class="pre">abs(y)</span></tt> comparisons.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="VBoundaryLerp">
+<tt class="descname">VBoundaryLerp</tt><big>(</big><em>lv</em>, <em>t=0.5</em><big>)</big><a class="headerlink" href="#VBoundaryLerp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interpolate linearily between a list of vectors, such that
+the resulting vector points to the weighted midpoint in the
+vector space defined by the boundaries max X to min X and
+max Y to min Y.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>t</strong> (<em>float</em>) &#8211; the weighting coefficient.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None if len(lst) is 0 or if the angle between
+the two max/min vectors is greater than 180 degrees.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="VLerp">
+<tt class="descname">VLerp</tt><big>(</big><em>startv</em>, <em>endv</em>, <em>t=0.5</em><big>)</big><a class="headerlink" href="#VLerp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Linear interpolation between 2 vectors.</p>
+<p>Same as <tt class="docutils literal"><span class="pre">c4d.utils.VectorMix</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="VNLerp">
+<tt class="descname">VNLerp</tt><big>(</big><em>startv</em>, <em>endv</em>, <em>t=0.5</em><big>)</big><a class="headerlink" href="#VNLerp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Normalized linear interpolation between 2 vectors.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="VSLerp">
+<tt class="descname">VSLerp</tt><big>(</big><em>startv</em>, <em>endv</em>, <em>t=0.5</em><big>)</big><a class="headerlink" href="#VSLerp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spherical linear interpolation between 2 vectors.</p>
 </dd></dl>
 
 <dl class="function">
@@ -221,7 +348,8 @@ or <tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> w
 <dl class="function">
 <dt id="PolyToList">
 <tt class="descname">PolyToList</tt><big>(</big><em>p</em><big>)</big><a class="headerlink" href="#PolyToList" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Convert a <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt> to a <tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">c4d.Vectors</span></tt>, representing the points of the polygon.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="PolyToListList">
@@ -232,20 +360,31 @@ or <tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> w
 
 <dl class="function">
 <dt id="ListToPoly">
-<tt class="descname">ListToPoly</tt><big>(</big><em>l</em><big>)</big><a class="headerlink" href="#ListToPoly" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">ListToPoly</tt><big>(</big><em>li</em><big>)</big><a class="headerlink" href="#ListToPoly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a <tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">int</span></tt> representing indices into an object&#8217;s point list to a <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt>.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="ListListToPoly">
-<tt class="descname">ListListToPoly</tt><big>(</big><em>l</em><big>)</big><a class="headerlink" href="#ListListToPoly" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a list of lists to <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt>.</p>
-<p><tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> represents a list of points comprised of a list of coordinate values.</p>
+<tt class="descname">ListListToPoly</tt><big>(</big><em>lli</em><big>)</big><a class="headerlink" href="#ListListToPoly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a <tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> structure to <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt>.</p>
+<p><tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> represents a list of indices that indentify points of an object.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ListToMatrix">
+<tt class="descname">ListToMatrix</tt><big>(</big><em>lv</em><big>)</big><a class="headerlink" href="#ListToMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a list of 3 or 4 <tt class="docutils literal"><span class="pre">c4d.Vector</span></tt> to <tt class="docutils literal"><span class="pre">c4d.Matrix</span></tt>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="ListListToMatrix">
-<tt class="descname">ListListToMatrix</tt><big>(</big><em>l</em><big>)</big><a class="headerlink" href="#ListListToMatrix" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descname">ListListToMatrix</tt><big>(</big><em>lli</em><big>)</big><a class="headerlink" href="#ListListToMatrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a <tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> structure, representing a list of list
+of coordinate values to a <tt class="docutils literal"><span class="pre">c4d.Matrix</span></tt>.</p>
+<p>See <a class="reference internal" href="#MatrixToListList" title="MatrixToListList"><tt class="xref py py-func docutils literal"><span class="pre">MatrixToListList()</span></tt></a> to find out which list corresponds
+to which matrix component.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="MatrixToListList">
@@ -281,6 +420,21 @@ constructing a <tt class="docutils literal"><span class="pre">c4d.Matrix</span><
 <dt id="IsPointInTriangle">
 <tt class="descname">IsPointInTriangle</tt><big>(</big><em>p</em>, <em>a</em>, <em>b</em>, <em>c</em><big>)</big><a class="headerlink" href="#IsPointInTriangle" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns True if the point p is inside the triangle given by points a, b, and c.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="IsColinear">
+<tt class="descname">IsColinear</tt><big>(</big><em>lv</em><big>)</big><a class="headerlink" href="#IsColinear" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a list of vectors check if they all share the same coordinates
+in at least 2 dimensions.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if all the vectors in the list are co-linear.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -367,7 +521,7 @@ the standard <a class="reference external" href="http://docs.python.org/2/librar
         <li class="right" >
           <a href="../api.html" title="API docs"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.4 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.5 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>

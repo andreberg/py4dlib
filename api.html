@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>API docs &mdash; py4dlib 0.4 documentation</title>
+    <title>API docs &mdash; py4dlib 0.5 documentation</title>
     
     <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.4',
+        VERSION:     '0.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.4 documentation" href="index.html" />
+    <link rel="top" title="py4dlib 0.5 documentation" href="index.html" />
     <link rel="next" title="Maths" href="api/maths.html" />
     <link rel="prev" title="License" href="license.html" /> 
   </head>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="license.html" title="License"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">py4dlib 0.4 documentation</a> &raquo;</li> 
+        <li><a href="index.html">py4dlib 0.5 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -51,6 +51,73 @@
             
   <div class="section" id="api-docs">
 <h1>API docs<a class="headerlink" href="#api-docs" title="Permalink to this headline">¶</a></h1>
+<p>A word about the style of the API. I tried to mirror the format and style
+used by the original Py4D SDK so using methods from <strong>py4dlib</strong> should
+hopefully feel familiar.</p>
+<p>Concerning function/method paramaters, I also try to avoid ambiguity by using
+the same argument names for the same type of data. This is especially apparent
+for functions that expect points or polygons. I usually try set the functions
+up in a general way, so that you don&#8217;t have to remember that you have to call
+the version of the function that expects a list of point indices instead of a
+list of points (<tt class="docutils literal"><span class="pre">c4d.Vector</span></tt>, to be exact).</p>
+<p>I try to make that polymorphic nature apparent by using the parameter name <tt class="docutils literal"><span class="pre">e</span></tt>
+(for <em>element</em> or <em>entity</em>) whenever you can pass either. In all other cases
+it should be apparent if you need to pass a point, a list of points, a list of
+point indices, an object, a matrix, vector or whatever else have you.</p>
+<p>Here&#8217;s an overview of some of the default parameter names and their meaning:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>e</td>
+<td>the <tt class="docutils literal"><span class="pre">any</span></tt> value. stands for <em>element</em>. Refer to the function docs what
+any means in the function&#8217;s context.</td>
+</tr>
+<tr class="row-even"><td>obj</td>
+<td>any descendant of <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> incl. <tt class="docutils literal"><span class="pre">c4d.PointObject</span></tt> + children</td>
+</tr>
+<tr class="row-odd"><td>m</td>
+<td><tt class="docutils literal"><span class="pre">c4d.Matrix</span></tt></td>
+</tr>
+<tr class="row-even"><td>v</td>
+<td><tt class="docutils literal"><span class="pre">c4d.Vector</span></tt></td>
+</tr>
+<tr class="row-odd"><td>p</td>
+<td><tt class="docutils literal"><span class="pre">c4d.Vector</span></tt> representing a point, or a polygon as <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt></td>
+</tr>
+<tr class="row-even"><td>l</td>
+<td><tt class="docutils literal"><span class="pre">list</span></tt></td>
+</tr>
+<tr class="row-odd"><td>li</td>
+<td><tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">int</span></tt>, which usually represents indices into an object&#8217;s
+point list</td>
+</tr>
+<tr class="row-even"><td>lv</td>
+<td><tt class="docutils literal"><span class="pre">list</span></tt> of vectors</td>
+</tr>
+<tr class="row-odd"><td>lp</td>
+<td><tt class="docutils literal"><span class="pre">list</span></tt> of points</td>
+</tr>
+<tr class="row-even"><td>lli</td>
+<td><tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">int</span></tt></td>
+</tr>
+<tr class="row-odd"><td>llf</td>
+<td><tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">float</span></tt></td>
+</tr>
+<tr class="row-even"><td>x, n, w
+...</td>
+<td><tt class="docutils literal"><span class="pre">float</span></tt> sometimes can be called other traditional names, like <em>theta</em>
+if for example an angle is represented (w for greek omega, n for number)</td>
+</tr>
+<tr class="row-odd"><td>a, b, c
+v1, ...</td>
+<td>a name series usually represents a series of vectors.</td>
+</tr>
+</tbody>
+</table>
+<p>Contents:</p>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="api/maths.html">Maths</a></li>
@@ -109,7 +176,7 @@
         <li class="right" >
           <a href="license.html" title="License"
              >previous</a> |</li>
-        <li><a href="index.html">py4dlib 0.4 documentation</a> &raquo;</li> 
+        <li><a href="index.html">py4dlib 0.5 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
