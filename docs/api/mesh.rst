@@ -58,7 +58,7 @@ Functions for working with CINEMA 4D's point and polygon objects.
 
    .. code::
 
-      # calculate the average normal of a selected points
+      # calculate average vertex normal for point selection
       vtx_normals = []
 
       for i, point in enumerate(obj.GetAllPoints()):
@@ -75,7 +75,7 @@ Functions for working with CINEMA 4D's point and polygon objects.
    This gives the same normal as setting the modelling tool 
    to "Normal" mode for an arbitrary point selection.
 
-   :return: normal or zero vector if no points selected.
+   :return: normal, or zero vector if no points selected.
 
 .. function:: CalcThreePointNormal(a, b, c)
 
