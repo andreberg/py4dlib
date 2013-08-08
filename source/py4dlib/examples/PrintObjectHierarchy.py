@@ -7,21 +7,31 @@
 #  Copyright 2013 Berg Media. All rights reserved.
 #
 #  andre.bergmedia@googlemail.com
-# 
+#
+#  PrintObjectHierarchy
+#  
+#  Summary:
+#  
+#  Shows how to use the ObjectHierarchy class.
+#
 # pylint: disable-msg=F0401
 
-'''PrintObjectHierarchy -- shows how to use the ObjectHierarchy class.'''
+"""
+Name-US:Print Object Hierarchy
+Description-US:Pretty print an indented list of the selected object hierarchy to the console.
+"""
 
 import os
 
-__all__ = []
-__version__ = (0, 1)
+__version__ = (0, 2)
 __date__ = '2013-07-29'
-__updated__ = '2013-08-02'
+__updated__ = '2013-08-08'
 
 
 DEBUG = 1 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
 TESTRUN = 0 or ('TestRunLevel' in os.environ and os.environ['TestRunLevel'] > 0)
+
+
 
 import pprint
 
@@ -36,8 +46,14 @@ except ImportError:
     if TESTRUN == 1:
         pass
 
+
+if DEBUG:
+    import py4dlib
+    reload(py4dlib)
+    reload(py4dlib.objects)
+
 from py4dlib.objects import ObjectHierarchy
-from py4dlib.utils import ClearConsole
+from py4dlib.utils import ClearConsole, UnescapeUnicode, EscapeUnicode
 
 
 def main(doc):  # IGNORE:W0621
@@ -52,14 +68,14 @@ def main(doc):  # IGNORE:W0621
     root = doc.GetFirstObject()
     if not root: return False
     
-    print("printing hierarchy starting from %r" % root.GetName())
+    print(u"printing hierarchy starting from %s" % root.GetName())
 
-    oh = ObjectHierarchy(root)
+    oh = ObjectHierarchy()
     oh.PPrint()
     
-    print("printing Null objects starting from %r" % root.GetName())
+    print(u"printing Null objects starting from %s" % root.GetName())
     
-    oh.PPrint(filtertype=c4d.Onull)
+    oh.PPrint(filter_type=c4d.Onull)
         
     PP(oh)
     print(oh)

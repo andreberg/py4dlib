@@ -3,7 +3,7 @@ Objects
 
 Functions for working with CINEMA 4D's objects.
 
-.. class:: ObjectIterator(startobj, stopobj=None, children_only=True, startlvl=-1)
+.. class:: ObjectIterator(start_obj, stop_obj=None, children_only=True, startlvl=-1)
 
    Iterator over specific objects in the object manager tree.
 
@@ -11,14 +11,14 @@ Functions for working with CINEMA 4D's objects.
    ``(op, lvl)``, where op is a ``c4d.BaseObject`` representing the current 
    object and lvl is an integer indicating the current depth level.
 
-   :param c4d.BaseObject startobj:  the object whose hierarchy should be iterated over
-   :param c4d.BaseObject stopobj:   an object or a list of objects at which traversal 
-                                    should stop (optional)
-   :param bool children_only:       if True, iterate through the sub-hierarchy under
-                                    startobj and stop as soon as startobj's parent or
-                                    stopobj (if given) is reached. This excludes startobj
-                                    from the iteration.
-   :param int startlvl:             base indentation level 
+   :param c4d.BaseObject start_obj:  the object whose hierarchy should be iterated over
+   :param c4d.BaseObject stop_obj:   an object or a list of objects at which traversal 
+                                     should stop (optional)
+   :param bool children_only:        if True, iterate through the sub-hierarchy under
+                                     startobj and stop as soon as startobj's parent or
+                                     stopobj (if given) is reached. This excludes startobj
+                                     from the iteration.
+   :param int startlvl:              base indentation level 
                            
 .. class:: ObjectEntry(op, lvl=-1, parents=None)
 
@@ -29,7 +29,7 @@ Functions for working with CINEMA 4D's objects.
    :param int lvl: the depth level within the hierarchy.
    :param list parents: a list of parent objects   
 
-.. class:: ObjectHierarchy(rootobj=None, filtertype=None)
+.. class:: ObjectHierarchy(root_obj=None, filter_type=None, children_only=False)
    
    Represents a hierarchical group structure in the object manager.
 
@@ -48,13 +48,14 @@ Functions for working with CINEMA 4D's objects.
    expansion. This makes it easy to select a subset of objects,
    based on parent-name relationships.
    
-   :param c4d.Otype filtertype: only recognize objects of this c4d type
+   :param c4d.Otype filter_type: only recognize objects of this c4d type
+   :param bool children_only: see :py:class:`ObjectIterator`
    
    .. function:: PPrint(stopobj=None, filtertype=None, tabsize=4)
    
       Print an indented, tree-like representation of an object manager hierarchy.
       
-   .. function:: Get(path)
+   .. function:: Get(path, strict=True)
       
       Get a list of ``c4d.BaseObject`` for the key path given by 'path'.
 
@@ -62,7 +63,9 @@ Functions for working with CINEMA 4D's objects.
       syntax. Prepend a ``!`` to ``path`` if you want to forego wildcard expansion
       and thus ensure it is used as a verbatim regular expression pattern instead.
       
-      Note that ``path`` must match the whole key it is tested against.
+      Note that if ``strict`` is True, ``path`` must match the whole key it is 
+      tested against. Otherwise it is sufficient if the path is contained by
+      the key.
       
       Returns a list of all objects for which ``path``, expanded, matches a 
       concatenated parent path. 
@@ -104,11 +107,11 @@ Functions for working with CINEMA 4D's objects.
 
 .. function:: RecurseBranch(obj)
    
-.. function:: GetNextObject(obj, stopobjs=None)
+.. function:: GetNextObject(obj, stop_objs=None)
    
    Return the next object in the hierarchy using a depth-first traversal scheme.
    
-   If stopobjs is a ``c4d.BaseObject`` or a list of ``c4d.BaseObjects`` and the next
+   If stop_objs is a ``c4d.BaseObject`` or a list of ``c4d.BaseObjects`` and the next
    operation would encounter this object (or the first object in the list) None
    will be returned. This is so that this function can be used in a while loop.
 
@@ -128,9 +131,12 @@ Functions for working with CINEMA 4D's objects.
        will be passed a potential candidate object plus any 
        remaining args. It should return True or False.
    
-.. function:: FindObjects(name)
+.. function:: FindObjects(name=None, uip=None)
    
-   Find all objects in the scene with the name 'name'
+   Find all objects in the scene, either with the name ``name`` 
+   and/or the unique IP ``uip``.
+   
+   :return: list with matched objects or empty list if no match.
    
 .. function:: CreateObject(typ, name, undo=True)
 
@@ -162,7 +168,6 @@ Functions for working with CINEMA 4D's objects.
    Using the default template, the function would return ``Cube.13`` 
    as a new name.
    
-
 .. function:: InsertUnderNull(objs, grp=None, name="Group", copy=False)
 
    Inserts objects under a group (null) object, optionally creating the group.
@@ -175,7 +180,7 @@ Functions for working with CINEMA 4D's objects.
                                 a new null object will be created.
    :param str name:             name for the new group
    :param bool copy:            copy the objects if True
-   
+
 .. function:: GetGlobalPosition(obj)
 
 .. function:: GetGlobalRotation(obj)
@@ -224,6 +229,11 @@ Functions for working with CINEMA 4D's objects.
       object's center of gravity. The difference is that in the
       latter case single points at extreme distances from the
       object's core aren't given as much weight.
+
+
+.. function:: ObjectAxisFromVector(v)
+
+   Same as ``c4d.utils.HPBToMatrix(c4d.utils.VectorToHPB(v))``.
 
 .. function:: MakeEditable(obj)
 

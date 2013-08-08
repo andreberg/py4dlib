@@ -17,7 +17,7 @@ import re
 
 __version__ = (0, 5)
 __date__ = '2012-09-27'
-__updated__ = '2013-08-05'
+__updated__ = '2013-08-08'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -36,7 +36,7 @@ except ImportError:
     if TESTRUN == 1:
         pass
 
-from py4dlib.utils import UnescapeUnicode, EscapeUnicode, FuzzyCompareStrings
+from py4dlib.utils import UnescapeUnicode, EscapeUnicode, FuzzyCompareStrings, deprecated
 from py4dlib.maths import BBox
 from py4dlib.mesh import CalcGravityCenter
 
@@ -180,11 +180,11 @@ class ObjectHierarchy(object):
     expansion. This makes it easy to select a subset of objects,
     based on parent-name relationships.
     
-    :param filter_type:    only recognize objects of this c4d type
+    :param filter_type: only recognize objects of this c4d type
+    :param bool children_only: see :py:class:`ObjectIterator`
     """
-    def __init__(self, root_obj=None, filter_type=None):
+    def __init__(self, root_obj=None, filter_type=None, children_only=False):
         super(ObjectHierarchy, self).__init__()
-        children_only = True
         if root_obj is None:
             doc = c4d.documents.GetActiveDocument()
             root_obj = doc.GetFirstObject()
@@ -260,7 +260,7 @@ class ObjectHierarchy(object):
             fstr = ""
         print("processed %d object%s%s" % (handled, s, fstr))
         
-    def Get(self, path):
+    def Get(self, path, strict=True):
         """
         Get a list of ``c4d.BaseObject``s for the key path given by 'path'.
         
@@ -268,7 +268,9 @@ class ObjectHierarchy(object):
         syntax. Prepend a '!' to 'path' if you want to forego wildcard expansion
         and thus ensure it is used as a verbatim regular expression pattern instead.
         
-        Note that 'path' must match the whole key it is tested against.
+        Note that if 'strict' is True, 'path' must match the whole key it is 
+        tested against. Otherwise it is sufficient if the path is contained by
+        the key.
         
         Returns a list of all objects for which 'path', expanded, matched a 
         concatenated parent path. Returns an empty list if no objects could be
@@ -279,8 +281,8 @@ class ObjectHierarchy(object):
             path = UnescapeUnicode(path.strip())
         except UnicodeEncodeError:
             path = path.strip()
-        #if path[-1] == self.sep:
-        #    path = path[:-1] 
+        if path[-1] == self.sep:
+            path = path[:-1] 
         if '..' in path:
             comps = path.split(self.sep)
             resolved_comps = []
@@ -304,9 +306,14 @@ class ObjectHierarchy(object):
             # go back one escape level
             pat = path.replace(r'\\', '\\')
             pat = pat.replace('?', '.').replace('*', '.*?')
-        pat = '%s' % pat
+        if strict is True:
+            pat = '^%s$' % pat
+            func = re.match
+        else:
+            pat = '%s' % pat
+            func = re.search
         keys = [key for key in list(self.entries.keys()) if 
-                re.match(pat, UnescapeUnicode(key), flags=re.UNICODE)]
+                func(pat, UnescapeUnicode(key), flags=re.UNICODE)]
         if DEBUG: 
             print("path = %r" % (path))
             print("pat = %r" % (pat))     
@@ -416,6 +423,8 @@ def GetNextObject(obj, stop_objs=None):
     """
     if stop_objs and not isinstance(stop_objs, list):
         stop_objs = [stop_objs]
+    elif stop_objs is None:
+        stop_objs = []
     if obj == None: return None
     if obj.GetDown(): 
         if (obj.GetNext() in stop_objs or
@@ -424,7 +433,7 @@ def GetNextObject(obj, stop_objs=None):
         return obj.GetDown()
     if obj in stop_objs:
         return None
-    if stop_objs is None:
+    if len(stop_objs) == 0:
         while not obj.GetNext() and obj.GetUp():
             obj = obj.GetUp()
     else:
@@ -476,6 +485,7 @@ def FindObject(name, start=None, matchfunc=None, *args, **kwargs):
         startop = doc.GetFirstObject()
     else:
         if isinstance(start, str):
+            # warning: doesn't distinguish between objects with same name
             startop = doc.SearchObject(start)
         elif isinstance(start, c4d.BaseObject):
             startop = start
@@ -487,14 +497,14 @@ def FindObject(name, start=None, matchfunc=None, *args, **kwargs):
         print("Finding %s under %r" % (name, startop.GetName()))
     curname = startop.GetName()
     if startop:
-        if matchfunc and matchfunc(curname, name, *args, **kwargs):
+        if matchfunc and matchfunc(startop, *args, **kwargs):
             return startop
         elif curname == name: 
             return startop
     obj = GetNextObject(startop, startop)
     while obj:
         curname = obj.GetName()
-        if matchfunc and matchfunc(curname, name, *args, **kwargs):
+        if matchfunc and matchfunc(obj, *args, **kwargs):
             return obj
         elif curname == name: 
             return obj
@@ -502,20 +512,33 @@ def FindObject(name, start=None, matchfunc=None, *args, **kwargs):
     return result
 
 
-def FindObjects(name):
-    """Find all objects in the scene with the name 'name'"""
-    if name is None: return None
+def FindObjects(name=None, uip=None):
+    """ Find all objects in the scene, either with the name ``name`` 
+        and/or the unique IP ``uip``.
+    """
+    if name is None and uip is None: 
+        return None
     if not isinstance(name, (str, unicode)):
         raise TypeError("E: expected string or unicode, got %s" % type(name))
     doc = documents.GetActiveDocument()
-    if not doc: return None
+    if not doc: 
+        return None
     result = []
     obj = doc.GetFirstObject()
-    if not obj: return result
+    if not obj: 
+        return result
     while obj:
         curname = obj.GetName()
-        if curname == name: 
-            result.append(obj)
+        curip = obj.GetUniqueIP()
+        if name and uip:
+            if curname == name and uip == curip:
+                result.append(obj)
+        elif uip and name is None:
+            if uip == curip:
+                result.append(obj)
+        elif name and uip is None:
+            if name == curname:
+                result.append(obj)
         obj = GetNextObject(obj)
     return result
 
@@ -585,11 +608,12 @@ def InsertUnderNull(objs, grp=None, name="Group", copy=False):
     return grp
 
 
+@deprecated(since="0.5")
 def RecursiveInsertGroups(entry, parent, root, tree, pmatch='90%'):
-    print("processing %s..." % PF(entry))
+    #print("processing %s..." % PF(entry))
     if isinstance(entry, dict):
-        print("... as dict (1)")
-        print("parent = %r, root = %r" % (parent, root))
+        #print("... as dict (1)")
+        #print("parent = %r, root = %r" % (parent, root))
         for node in entry:
             nodeobj = None
             for op, lvl in ObjectIterator(root.op, root.op): # IGNORE:W0612 #@UnusedVariable
@@ -597,31 +621,31 @@ def RecursiveInsertGroups(entry, parent, root, tree, pmatch='90%'):
                     nodeobj = op
             if not nodeobj:
                 nodeobj = CreateObject(c4d.Onull, node.name)
-                print("inserting nodeobj %r under parent.op %r" % (nodeobj, parent.op))
+                #print("inserting nodeobj %r under parent.op %r" % (nodeobj, parent.op))
                 nodeobj.InsertUnder(parent.op)
             return RecursiveInsertGroups(node, node, root, entry, pmatch)
     elif isinstance(entry, list):
-        print("... as list (1)")
-        print("parent = %r, root = %r" % (parent, root))
+        #print("... as list (1)")
+        #print("parent = %r, root = %r" % (parent, root))
         j = 0
         for child in entry: # type(child) == <type: TreeEntry> or another dict
             j += 1
-            print("processing %d of %d children: %r..." % (j, len(entry), child))
+            #print("processing %d of %d children: %r..." % (j, len(entry), child))
             if isinstance(child, dict):
-                print("... as dict (2)")
-                print("parent = %r, root = %r" % (parent, root))
+                #print("... as dict (2)")
+                #print("parent = %r, root = %r" % (parent, root))
                 return RecursiveInsertGroups(child, parent, root, tree, pmatch)
             else:
-                print("... as object (2)")
-                print("parent = %r, root = %r" % (parent, root))
+                #print("... as object (2)")
+                #print("parent = %r, root = %r" % (parent, root))
                 childobj = FindObject(child.name, start=root.op, matchfunc=FuzzyCompareStrings, limit=pmatch)
                 if not childobj:
-                    print("creating childobj %r" % (child.name))
+                    #print("creating childobj %r" % (child.name))
                     childobj = CreateObject(c4d.Onull, child.name)
-                    print("child parents: %r, lvl = %d" % (child.parents, child.lvl))
-                print("inserting childobj %r under parent.op %r" % (childobj, parent.op))
+                    #print("child parents: %r, lvl = %d" % (child.parents, child.lvl))
+                #print("inserting childobj %r under parent.op %r" % (childobj, parent.op))
                 childobj.InsertUnder(parent.op)
-        print("done children of %s" % parent.name)
+        #print("done children of %s" % parent.name)
     else:
         children = tree[entry]
         return RecursiveInsertGroups(children, entry, root, tree, pmatch)

@@ -16,9 +16,9 @@ import os
 import sys
 import math
 
-__version__ = (0, 5)
+__version__ = (0, 6)
 __date__ = '2013-07-29'
-__updated__ = '2013-08-06'
+__updated__ = '2013-08-08'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -116,16 +116,16 @@ class BBox(object):
         return bb
     
     @classmethod
-    def FromObject(cls, obj, sel_only=False):
+    def FromObject(cls, obj, selOnly=False):
         """
         Returns a new BBox object with all 
         points from the passed object.
         
-        :param sel_only: ``bool`` - use selected
-        points only instead of all points.
+        :param bool selOnly: use selected
+            points only instead of all points.
         
         :raise ValueError: if the object has 
-        no points.
+            no points.
         """
         if not isinstance(obj, c4d.PointObject):
             raise TypeError("E: expected c4d.PointObject, got %s" % type(obj))
@@ -133,7 +133,7 @@ class BBox(object):
         if len(allpnts) == 0: 
             raise ValueError("E: object has no points")
         bb = BBox()
-        if sel_only is True:
+        if selOnly is True:
             pntsel = obj.GetPointS()
             if pntsel.HostAlive():
                 for i, p in enumerate(allpnts):  # IGNORE:W0612 @UnusedVariable
@@ -147,7 +147,31 @@ class BBox(object):
                 bb.AddPoint(p)
                 bb.np += 1
         return bb
-      
+    
+    @classmethod
+    def FromPolygon(cls, poly, obj):
+        """
+        Returns a new BBox object with all 
+        points from the passed polygon.
+        """
+        if not isinstance(obj, c4d.PolygonObject):
+            raise TypeError("E: expected c4d.PolygonObject, got %s" % type(obj))
+        if not isinstance(poly, c4d.CPolygon):
+            raise TypeError("E: expected c4d.CPolygon, got %r" % (type(poly)))
+        allpoints = obj.GetAllPoints()
+        pnts = []
+        if poly.c == poly.d:
+            pnts.append(allpoints[poly.a])
+            pnts.append(allpoints[poly.b])
+            pnts.append(allpoints[poly.c])
+        else:
+            pnts.append(allpoints[poly.a])
+            pnts.append(allpoints[poly.b])
+            pnts.append(allpoints[poly.c])
+            pnts.append(allpoints[poly.d])
+        bb = BBox.FromPointList(pnts)
+        return bb
+
     def GetMax(self):
         """ Return max bounds vector. """
         return self.max
@@ -182,13 +206,13 @@ class Plane(object):
             print("New plane with pos = %r, normal n = %r" % (pos, n))
 
     def __str__(self):
-        return "%r, pos = %r, n = %r" % (self, self.pos, self.n)
+        return "%r, pos = %r, n = %r" % (self, self.pos, self.n)       
+           
+    def SetN(self, newN):
+        self.n = newN.GetNormalized()
     
-    def SetN(self, new_n):
-        self.n = new_n.GetNormalized()
-    
-    def SetPos(self, new_pos):
-        self.pos = new_pos
+    def SetPos(self, newPos):
+        self.pos = newPos
     
     def SideAsString(self, d):
         if d < 0:
@@ -218,11 +242,11 @@ class Plane(object):
             print("point residence = %r" % d)
         return d
     
-    def PointDistance(self, p, get_signed=True):
+    def PointDistance(self, p, signed=True):
         """
         Calculate distance from a point p to the plane.
         
-        :param bool get_signed: set to True if you want the signed distance.
+        :param bool signed: set to True if you want the signed distance.
         
         A signed distance can be useful to determine if the point is located 
         in the half space from the backside of the plane or in the half space 
@@ -234,7 +258,7 @@ class Plane(object):
             raise TypeError("Expected Vector, got %s" % type(p))
         if DEBUG: 
             print("pos = %r, n = %r, p = %r" % (self.pos, self.n, p))
-        if not get_signed:
+        if not signed:
             projp = self.LineIntersection(p)
             if projp is None:
                 raise ValueError("dist can't be None when projected along plane normal!")
@@ -246,7 +270,7 @@ class Plane(object):
             dist = (n.x * p.x + n.y * p.y + n.z * p.z + d)
             if DEBUG:
                 s = ""
-                if get_signed is True:
+                if signed is True:
                     s = " (signed)"
                 print("dist = %r%s" % (dist, s))
         return dist
@@ -514,6 +538,48 @@ def BuildMatrix2(v, off=None, base="z"):
     return c4d.Matrix(off, x, y, z)
 
 
+def BuildMatrix3(v, v2, off=None, base="z"):
+    """ Builds a new orthonormal basis from 2 direction 
+        and (optionally) an offset vector using cross products. 
+        
+        :param str base: the base component 'v' represents.
+    """
+    if not isinstance(v, c4d.Vector):
+        raise ValueError("E: expected c4d.Vector, got %r" % v)
+    if not isinstance(v2, c4d.Vector):
+        raise ValueError("E: expected c4d.Vector, got %r" % v)
+    if off is None:
+        off = c4d.Vector(0)
+    v2.Normalize()
+    if base == "z":
+        z = v.GetNormalized()
+        x = z.Cross(v2).GetNormalized()
+        y = x.Cross(z).GetNormalized()
+    elif base == "y":
+        y = v.GetNormalized()
+        z = y.Cross(v2).GetNormalized()
+        x = z.Cross(y).GetNormalized()
+    elif base == "x":
+        x = v.GetNormalized()
+        y = x.Cross(v2).GetNormalized()
+        z = y.Cross(x).GetNormalized()
+    elif base == "-z":
+        z = v.GetNormalized()
+        x = z.Cross(-v2).GetNormalized()
+        y = x.Cross(z).GetNormalized()
+    elif base == "-y":
+        y = v.GetNormalized()
+        z = y.Cross(-v2).GetNormalized()
+        x = z.Cross(y).GetNormalized()
+    elif base == "-x":
+        x = v.GetNormalized()
+        y = x.Cross(-v2).GetNormalized()
+        z = y.Cross(x).GetNormalized()
+    else:
+        raise ValueError("E: base must be one of x, y, z, -x, -y, -z, but is %r" % base)
+    return c4d.Matrix(off, x, y, z)
+
+
 # Define these functions to ease conversion of C.O.F.F.E.E. scripts to Python.
 def GetMulP(m, v):
     """ Multiply a matrix with a vector representing a point. 
@@ -606,85 +672,21 @@ def Transpose(e):
     for i in temp:
         result.append(list(i))
     return result
-
-
-def PolyToList(p):
-    """ Convert a ``c4d.CPolygon`` to a ``list`` of ``c4d.Vectors``, 
-        representing the points of the polygon. 
-    """ 
-    if not isinstance(p, c4d.CPolygon):
-        raise TypeError("E: expected c4d.CPolygon, got %r" % type(p))
-    if p.c == p.d: 
-        return [p.a,p.b,p.c]
-    return [p.a,p.b,p.c,p.d]
-
-
-def PolyToListList(p, obj):
-    """ Convert a ``c4d.CPolygon`` to a ``list<list>`` structure. 
     
-    ``list<list>`` represents a list of points comprised of a 
-    list of coordinate values.
-    """
-    if not isinstance(p, c4d.CPolygon):
-        raise TypeError("E: expected c4d.CPolygon, got %r" % type(p))
-    if not isinstance(obj, c4d.PolygonObject):
-        raise TypeError("E: expected c4d.PolygonObject, got %r" % type(obj))
-    allp = obj.GetAllPoints()
-    a = allp[p.a]
-    b = allp[p.b]
-    c = allp[p.c]
-    if p.c == p.d: 
-        return [[a.x, a.y, a.z], 
-                [b.x, b.y, b.z],
-                [c.x, c.y, c.z]]
-    d = allp[p.d]
-    return [[a.x, a.y, a.z], 
-            [b.x, b.y, b.z],
-            [c.x, c.y, c.z],
-            [d.x, d.y, d.z]]
 
-    
-def ListToPoly(li):
-    """ Convert a ``list`` of ``int`` representing indices 
-        into an object's point list to a ``c4d.CPolygon``. 
-    """
-    if not isinstance(li, list): 
-        raise TypeError("E: expected list, got %r" % type(li))
-    for i, e in enumerate(li):
-        if not isinstance(e, int):
-            raise TypeError("E: element %d of l should be of type int, but is %r" % (i, type(e)))
-    ln = len(li)
-    if ln < 3:
-        raise IndexError("list must have at least 3 indices")
-    elif ln == 3:
-        return c4d.CPolygon(li[0],li[1],li[2])
+def ListToMatrix(lv):
+    """ Convert a list of 3 or 4 ``c4d.Vector`` to ``c4d.Matrix``. """ 
+    if not isinstance(lv, list):
+        raise TypeError("E: expected list of vectors, got %r" % type(lv))
+    m = len(lv)
+    if not isinstance(lv[0], c4d.Vector):
+        raise TypeError("E: expected list elements of type c4d.Vector, got %r" % (type(lv[0])))
+    if m == 4:
+        return c4d.Matrix(lv[0], lv[1], lv[2], lv[3])
+    elif m == 3:
+        return c4d.Matrix(c4d.Vector(0), lv[1], lv[2], lv[3])
     else:
-        return c4d.CPolygon(li[0],li[1],li[2],li[3])
-
-
-def ListListToPoly(lli):
-    """ Convert a ``list<list>`` structure to ``c4d.CPolygon``. 
-    
-    ``list<list>`` represents a list of indices that indentify
-    points of an object.
-    """
-    if not isinstance(lli, list): 
-        raise TypeError("E: expected list, got %r" % type(lli))
-    for i, e in enumerate(lli):
-        if not isinstance(e, int):
-            raise TypeError("E: element %d of l should be of type int, but is %r" % (i, type(e)))
-    ln = len(lli)
-    if ln < 3:
-        raise IndexError("E: list must have at least 3 indices")
-    elif ln == 3:
-        return c4d.CPolygon(lli[0][0], lli[0][1], lli[0][2],
-                            lli[1][0], lli[1][1], lli[1][2],
-                            lli[2][0], lli[2][1], lli[2][2])
-    else:
-        return c4d.CPolygon(lli[0][0], lli[0][1], lli[0][2],
-                            lli[1][0], lli[1][1], lli[1][2],
-                            lli[2][0], lli[2][1], lli[2][2],
-                            lli[3][0], lli[3][1], lli[3][2])
+        raise ValueError("E: need list of length 3 or 4, got %d" % (m))
 
 
 def ListListToMatrix(lli):
@@ -721,24 +723,9 @@ def ListListToMatrix(lli):
                           c4d.Vector(lli[3][0], lli[3][1], lli[3][2]))
     else:
         raise ValueError("E: invalid dimensions. Accepted dimensions include 4x4 and 4x3, but currently are %dx%d" % (m, n))
-    
-
-def ListToMatrix(lv):
-    """ Convert a list of 3 or 4 ``c4d.Vector`` to ``c4d.Matrix``. """ 
-    if not isinstance(lv, list):
-        raise TypeError("E: expected list of vectors, got %r" % type(lv))
-    m = len(lv)
-    if not isinstance(lv[0], c4d.Vector):
-        raise TypeError("E: expected list elements of type c4d.Vector, got %r" % (type(lv[0])))
-    if m == 4:
-        return c4d.Matrix(lv[0], lv[1], lv[2], lv[3])
-    elif m == 3:
-        return c4d.Matrix(c4d.Vector(0), lv[1], lv[2], lv[3])
-    else:
-        raise ValueError("E: need list of length 3 or 4, got %d" % (m))
 
 
-def MatrixToListList(m, incl_off=False):
+def MatrixToListList(m, inclOff=False):
     """ Convert a ``c4d.Matrix`` to a ``list<list>`` structure. 
         The structure layout is generally in row-major format, 
         and the ordering the same as the order required for 
@@ -753,7 +740,7 @@ def MatrixToListList(m, incl_off=False):
     """
     if not isinstance(m, c4d.Matrix):
         raise TypeError("E: expected c4d.Matrix, got %r" % type(m))
-    if incl_off is True:
+    if inclOff is True:
         return [[m.off.x, m.off.y, m.off.z],
                 [m.v1.x,  m.v1.y,  m.v1.z],
                 [m.v2.x,  m.v2.y,  m.v2.z],

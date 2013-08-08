@@ -129,7 +129,18 @@ Decorators
       @require(x=int, y=float)
       def func(x, y):
          return  x / y
-   
+
+.. function:: deprecated(level=1, since=None, info=None)
+
+   Can be used to mark functions as deprecated.
+
+   :param int level: severity level. 
+      0 = warnings.warn(category=DeprecationWarning)
+      1 = warnings.warn_explicit(category=DeprecationWarning)
+      2 = raise DeprecationWarning()
+   :param string since: the version where deprecation was introduced.
+   :param string info: additional info. normally used to refer to the new 
+      function now favored in place of the deprecated one.
 
 .. function:: cache(func)
    

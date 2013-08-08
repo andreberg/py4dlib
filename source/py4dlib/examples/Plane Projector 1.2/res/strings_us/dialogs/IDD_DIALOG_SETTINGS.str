@@ -5,6 +5,9 @@ DIALOGSTRINGS IDD_DIALOG_SETTINGS
   IDS_BUTTON_CANCEL     "Cancel";
   IDS_BUTTON_DOIT       "Project";
   IDS_BUTTON_GETOBJ     "<";
+  IDS_BUTTON_PICK       "Pick";
+  IDS_BUTTON_PLANE      "Plane";
+  IDS_BUTTON_WPLANE     "Workplane";
   IDS_DIALOG_TITLE      "Plane Projector";
   IDS_DUMMY             "Dummy";
   IDS_GROUP_BUTTONS     "Buttons";
@@ -14,6 +17,8 @@ DIALOGSTRINGS IDD_DIALOG_SETTINGS
   IDS_GROUP_WRAPPER     "Wrapper";
   IDS_MANUAL            "Manual";
   IDS_NORMAL            "Vertex Normal";
+  IDS_STATIC1           "Create ...............";
+  IDS_STATIC2           "Create Buttons";
   IDS_STATIC_MANUAL     "Manual Dir ..";
   IDS_STATIC_MODE       "Direction .....";
   IDS_STATIC_SETTINGS4  "Settings4";

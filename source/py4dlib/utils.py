@@ -13,10 +13,11 @@
 '''py4dlib.utils -- utility toolbelt for great convenience.'''
 
 import os
+import warnings
 
-__version__ = (0, 5)
+__version__ = (0, 6)
 __date__ = '2012-09-27'
-__updated__ = '2013-08-04'
+__updated__ = '2013-08-08'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -85,6 +86,12 @@ def EscapeUnicode(s):
         high-order chars with a unicode escape sequence suitable for CINEMA 4D.
     """
     result = ""
+    if c4d.GetC4DVersion() > 12999:
+        try:
+            s = s.decode('utf-8')
+        except UnicodeEncodeError:
+            # already unicode?
+            pass
     for b in s:
         if ord(b) > 126:
             result += r"\\u%04X" % (ord(b),)
@@ -288,6 +295,39 @@ def require(*args, **kwargs):
         wrapped_fn.wrapped_args = wrapped_args
         return wrapped_fn
     return wrapper
+
+
+def deprecated(level=1, since=None, info=None):
+    """This decorator can be used to mark functions as deprecated.
+        
+    :param int level: severity level. 
+        0 = warnings.warn(category=DeprecationWarning)
+        1 = warnings.warn_explicit(category=DeprecationWarning)
+        2 = raise DeprecationWarning()
+    :param string since: the version where deprecation was introduced.
+    :param string info: additional info. normally used to refer to the new 
+        function now favored in place of the deprecated one.
+    """
+    def __decorate(func):
+        if since is None:
+            msg = 'Method %s() is deprecated.' % func.__name__
+        else:
+            msg = 'Method %s() has been deprecated since version %s.' % (func.__name__, str(since))
+        if info:
+            msg += ' ' + info
+        @wraps(func)
+        def __wrapped(*args, **kwargs): # IGNORE:C0111
+            if level <= 0:
+                warnings.warn(msg, category=DeprecationWarning, stacklevel=2)
+                func(*args, **kwargs)
+            elif level == 1:
+                warnings.warn_explicit(msg, category=DeprecationWarning, 
+                                       filename=func.func_code.co_filename, 
+                                       lineno=func.func_code.co_firstlineno + 1)
+            elif level >= 2:
+                raise DeprecationWarning(msg)
+        return __wrapped
+    return __decorate
 
 
 def cache(func):

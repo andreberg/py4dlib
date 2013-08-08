@@ -16,7 +16,7 @@ import pprint
 
 __version__ = (0, 1)
 __date__ = '2012-09-28'
-__updated__ = '2013-08-02'
+__updated__ = '2013-08-08'
 
 
 from py4dlib.objects import ObjectHierarchy
@@ -98,7 +98,7 @@ DATA = {
 
 class OHMock(ObjectHierarchy):
     '''ObjectHierarchy mock object'''
-    def __init__(self): # IGNORE:W0231
+    def __init__(self, *args, **kwargs): # IGNORE:W0231
         # yes, we don't call/init super here to avoid 'c4d' is not defined
         self.sep = '/'
         self.entries = DATA

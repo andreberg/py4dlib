@@ -10,7 +10,7 @@
 #
 # pylint: disable-msg=F0401
 
-__version__ = (0, 3, 1)
+__version__ = (0, 6, 0)
 __author__  = u'André Berg'
 __email__   = 'andre.bergmedia@googlemail.com'
 __url__     = 'http://github.com/andreberg/py4dlib'
