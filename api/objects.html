@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Objects &mdash; py4dlib 0.5 documentation</title>
+    <title>Objects &mdash; py4dlib 0.6 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5',
+        VERSION:     '0.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.5 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.6 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="next" title="Plugins" href="plugins.html" />
     <link rel="prev" title="Mesh" href="mesh.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="mesh.html" title="Mesh"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.5 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.6 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -56,7 +56,7 @@
 <p>Functions for working with CINEMA 4D&#8217;s objects.</p>
 <dl class="class">
 <dt id="ObjectIterator">
-<em class="property">class </em><tt class="descname">ObjectIterator</tt><big>(</big><em>startobj</em>, <em>stopobj=None</em>, <em>children_only=True</em>, <em>startlvl=-1</em><big>)</big><a class="headerlink" href="#ObjectIterator" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descname">ObjectIterator</tt><big>(</big><em>start_obj</em>, <em>stop_obj=None</em>, <em>children_only=True</em>, <em>startlvl=-1</em><big>)</big><a class="headerlink" href="#ObjectIterator" title="Permalink to this definition">¶</a></dt>
 <dd><p>Iterator over specific objects in the object manager tree.</p>
 <p>Using a depth first traversal scheme, return a tuple in the form
 <tt class="docutils literal"><span class="pre">(op,</span> <span class="pre">lvl)</span></tt>, where op is a <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> representing the current
@@ -66,8 +66,8 @@ object and lvl is an integer indicating the current depth level.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
-<li><strong>startobj</strong> (<em>c4d.BaseObject</em>) &#8211; the object whose hierarchy should be iterated over</li>
-<li><strong>stopobj</strong> (<em>c4d.BaseObject</em>) &#8211; an object or a list of objects at which traversal
+<li><strong>start_obj</strong> (<em>c4d.BaseObject</em>) &#8211; the object whose hierarchy should be iterated over</li>
+<li><strong>stop_obj</strong> (<em>c4d.BaseObject</em>) &#8211; an object or a list of objects at which traversal
 should stop (optional)</li>
 <li><strong>children_only</strong> (<em>bool</em>) &#8211; if True, iterate through the sub-hierarchy under
 startobj and stop as soon as startobj&#8217;s parent or
@@ -103,7 +103,7 @@ so they can be used as keys in dictionaries.</p>
 
 <dl class="class">
 <dt id="ObjectHierarchy">
-<em class="property">class </em><tt class="descname">ObjectHierarchy</tt><big>(</big><em>rootobj=None</em>, <em>filtertype=None</em><big>)</big><a class="headerlink" href="#ObjectHierarchy" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descname">ObjectHierarchy</tt><big>(</big><em>root_obj=None</em>, <em>filter_type=None</em>, <em>children_only=False</em><big>)</big><a class="headerlink" href="#ObjectHierarchy" title="Permalink to this definition">¶</a></dt>
 <dd><p>Represents a hierarchical group structure in the object manager.</p>
 <p>Can be used to create a Pythonic snapshot of the current scene
 so as to provide easy access to specifc sets of objects.</p>
@@ -121,7 +121,11 @@ based on parent-name relationships.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>filtertype</strong> (<em>c4d.Otype</em>) &#8211; only recognize objects of this c4d type</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>filter_type</strong> (<em>c4d.Otype</em>) &#8211; only recognize objects of this c4d type</li>
+<li><strong>children_only</strong> (<em>bool</em>) &#8211; see <a class="reference internal" href="#ObjectIterator" title="ObjectIterator"><tt class="xref py py-class docutils literal"><span class="pre">ObjectIterator</span></tt></a></li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
@@ -133,12 +137,14 @@ based on parent-name relationships.</p>
 
 <dl class="function">
 <dt id="ObjectHierarchy.Get">
-<tt class="descname">Get</tt><big>(</big><em>path</em><big>)</big><a class="headerlink" href="#ObjectHierarchy.Get" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">Get</tt><big>(</big><em>path</em>, <em>strict=True</em><big>)</big><a class="headerlink" href="#ObjectHierarchy.Get" title="Permalink to this definition">¶</a></dt>
 <dd><p>Get a list of <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> for the key path given by &#8216;path&#8217;.</p>
 <p>Key path can contain wildcards (<tt class="docutils literal"><span class="pre">*</span></tt> or <tt class="docutils literal"><span class="pre">?</span></tt>) or regular expression
 syntax. Prepend a <tt class="docutils literal"><span class="pre">!</span></tt> to <tt class="docutils literal"><span class="pre">path</span></tt> if you want to forego wildcard expansion
 and thus ensure it is used as a verbatim regular expression pattern instead.</p>
-<p>Note that <tt class="docutils literal"><span class="pre">path</span></tt> must match the whole key it is tested against.</p>
+<p>Note that if <tt class="docutils literal"><span class="pre">strict</span></tt> is True, <tt class="docutils literal"><span class="pre">path</span></tt> must match the whole key it is
+tested against. Otherwise it is sufficient if the path is contained by
+the key.</p>
 <p>Returns a list of all objects for which <tt class="docutils literal"><span class="pre">path</span></tt>, expanded, matches a
 concatenated parent path.</p>
 <p>Returns an empty list if no objects could be located for <tt class="docutils literal"><span class="pre">path</span></tt>.</p>
@@ -206,9 +212,9 @@ Generally unreliable, because selection state matters.</p>
 
 <dl class="function">
 <dt id="GetNextObject">
-<tt class="descname">GetNextObject</tt><big>(</big><em>obj</em>, <em>stopobjs=None</em><big>)</big><a class="headerlink" href="#GetNextObject" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">GetNextObject</tt><big>(</big><em>obj</em>, <em>stop_objs=None</em><big>)</big><a class="headerlink" href="#GetNextObject" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the next object in the hierarchy using a depth-first traversal scheme.</p>
-<p>If stopobjs is a <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> or a list of <tt class="docutils literal"><span class="pre">c4d.BaseObjects</span></tt> and the next
+<p>If stop_objs is a <tt class="docutils literal"><span class="pre">c4d.BaseObject</span></tt> or a list of <tt class="docutils literal"><span class="pre">c4d.BaseObjects</span></tt> and the next
 operation would encounter this object (or the first object in the list) None
 will be returned. This is so that this function can be used in a while loop.</p>
 </dd></dl>
@@ -244,8 +250,17 @@ remaining args. It should return True or False.</li>
 
 <dl class="function">
 <dt id="FindObjects">
-<tt class="descname">FindObjects</tt><big>(</big><em>name</em><big>)</big><a class="headerlink" href="#FindObjects" title="Permalink to this definition">¶</a></dt>
-<dd><p>Find all objects in the scene with the name &#8216;name&#8217;</p>
+<tt class="descname">FindObjects</tt><big>(</big><em>name=None</em>, <em>uip=None</em><big>)</big><a class="headerlink" href="#FindObjects" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find all objects in the scene, either with the name <tt class="docutils literal"><span class="pre">name</span></tt>
+and/or the unique IP <tt class="docutils literal"><span class="pre">uip</span></tt>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list with matched objects or empty list if no match.</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -382,6 +397,12 @@ object&#8217;s core aren&#8217;t given as much weight.</td>
 </dd></dl>
 
 <dl class="function">
+<dt id="ObjectAxisFromVector">
+<tt class="descname">ObjectAxisFromVector</tt><big>(</big><em>v</em><big>)</big><a class="headerlink" href="#ObjectAxisFromVector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as <tt class="docutils literal"><span class="pre">c4d.utils.HPBToMatrix(c4d.utils.VectorToHPB(v))</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="MakeEditable">
 <tt class="descname">MakeEditable</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#MakeEditable" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run the Make Editible command on obj or a list of objects.</p>
@@ -435,7 +456,7 @@ object&#8217;s core aren&#8217;t given as much weight.</td>
         <li class="right" >
           <a href="mesh.html" title="Mesh"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.5 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.6 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>

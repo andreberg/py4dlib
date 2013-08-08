@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Mesh &mdash; py4dlib 0.5 documentation</title>
+    <title>Mesh &mdash; py4dlib 0.6 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5',
+        VERSION:     '0.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.5 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.6 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="next" title="Objects" href="objects.html" />
     <link rel="prev" title="Maths" href="maths.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="maths.html" title="Maths"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.5 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.6 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -65,6 +65,42 @@
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="SelectPolys">
+<tt class="descname">SelectPolys</tt><big>(</big><em>li</em>, <em>obj</em>, <em>clearOldSel=True</em><big>)</big><a class="headerlink" href="#SelectPolys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch the selection state to &#8216;selected&#8217; for a list of polygons.
+Expects a list of polygon indices.</p>
+<p>If <tt class="docutils literal"><span class="pre">clearOldSel</span></tt> is True, clears the old polygon selection.
+Otherwise appends to the current selection. Default is True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the selection state was changed, or False if
+obj is not a <tt class="docutils literal"><span class="pre">c4d.PolygonObject</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="SelectPoints">
+<tt class="descname">SelectPoints</tt><big>(</big><em>li</em>, <em>obj</em>, <em>clearOldSel=True</em><big>)</big><a class="headerlink" href="#SelectPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Switch the selection state to &#8216;selected&#8217; for a list of points.
+Expects a list of point indices.</p>
+<p>If <tt class="docutils literal"><span class="pre">clearOldSel</span></tt> is True, clears the old polygon selection.
+Otherwise appends to the current selection. Default is True.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">True if the selection state was changed, or False if
+obj is not a <tt class="docutils literal"><span class="pre">c4d.PointObject</span></tt>.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="GetSelectedPoints">
 <tt class="descname">GetSelectedPoints</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#GetSelectedPoints" title="Permalink to this definition">¶</a></dt>
 <dd><p>Returns list of selected point indices.</p>
@@ -86,6 +122,56 @@ from the returned list do something like</p>
 <span class="n">poly</span> <span class="o">=</span> <span class="n">allpolys</span><span class="p">[</span><span class="n">index</span><span class="p">]</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="function">
+<dt id="GetPointsForIndices">
+<tt class="descname">GetPointsForIndices</tt><big>(</big><em>li</em>, <em>obj</em><big>)</big><a class="headerlink" href="#GetPointsForIndices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list with the actual points from a list of point indices.</p>
+<p>If <tt class="docutils literal"><span class="pre">li</span></tt> already is of type <tt class="docutils literal"><span class="pre">list&lt;c4d.Vector&gt;</span></tt> return the list untouched.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="GetPolysForIndices">
+<tt class="descname">GetPolysForIndices</tt><big>(</big><em>li</em>, <em>obj</em><big>)</big><a class="headerlink" href="#GetPolysForIndices" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list with the actual polygons from a list of polygon indices.</p>
+<p>If <tt class="docutils literal"><span class="pre">li</span></tt> already is of type <tt class="docutils literal"><span class="pre">list&lt;c4d.CPolygon&gt;</span></tt> return the list untouched.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="GetIndicesForPoints">
+<tt class="descname">GetIndicesForPoints</tt><big>(</big><em>lp</em>, <em>obj</em><big>)</big><a class="headerlink" href="#GetIndicesForPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a list of point indices for all points that are equal
+to the vectors from lp.</p>
+<p>Warning: can be time consuming for large models, since this
+has to check against all points each time for every element
+in lp.</p>
+<p>You are better off acquiring the list of indices another way.
+Especially if it is just about converting a list of selected
+points to their indices.</p>
+<p>Use <a class="reference internal" href="#GetSelectedPoints" title="GetSelectedPoints"><tt class="xref py py-func docutils literal"><span class="pre">GetSelectedPoints()</span></tt></a> in that case.</p>
+<p>If <tt class="docutils literal"><span class="pre">lp</span></tt> already is of type <tt class="docutils literal"><span class="pre">list&lt;int&gt;</span></tt> return the list untouched.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="GetPolysForPoints">
+<tt class="descname">GetPolysForPoints</tt><big>(</big><em>li</em>, <em>obj</em>, <em>strict=True</em><big>)</big><a class="headerlink" href="#GetPolysForPoints" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a list of polygon indices for all polygons that have
+points with point indices given by <tt class="docutils literal"><span class="pre">li</span></tt> as their members.</p>
+<p>This is the same as converting between selections by holding
+Cmd/Ctrl when pressing the modelling mode buttons in CINEMA 4D.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>strict</strong> (<em>bool</em>) &#8211; if True, return only those polygons
+that fully are fully enclosed by all the points that make
+up that polygon.</td>
+</tr>
+</tbody>
+</table>
+<p>If <tt class="docutils literal"><span class="pre">li</span></tt> already is of type <tt class="docutils literal"><span class="pre">list&lt;c4d.CPolygon&gt;</span></tt> return the
+list untouched.</p>
 </dd></dl>
 
 <dl class="function">
@@ -176,8 +262,11 @@ to &#8220;Normal&#8221; mode for an arbitrary point selection.</p>
 
 <dl class="function">
 <dt id="CalcBBox">
-<tt class="descname">CalcBBox</tt><big>(</big><em>e</em>, <em>sel_only=False</em><big>)</big><a class="headerlink" href="#CalcBBox" title="Permalink to this definition">¶</a></dt>
-<dd><p>Construct a <a class="reference internal" href="maths.html#BBox" title="BBox"><tt class="xref py py-class docutils literal"><span class="pre">BBox</span></tt></a> for a <tt class="docutils literal"><span class="pre">c4d.PointObject</span></tt> or a <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt>.</p>
+<tt class="descname">CalcBBox</tt><big>(</big><em>e</em>, <em>selOnly=False</em>, <em>obj=None</em><big>)</big><a class="headerlink" href="#CalcBBox" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct a <a class="reference internal" href="maths.html#BBox" title="BBox"><tt class="xref py py-class docutils literal"><span class="pre">BBox</span></tt></a> for a <tt class="docutils literal"><span class="pre">c4d.PointObject</span></tt>, a <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt>,
+or a list of polygon indices. If you have a list of point indices you can
+construct a BBox directly using the <tt class="xref py py-func docutils literal"><span class="pre">FromPointList()</span></tt> class method.</p>
+<p>You must supply the object the polygon list belongs to in the latter case.</p>
 <p>Note that if you are interested in the midpoint or radius only, you can
 use the built-in <tt class="docutils literal"><span class="pre">c4d.BaseObject.GetMp()</span></tt> and <tt class="docutils literal"><span class="pre">GetRad()</span></tt> methods
 respectively.</p>
@@ -185,8 +274,9 @@ respectively.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sel_only</strong> (<em>bool</em>) &#8211; if True and <tt class="docutils literal"><span class="pre">e</span></tt> is a <tt class="docutils literal"><span class="pre">c4d.PointObject</span></tt>,
-use selected points only. Otherwise use all points.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>selOnly</strong> (<em>bool</em>) &#8211; if True, use selected points
+only if e is a <tt class="docutils literal"><span class="pre">c4d.PointObject</span></tt>. Otherwise use
+all points of the object.</td>
 </tr>
 </tbody>
 </table>
@@ -196,6 +286,32 @@ use selected points only. Otherwise use all points.</td>
 <dt id="CalcGravityCenter">
 <tt class="descname">CalcGravityCenter</tt><big>(</big><em>obj</em><big>)</big><a class="headerlink" href="#CalcGravityCenter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the center of gravity for obj.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PolyToList">
+<tt class="descname">PolyToList</tt><big>(</big><em>p</em><big>)</big><a class="headerlink" href="#PolyToList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt> to a <tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">c4d.Vectors</span></tt>, representing the points of the polygon.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="PolyToListList">
+<tt class="descname">PolyToListList</tt><big>(</big><em>p</em>, <em>obj</em><big>)</big><a class="headerlink" href="#PolyToListList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt> to a <tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> structure.</p>
+<p><tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> represents a list of points comprised of a list of coordinate values.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ListToPoly">
+<tt class="descname">ListToPoly</tt><big>(</big><em>li</em><big>)</big><a class="headerlink" href="#ListToPoly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a <tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">int</span></tt> representing indices into an object&#8217;s point list to a <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="ListListToPoly">
+<tt class="descname">ListListToPoly</tt><big>(</big><em>lli</em><big>)</big><a class="headerlink" href="#ListListToPoly" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert a <tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> structure to <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt>.</p>
+<p><tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> represents a list of indices that indentify points of an object.</p>
 </dd></dl>
 
 </div>
@@ -246,7 +362,7 @@ use selected points only. Otherwise use all points.</td>
         <li class="right" >
           <a href="maths.html" title="Maths"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.5 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.6 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>

@@ -7,23 +7,25 @@ Maths
    Calculate various bounding box metrics from a list of points,
    such as min, max, midpoint, radius and size.
       
-   .. classmethod:: FromObject(cls, obj, sel_only=False)
+   .. classmethod:: FromObject(cls, obj, selOnly=False)
       
-      Returns a new BBox object with all 
-      points from the passed object.
+      Returns a new BBox object with all points from the passed object.
       
-      :param bool sel_only: use selected points only instead of all points.
+      :param bool selOnly: use selected points only instead of all points.
       
       :raise ValueError: if the object has no points.
       
    .. classmethod:: FromPointList(cls, lst)
       
-      Returns a new BBox object with all 
-      points from a list added.
+      Returns a new BBox object with all points from a list added.
       
       Elements of lst must be of type ``c4d.Vector``.
       
       :raise ValueError: if the list is empty.
+      
+   .. classmethod:: FromPolygon(cls, poly, obj)
+      
+      Returns a new BBox object with all points from the passed polygon.
 
    .. function:: AddPoint(p)
       
@@ -57,13 +59,13 @@ Maths
    
    Represents a plane defined by positional offset and normal direction.
    
-   .. function:: SetN(self, new_n)
+   .. function:: SetN(self, newN)
    
-      Sets the normal of the plane to ``new_n``.
+      Sets the normal of the plane to ``newN``.
       
-   .. function:: SetPos(self, new_pos)
+   .. function:: SetPos(self, newPos)
       
-      Sets the positional offset of the plane to ``new_pos``.
+      Sets the positional offset of the plane to ``newPos``.
       
    .. function:: SideAsString(self, d)
       
@@ -85,11 +87,11 @@ Maths
       plane (0) or at the back of the plane (-1).
 
 
-   .. function:: PointDistance(self, p, get_signed=True)
+   .. function:: PointDistance(self, p, signed=True)
       
       Calculate distance from a point p to the plane.
       
-      :param bool get_signed: set to True if you want the signed distance.
+      :param bool signed: set to True if you want the signed distance.
       
       A signed distance can be useful to determine if the point is located 
       in the half space from the backside of the plane or in the half space 
@@ -106,6 +108,10 @@ Maths
       :return: ``c4d.Vector`` representing the intersection point, or 
          None if an intersection isn't possible (parallel directions).
       
+
+.. function:: FloatEqual(a, b, places=8)
+
+   Same as ``c4d.utils.FloatTolerantCompare`` just a shorter function name.
 
 .. function:: MAbs(m)
 
@@ -171,6 +177,14 @@ Maths
    
    :param str base: the base component 'v' represents. Must be one of ``x, y, z, -x, -y, -z``
 
+
+.. function:: BuildMatrix3(v, v2, off=None, base="z")
+   
+   Builds a new orthonormal basis from 2 direction 
+   and (optionally) an offset vector using cross products. 
+
+   :param str base: the base component 'v' represents.
+   
 .. function:: GetMulP(m, v)
    
    Multiply a matrix with a vector representing a point. 
@@ -196,26 +210,6 @@ Maths
    
    ``e`` can be of type ``list<list>`` structure or ``c4d.Matrix``.
 
-.. function:: PolyToList(p)
-   
-   Convert a ``c4d.CPolygon`` to a ``list`` of ``c4d.Vectors``, representing the points of the polygon.
-
-.. function:: PolyToListList(p, obj)
-   
-   Convert a ``c4d.CPolygon`` to a ``list<list>`` structure. 
-
-   ``list<list>`` represents a list of points comprised of a list of coordinate values.
-   
-.. function:: ListToPoly(li)
-
-   Convert a ``list`` of ``int`` representing indices into an object's point list to a ``c4d.CPolygon``.
-
-.. function:: ListListToPoly(lli)
-   
-   Convert a ``list<list>`` structure to ``c4d.CPolygon``. 
-
-   ``list<list>`` represents a list of indices that indentify points of an object.
-
 .. function:: ListToMatrix(lv)
 
    Convert a list of 3 or 4 ``c4d.Vector`` to ``c4d.Matrix``.
@@ -228,7 +222,7 @@ Maths
    See :py:func:`MatrixToListList` to find out which list corresponds
    to which matrix component.
 
-.. function:: MatrixToListList(m, incl_off=False)
+.. function:: MatrixToListList(m, inclOff=False)
    
    Convert a ``c4d.Matrix`` to a ``list<list>`` structure. 
    

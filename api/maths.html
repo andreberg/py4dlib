@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Maths &mdash; py4dlib 0.5 documentation</title>
+    <title>Maths &mdash; py4dlib 0.6 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5',
+        VERSION:     '0.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.5 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.6 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="next" title="Mesh" href="mesh.html" />
     <link rel="prev" title="API docs" href="../api.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="../api.html" title="API docs"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.5 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.6 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -60,14 +60,13 @@
 such as min, max, midpoint, radius and size.</p>
 <dl class="classmethod">
 <dt id="BBox.FromObject">
-<em class="property">classmethod </em><tt class="descname">FromObject</tt><big>(</big><em>cls</em>, <em>obj</em>, <em>sel_only=False</em><big>)</big><a class="headerlink" href="#BBox.FromObject" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a new BBox object with all
-points from the passed object.</p>
+<em class="property">classmethod </em><tt class="descname">FromObject</tt><big>(</big><em>cls</em>, <em>obj</em>, <em>selOnly=False</em><big>)</big><a class="headerlink" href="#BBox.FromObject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new BBox object with all points from the passed object.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>sel_only</strong> (<em>bool</em>) &#8211; use selected points only instead of all points.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>selOnly</strong> (<em>bool</em>) &#8211; use selected points only instead of all points.</td>
 </tr>
 <tr class="field-even field"><th class="field-name" colspan="2">Raises ValueError:</th></tr>
 <tr class="field-even field"><td>&nbsp;</td><td class="field-body">if the object has no points.</td>
@@ -79,8 +78,7 @@ points from the passed object.</p>
 <dl class="classmethod">
 <dt id="BBox.FromPointList">
 <em class="property">classmethod </em><tt class="descname">FromPointList</tt><big>(</big><em>cls</em>, <em>lst</em><big>)</big><a class="headerlink" href="#BBox.FromPointList" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns a new BBox object with all
-points from a list added.</p>
+<dd><p>Returns a new BBox object with all points from a list added.</p>
 <p>Elements of lst must be of type <tt class="docutils literal"><span class="pre">c4d.Vector</span></tt>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -91,6 +89,12 @@ points from a list added.</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="BBox.FromPolygon">
+<em class="property">classmethod </em><tt class="descname">FromPolygon</tt><big>(</big><em>cls</em>, <em>poly</em>, <em>obj</em><big>)</big><a class="headerlink" href="#BBox.FromPolygon" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new BBox object with all points from the passed polygon.</p>
 </dd></dl>
 
 <dl class="function">
@@ -143,14 +147,14 @@ points from a list added.</p>
 <dd><p>Represents a plane defined by positional offset and normal direction.</p>
 <dl class="function">
 <dt id="Plane.SetN">
-<tt class="descname">SetN</tt><big>(</big><em>self</em>, <em>new_n</em><big>)</big><a class="headerlink" href="#Plane.SetN" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the normal of the plane to <tt class="docutils literal"><span class="pre">new_n</span></tt>.</p>
+<tt class="descname">SetN</tt><big>(</big><em>self</em>, <em>newN</em><big>)</big><a class="headerlink" href="#Plane.SetN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the normal of the plane to <tt class="docutils literal"><span class="pre">newN</span></tt>.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="Plane.SetPos">
-<tt class="descname">SetPos</tt><big>(</big><em>self</em>, <em>new_pos</em><big>)</big><a class="headerlink" href="#Plane.SetPos" title="Permalink to this definition">¶</a></dt>
-<dd><p>Sets the positional offset of the plane to <tt class="docutils literal"><span class="pre">new_pos</span></tt>.</p>
+<tt class="descname">SetPos</tt><big>(</big><em>self</em>, <em>newPos</em><big>)</big><a class="headerlink" href="#Plane.SetPos" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the positional offset of the plane to <tt class="docutils literal"><span class="pre">newPos</span></tt>.</p>
 </dd></dl>
 
 <dl class="function">
@@ -183,13 +187,13 @@ plane (0) or at the back of the plane (-1).</p>
 
 <dl class="function">
 <dt id="Plane.PointDistance">
-<tt class="descname">PointDistance</tt><big>(</big><em>self</em>, <em>p</em>, <em>get_signed=True</em><big>)</big><a class="headerlink" href="#Plane.PointDistance" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">PointDistance</tt><big>(</big><em>self</em>, <em>p</em>, <em>signed=True</em><big>)</big><a class="headerlink" href="#Plane.PointDistance" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate distance from a point p to the plane.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>get_signed</strong> (<em>bool</em>) &#8211; set to True if you want the signed distance.</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>signed</strong> (<em>bool</em>) &#8211; set to True if you want the signed distance.</td>
 </tr>
 </tbody>
 </table>
@@ -217,6 +221,12 @@ None if an intersection isn&#8217;t possible (parallel directions).</td>
 </table>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="function">
+<dt id="FloatEqual">
+<tt class="descname">FloatEqual</tt><big>(</big><em>a</em>, <em>b</em>, <em>places=8</em><big>)</big><a class="headerlink" href="#FloatEqual" title="Permalink to this definition">¶</a></dt>
+<dd><p>Same as <tt class="docutils literal"><span class="pre">c4d.utils.FloatTolerantCompare</span></tt> just a shorter function name.</p>
 </dd></dl>
 
 <dl class="function">
@@ -317,6 +327,21 @@ the two max/min vectors is greater than 180 degrees.</td>
 </dd></dl>
 
 <dl class="function">
+<dt id="BuildMatrix3">
+<tt class="descname">BuildMatrix3</tt><big>(</big><em>v</em>, <em>v2</em>, <em>off=None</em>, <em>base=&quot;z&quot;</em><big>)</big><a class="headerlink" href="#BuildMatrix3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Builds a new orthonormal basis from 2 direction
+and (optionally) an offset vector using cross products.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>base</strong> (<em>str</em>) &#8211; the base component &#8216;v&#8217; represents.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="GetMulP">
 <tt class="descname">GetMulP</tt><big>(</big><em>m</em>, <em>v</em><big>)</big><a class="headerlink" href="#GetMulP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Multiply a matrix with a vector representing a point.</p>
@@ -346,32 +371,6 @@ or <tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> w
 </dd></dl>
 
 <dl class="function">
-<dt id="PolyToList">
-<tt class="descname">PolyToList</tt><big>(</big><em>p</em><big>)</big><a class="headerlink" href="#PolyToList" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt> to a <tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">c4d.Vectors</span></tt>, representing the points of the polygon.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="PolyToListList">
-<tt class="descname">PolyToListList</tt><big>(</big><em>p</em>, <em>obj</em><big>)</big><a class="headerlink" href="#PolyToListList" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt> to a <tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> structure.</p>
-<p><tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> represents a list of points comprised of a list of coordinate values.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ListToPoly">
-<tt class="descname">ListToPoly</tt><big>(</big><em>li</em><big>)</big><a class="headerlink" href="#ListToPoly" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a <tt class="docutils literal"><span class="pre">list</span></tt> of <tt class="docutils literal"><span class="pre">int</span></tt> representing indices into an object&#8217;s point list to a <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt>.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="ListListToPoly">
-<tt class="descname">ListListToPoly</tt><big>(</big><em>lli</em><big>)</big><a class="headerlink" href="#ListListToPoly" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a <tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> structure to <tt class="docutils literal"><span class="pre">c4d.CPolygon</span></tt>.</p>
-<p><tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> represents a list of indices that indentify points of an object.</p>
-</dd></dl>
-
-<dl class="function">
 <dt id="ListToMatrix">
 <tt class="descname">ListToMatrix</tt><big>(</big><em>lv</em><big>)</big><a class="headerlink" href="#ListToMatrix" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a list of 3 or 4 <tt class="docutils literal"><span class="pre">c4d.Vector</span></tt> to <tt class="docutils literal"><span class="pre">c4d.Matrix</span></tt>.</p>
@@ -388,7 +387,7 @@ to which matrix component.</p>
 
 <dl class="function">
 <dt id="MatrixToListList">
-<tt class="descname">MatrixToListList</tt><big>(</big><em>m</em>, <em>incl_off=False</em><big>)</big><a class="headerlink" href="#MatrixToListList" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">MatrixToListList</tt><big>(</big><em>m</em>, <em>inclOff=False</em><big>)</big><a class="headerlink" href="#MatrixToListList" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a <tt class="docutils literal"><span class="pre">c4d.Matrix</span></tt> to a <tt class="docutils literal"><span class="pre">list&lt;list&gt;</span></tt> structure.</p>
 <p>The structure layout is generally in row-major format,
 and the ordering the same as the order required for
@@ -521,7 +520,7 @@ the standard <a class="reference external" href="http://docs.python.org/2/librar
         <li class="right" >
           <a href="../api.html" title="API docs"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.5 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.6 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>

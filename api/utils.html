@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Utils &mdash; py4dlib 0.5 documentation</title>
+    <title>Utils &mdash; py4dlib 0.6 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.5',
+        VERSION:     '0.6',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.5 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.6 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="next" title="Examples" href="../examples.html" />
     <link rel="prev" title="Plugins" href="plugins.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="plugins.html" title="Plugins"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.5 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.6 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -202,6 +202,29 @@ be a type or a tuple of types.</li>
 </dd></dl>
 
 <dl class="function">
+<dt id="deprecated">
+<tt class="descname">deprecated</tt><big>(</big><em>level=1</em>, <em>since=None</em>, <em>info=None</em><big>)</big><a class="headerlink" href="#deprecated" title="Permalink to this definition">¶</a></dt>
+<dd><p>Can be used to mark functions as deprecated.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>level</strong> (<em>int</em>) &#8211; severity level.
+0 = warnings.warn(category=DeprecationWarning)
+1 = warnings.warn_explicit(category=DeprecationWarning)
+2 = raise DeprecationWarning()</li>
+<li><strong>since</strong> (<em>string</em>) &#8211; the version where deprecation was introduced.</li>
+<li><strong>info</strong> (<em>string</em>) &#8211; additional info. normally used to refer to the new
+function now favored in place of the deprecated one.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="cache">
 <tt class="descname">cache</tt><big>(</big><em>func</em><big>)</big><a class="headerlink" href="#cache" title="Permalink to this definition">¶</a></dt>
 <dd><p>Classic cache decorator.</p>
@@ -267,7 +290,7 @@ be a type or a tuple of types.</li>
         <li class="right" >
           <a href="plugins.html" title="Plugins"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.5 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.6 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>
