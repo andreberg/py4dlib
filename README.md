@@ -14,6 +14,9 @@ plugins plus a small library of math routines needed for 3D work.
 
 You can view the current [documentation](http://andreberg.github.io/py4dlib "py4dlib docs") online.
 
+Better yet, you can watch the [introductional video](http://vimeo.com/72108443 "Introduction to py4dlib") on Vimeo!
+
+
 Installation
 ============
 
