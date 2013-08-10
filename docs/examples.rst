@@ -40,8 +40,11 @@ Normal setting for a group of selected points).
 
 Currently needs a working plane or a plane object as target. You can create a new working
 plane yourself and pick it up to be the target by pressing the pick target button (<) or
-you can select any three points on any polygon or point object and it will create the
-working plane for you when you press the (<) button.
+you can select any number of polygons on any number of polygon objects and hit one of the 
+Create buttons to create a new plane or workplane aligned to the polygons.
+
+Note: in R14 the workplane button aligns the workplane mode to the selection instead of 
+creating a workplane object.
 
 As a future improvement it shouldn't be hard at all to use polygons of other objects as
 planar targets. 

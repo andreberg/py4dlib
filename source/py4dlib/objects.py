@@ -17,7 +17,7 @@ import re
 
 __version__ = (0, 5)
 __date__ = '2012-09-27'
-__updated__ = '2013-08-08'
+__updated__ = '2013-08-10'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -355,13 +355,13 @@ def SelectObjects(objs):
         Select(obj)
     
 
-def DeselectAll(in_objmngr=False):
+def DeselectAll(inObjMngr=False):
     """ Not the same as ``BaseSelect.DeselectAll()``.
 
-       :param bool in_objmngr: if True, run the deselect command for the 
+       :param bool inObjMngr: if True, run the deselect command for the 
           Object Manager, else the general one for the editor viewport.
     """
-    if in_objmngr is True:
+    if inObjMngr is True:
         c4d.CallCommand(100004767) # deselect all (Object Manager)
     else:
         c4d.CallCommand(12113) # deselect all
@@ -610,10 +610,7 @@ def InsertUnderNull(objs, grp=None, name="Group", copy=False):
 
 @deprecated(since="0.5")
 def RecursiveInsertGroups(entry, parent, root, tree, pmatch='90%'):
-    #print("processing %s..." % PF(entry))
     if isinstance(entry, dict):
-        #print("... as dict (1)")
-        #print("parent = %r, root = %r" % (parent, root))
         for node in entry:
             nodeobj = None
             for op, lvl in ObjectIterator(root.op, root.op): # IGNORE:W0612 #@UnusedVariable
@@ -621,31 +618,17 @@ def RecursiveInsertGroups(entry, parent, root, tree, pmatch='90%'):
                     nodeobj = op
             if not nodeobj:
                 nodeobj = CreateObject(c4d.Onull, node.name)
-                #print("inserting nodeobj %r under parent.op %r" % (nodeobj, parent.op))
                 nodeobj.InsertUnder(parent.op)
             return RecursiveInsertGroups(node, node, root, entry, pmatch)
     elif isinstance(entry, list):
-        #print("... as list (1)")
-        #print("parent = %r, root = %r" % (parent, root))
-        j = 0
         for child in entry: # type(child) == <type: TreeEntry> or another dict
-            j += 1
-            #print("processing %d of %d children: %r..." % (j, len(entry), child))
             if isinstance(child, dict):
-                #print("... as dict (2)")
-                #print("parent = %r, root = %r" % (parent, root))
                 return RecursiveInsertGroups(child, parent, root, tree, pmatch)
             else:
-                #print("... as object (2)")
-                #print("parent = %r, root = %r" % (parent, root))
                 childobj = FindObject(child.name, start=root.op, matchfunc=FuzzyCompareStrings, limit=pmatch)
                 if not childobj:
-                    #print("creating childobj %r" % (child.name))
                     childobj = CreateObject(c4d.Onull, child.name)
-                    #print("child parents: %r, lvl = %d" % (child.parents, child.lvl))
-                #print("inserting childobj %r under parent.op %r" % (childobj, parent.op))
                 childobj.InsertUnder(parent.op)
-        #print("done children of %s" % parent.name)
     else:
         children = tree[entry]
         return RecursiveInsertGroups(children, entry, root, tree, pmatch)
@@ -671,7 +654,7 @@ def UniqueSequentialName(name_base, template=u'%(name)s.%(num)s'):
     if doc is None:
         return False
     oh = ObjectHierarchy()
-    objs = oh.Get(r"!" + name_base + ".*?\d*")
+    objs = oh.Get(r"!" + name_base + r".*?\d*")
     nums = []
     for obj in objs:
         name = obj.GetName()
@@ -839,8 +822,16 @@ def ObjectAxisFromVector(v):
     return c4d.utils.HPBToMatrix(c4d.utils.VectorToHPB(v))
 
 
-def MakeEditable(e):
-    """ Run the Make Editible command on obj or a list of objects. """
+def MakeEditable(e, clone=False):
+    """ Run the Make Editible command on an object or a list of objects. 
+    
+        :param bool clone: if True, return editable clones of the 
+            input.
+        
+        :return: editable object or list of editable objects
+            Returns False if the document of the input objects
+            can't be found.
+    """
     if isinstance(e, c4d.BaseObject):
         objs = [e]
     elif isinstance(e, list):
@@ -854,14 +845,20 @@ def MakeEditable(e):
     if doc is None:
         return False
     
-    settings = c4d.BaseContainer() 
+    settings = c4d.BaseContainer()
+    
+    if clone is True:
+        clones = []
+        for obj in objs:
+            clones.append(obj.GetClone())
+        objs = clones
+            
     result = c4d.utils.SendModelingCommand(command=c4d.MCOMMAND_MAKEEDITABLE,
                                            list=objs,
                                            mode=c4d.MODELINGCOMMANDMODE_ALL, 
                                            bc=settings, doc=doc, 
                                            flags=c4d.MODELINGCOMMANDFLAGS_CREATEUNDO)
-    c4d.EventAdd()
-    doc.Message(c4d.MSG_UPDATE)
+    
     if isinstance(result, list) and len(result) == 1:
         return result[0]
     return result

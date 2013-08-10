@@ -83,7 +83,7 @@ Functions for working with CINEMA 4D's point and polygon objects.
 
    If ``lp`` already is of type ``list<int>`` return the list untouched.
    
-.. function:: GetPolysForPoints(li, obj, strict=True)
+.. function:: GetPolysForPoints(li, obj, strict=True, threshold=3)
 
    Returns a list of polygon indices for all polygons that have 
    points with point indices given by ``li`` as their members. 
@@ -92,8 +92,13 @@ Functions for working with CINEMA 4D's point and polygon objects.
    Cmd/Ctrl when pressing the modelling mode buttons in CINEMA 4D.
 
    :param bool strict: if True, return only those polygons
-      that fully are fully enclosed by all the points that make 
+      that are fully enclosed by all the points that make 
       up that polygon.
+
+   :param int threshold: minimum number of points that must be
+       shared to for strict mode to be considered as enclosing
+       a polygon. 3 includes triangles, 4 would only include
+       quads.
 
    If ``li`` already is of type ``list<c4d.CPolygon>`` return the 
    list untouched.

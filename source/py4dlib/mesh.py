@@ -16,7 +16,7 @@ import os
 
 __version__ = (0, 6)
 __date__ = '2013-07-29'
-__updated__ = '2013-08-08'
+__updated__ = '2013-08-10'
 
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
@@ -232,7 +232,7 @@ def GetIndicesForPoints(lp, obj):
         raise TypeError("E: expected list<c4d.Vector>, got %r" % (type(lp[0])))
 
 
-def GetPolysForPoints(li, obj, strict=True):
+def GetPolysForPoints(li, obj, strict=True, threshold=3):
     """ Returns a list of polygon indices for all polygons that have 
         points with point indices given by ``li`` as their members. 
         
@@ -242,6 +242,11 @@ def GetPolysForPoints(li, obj, strict=True):
         :param bool strict: if True, return only those polygons
             that fully are fully enclosed by all the points that make 
             up that polygon.
+            
+        :param int threshold: minimum number of points that must be
+            shared to for strict mode to be considered as enclosing
+            a polygon. 3 includes triangles, 4 would only include
+            quads.
     
         If ``li`` already is of type ``list<c4d.CPolygon>`` return the 
         list untouched.
@@ -275,7 +280,7 @@ def GetPolysForPoints(li, obj, strict=True):
                 else:
                     pdict[j] = 1
         for k, v in pdict.iteritems():
-            if v >= 4:
+            if v >= threshold:
                 lpli.append(k)
     return lpli
             

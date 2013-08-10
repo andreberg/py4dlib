@@ -23,8 +23,8 @@
 #  
 #  Currently needs a working plane object as a target object. You can create a new working
 #  plane yourself and pick it up to be the target by pressing the pick target button (<) or
-#  you can select any three points on any polygon or point object and it will create the
-#  working plane for you when you press the (<) button.
+#  you can select any number of polygons on any number of polygon objects and hit one of the 
+#  Create buttons to create a new plane or workplane aligned to the polygons.
 #  
 #  As a future improvement it shouldn't be hard at all to use polygons of other objects as
 #  planar targets. 
@@ -44,7 +44,7 @@ import random
 
 __version__ = (1, 2)
 __date__ = '2011-03-30'
-__updated__ = '2013-08-08'
+__updated__ = '2013-08-10'
 
 DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
 TESTRUN = 0 or ('TestRunLevel' in os.environ and os.environ['TestRunLevel'] > 0)
