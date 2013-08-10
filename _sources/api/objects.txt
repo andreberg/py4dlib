@@ -84,11 +84,11 @@ Functions for working with CINEMA 4D's objects.
    
 .. function:: SelectObjects(objs)
    
-.. function:: DeselectAll(in_objmngr=False)
+.. function:: DeselectAll(inObjMngr=False)
 
    Not the same as ``BaseSelect.DeselectAll()``.
 
-   :param bool in_objmngr: if True, run the deselect command for the 
+   :param bool inObjMngr: if True, run the deselect command for the 
       Object Manager, else the general one for the editor viewport.
    
 .. function:: GroupObjects(objs, name="Group")
@@ -235,6 +235,13 @@ Functions for working with CINEMA 4D's objects.
 
    Same as ``c4d.utils.HPBToMatrix(c4d.utils.VectorToHPB(v))``.
 
-.. function:: MakeEditable(obj)
+.. function:: MakeEditable(obj, clone=False)
 
-   Run the Make Editible command on obj or a list of objects.
+   Run the Make Editible command on an object or a list of objects. 
+
+   :param bool clone: if True, return editable clones of the 
+       input.
+   
+   :return: editable object or list of editable objects
+       Returns False if the document of the input objects
+       can't be found.

@@ -47,10 +47,20 @@ itself, but I'd caution against it. Running a plugin
 shouldn't start a connection to some random website to
 download stuff on the end user's computer.
 
-The only sensible thing you can do, is check for a prerequisite
-dependency check at the time the plugin is actually executed
-and if dependencies are missing display a message to the user
-and politely ask to download the library.
+No, there are better ways to deal with this issue.
+For example, you could:
+
+1) kindly ask the user to download the library herself
+2) include the library with your script or plugin
+3) copy and paste the methods you are using into your own script or plugin
+
+Asking The User
+~~~~~~~~~~~~~~~
+
+In the first case a sensible thing you can do, is check for 
+prerequisite dependencies at the time the plugin is actually 
+executed and if dependencies are missing display a message to 
+the user and politely ask to download the library.
 
 You can find a complete example in the :ref:`Extract` plugin 
 included in the :ref:`py4dlib.examples`, but I shall give a 
@@ -87,8 +97,40 @@ and if not display a message dialog, for example, like so::
            return False
       # ...
 
-If you don't want to make the user install anything then you will have
-to copy and paste the py4dlib methods you are using into your plugin.
+Including The Library
+~~~~~~~~~~~~~~~~~~~~~
+
+In the second case you can put the py4dlib source folder into a subdirectory
+included in your plugin or script distribution. To import the library you
+can then modify ``sys.path`` at the top of your script before any py4dlib
+imports. For example if you have the following directory structure::
+
+   icons/
+   res/
+   lib/
+   Plugin.pyp
+   
+you can put the ``py4dlib`` folder under ``lib/`` and then modify ``sys.path``
+at the top of your plugin/script, like so::
+
+   import sys, os
+   sys.path.insert(1, os.path.realpath('lib'))  # use 1 not 0!
+   
+Note that we are using insert here instead of append. You can also use 
+append but in that case the user's version of py4dlib will be loaded 
+before your included one if the user has py4dlib installed.
+
+In case you are developing a script and not a plugin, it is the same, really.
+It just means you have to distribute an actual folder structure where a simple 
+file would have done. But if you want to include icons you'd have to do that 
+anyway.
+
+Copy And Paste Methods
+~~~~~~~~~~~~~~~~~~~~~~
+
+If you don't want to make the user install anything and you also don't want to
+include the library, then you will have to copy and paste the py4dlib methods 
+you are using into your plugin.
 
 In that case I recommend developing your plugin or script with the usual
 dependency imports until you have it just right. Then before you deliver

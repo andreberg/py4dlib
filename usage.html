@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Usage &mdash; py4dlib 0.6 documentation</title>
+    <title>Usage &mdash; py4dlib 0.6.1 documentation</title>
     
     <link rel="stylesheet" href="_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.6',
+        VERSION:     '0.6.1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.6 documentation" href="index.html" />
+    <link rel="top" title="py4dlib 0.6.1 documentation" href="index.html" />
     <link rel="next" title="Contributions" href="contributions.html" />
     <link rel="prev" title="Installation" href="installation.html" /> 
   </head>
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="installation.html" title="Installation"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">py4dlib 0.6 documentation</a> &raquo;</li> 
+        <li><a href="index.html">py4dlib 0.6.1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -87,10 +87,19 @@ the end user doesn&#8217;t have the library installed?</p>
 itself, but I&#8217;d caution against it. Running a plugin
 shouldn&#8217;t start a connection to some random website to
 download stuff on the end user&#8217;s computer.</p>
-<p>The only sensible thing you can do, is check for a prerequisite
-dependency check at the time the plugin is actually executed
-and if dependencies are missing display a message to the user
-and politely ask to download the library.</p>
+<p>No, there are better ways to deal with this issue.
+For example, you could:</p>
+<ol class="arabic simple">
+<li>kindly ask the user to download the library herself</li>
+<li>include the library with your script or plugin</li>
+<li>copy and paste the methods you are using into your own script or plugin</li>
+</ol>
+<div class="section" id="asking-the-user">
+<h2>Asking The User<a class="headerlink" href="#asking-the-user" title="Permalink to this headline">¶</a></h2>
+<p>In the first case a sensible thing you can do, is check for
+prerequisite dependencies at the time the plugin is actually
+executed and if dependencies are missing display a message to
+the user and politely ask to download the library.</p>
 <p>You can find a complete example in the <a class="reference internal" href="examples.html#extract"><em>Extract</em></a> plugin
 included in the <a class="reference internal" href="examples.html#py4dlib-examples"><em>Examples</em></a>, but I shall give a
 brief overview here.</p>
@@ -125,8 +134,37 @@ and if not display a message dialog, for example, like so:</p>
    <span class="c"># ...</span>
 </pre></div>
 </div>
-<p>If you don&#8217;t want to make the user install anything then you will have
-to copy and paste the py4dlib methods you are using into your plugin.</p>
+</div>
+<div class="section" id="including-the-library">
+<h2>Including The Library<a class="headerlink" href="#including-the-library" title="Permalink to this headline">¶</a></h2>
+<p>In the second case you can put the py4dlib source folder into a subdirectory
+included in your plugin or script distribution. To import the library you
+can then modify <tt class="docutils literal"><span class="pre">sys.path</span></tt> at the top of your script before any py4dlib
+imports. For example if you have the following directory structure:</p>
+<div class="highlight-python"><pre>icons/
+res/
+lib/
+Plugin.pyp</pre>
+</div>
+<p>you can put the <tt class="docutils literal"><span class="pre">py4dlib</span></tt> folder under <tt class="docutils literal"><span class="pre">lib/</span></tt> and then modify <tt class="docutils literal"><span class="pre">sys.path</span></tt>
+at the top of your plugin/script, like so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">os</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="s">&#39;lib&#39;</span><span class="p">))</span>  <span class="c"># use 1 not 0!</span>
+</pre></div>
+</div>
+<p>Note that we are using insert here instead of append. You can also use
+append but in that case the user&#8217;s version of py4dlib will be loaded
+before your included one if the user has py4dlib installed.</p>
+<p>In case you are developing a script and not a plugin, it is the same, really.
+It just means you have to distribute an actual folder structure where a simple
+file would have done. But if you want to include icons you&#8217;d have to do that
+anyway.</p>
+</div>
+<div class="section" id="copy-and-paste-methods">
+<h2>Copy And Paste Methods<a class="headerlink" href="#copy-and-paste-methods" title="Permalink to this headline">¶</a></h2>
+<p>If you don&#8217;t want to make the user install anything and you also don&#8217;t want to
+include the library, then you will have to copy and paste the py4dlib methods
+you are using into your plugin.</p>
 <p>In that case I recommend developing your plugin or script with the usual
 dependency imports until you have it just right. Then before you deliver
 the final version to your users, create a version with just the neccessary
@@ -134,6 +172,7 @@ methods inlined.</p>
 <p>Special care was given to make the py4dlib API not too self-entangled so
 ripping stuff out to copy+paste it into your own scripts shouldn&#8217;t prove
 too difficult.</p>
+</div>
 </div>
 
 
@@ -145,7 +184,12 @@ too difficult.</p>
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Usage</a></li>
-<li><a class="reference internal" href="#best-practices">Best Practices</a></li>
+<li><a class="reference internal" href="#best-practices">Best Practices</a><ul>
+<li><a class="reference internal" href="#asking-the-user">Asking The User</a></li>
+<li><a class="reference internal" href="#including-the-library">Including The Library</a></li>
+<li><a class="reference internal" href="#copy-and-paste-methods">Copy And Paste Methods</a></li>
+</ul>
+</li>
 </ul>
 
   <h4>Previous topic</h4>
@@ -188,7 +232,7 @@ too difficult.</p>
         <li class="right" >
           <a href="installation.html" title="Installation"
              >previous</a> |</li>
-        <li><a href="index.html">py4dlib 0.6 documentation</a> &raquo;</li> 
+        <li><a href="index.html">py4dlib 0.6.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
