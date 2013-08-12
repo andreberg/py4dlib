@@ -21,20 +21,57 @@ Utility toolbelt for great convenience.
    
 .. function:: EscapeUnicode(s)
 
-   CINEMA 4D's CPython integration stores high-order chars (``ord > 126``) 
+   CINEMA 4D R12's CPython integration stores high-order chars (``ord > 126``) 
    as 4-byte unicode escape sequences with upper case hex letters.
 
    For example the character ``ä`` (*LATIN SMALL LETTER A WITH DIAERESIS*)
    would be stored as the byte sequence ``\u00E4``. This function replaces
-   high-order chars with a unicode escape sequence suitable for CINEMA 4D.
+   high-order chars with a unicode escape sequence suitable for CINEMA 4D R12.
+
+   If you use this function in R12 you probably need to balance each call with a
+   call to :py:func:`UnescapeUnicode` when the time comes to use, display or
+   compare your string to a string returned by some internal function of C4D R12.
+   
+   For example, if you ask an object named ``Würfel`` (German for cube) 
+   for its name::
+   
+      opname = op.GetName() 
+       
+      # opname now prints as "W\ürfel" but is actually "W\u00FCrfel"
+      # if you UnescapeUnicode now you will get a Python byte string 
+      # with proper encoding
+      
+      opname_unescaped = UnescapeUnicode(opname)
+      
+      # opname_unescaped is now "W\xfcrfel" (latin-1) and you can compare 
+      # it to other Python byte strings with no additional fuzz. If you want
+      # to change the byte string and then pass it to C4D to set an object's
+      # new name you would have to escape the byte string to get a string
+      # that uses an escape sequence similar to the one shown at the beginning
+      
+      new_opname_escaped = EscapeUnicode(opname_unescaped) 
+      
+      op.SetName(new_opname_escaped)
+      
+      # Remember this is only relevant for R12. In R13 and R14 both functions
+      # are practically no-ops.
+
+   In R13 and R14 it returns the string untouched since in those versions
+   the CPython intergration handles Unicode encoded strings properly.
 
 .. function:: UnescapeUnicode(s)
 
-   CINEMA 4D's CPython integration stores high-order chars (``ord > 126``) 
+   CINEMA 4D R12's CPython integration stores high-order chars (``ord > 126``) 
    as 4-byte unicode escape sequences with upper case hex letters.
 
-   This function converts unicode escape sequences used by CINEMA 4D to their
-   corresponding high-order characters.
+   This function converts unicode escape sequences used by CINEMA 4D when passing 
+   bytes (e.g. ``\u00FC`` -> ``\xfc``) to their corresponding high-order characters.
+
+   It should be used in R12 only and should balance out any calls made to 
+   :py:func:`EscapeUnicode`.
+
+   In R13 and R14 the string is returned untouched since in those versions
+   the CPython intergration handles Unicode encoded strings properly.
 
 .. function:: VersionString(versionTuple)
    

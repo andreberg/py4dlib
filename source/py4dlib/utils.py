@@ -17,10 +17,10 @@ import warnings
 
 __version__ = (0, 6)
 __date__ = '2012-09-27'
-__updated__ = '2013-08-08'
+__updated__ = '2013-08-12'
 
 
-DEBUG = 0 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
+DEBUG = 1 or ('DebugLevel' in os.environ and os.environ['DebugLevel'] > 0)
 TESTRUN = 0 or ('TestRunLevel' in os.environ and os.environ['TestRunLevel'] > 0)
 
 
@@ -28,10 +28,14 @@ from subprocess import Popen, PIPE
 from functools import wraps, partial
 
 try:
-    import c4d #@UnresolvedImport
+    import c4d  #@UnresolvedImport
+    C4D_VERSION = c4d.GetC4DVersion()
 except ImportError:
+    # TestRunLevel is defined by the Pydev PyUnit launcher to be 1
     if TESTRUN == 1:
-        pass
+        # define hard coded version here so test scripts
+        # can set the desired version after importing py4dlib.utils 
+        C4D_VERSION = 12043
 
 
 def ClearConsole():
@@ -78,40 +82,65 @@ def FuzzyCompareStrings(a, b, limit=20):
 
 
 def EscapeUnicode(s):
-    ur""" CINEMA 4D's CPython integration stores high-order chars (``ord > 126``) 
+    ur""" CINEMA 4D R12's CPython integration stores high-order chars (``ord > 126``) 
         as 4-byte unicode escape sequences with upper case hex letters.
         
         For example the character ``ä`` (LATIN SMALL LETTER A WITH DIAERESIS)
         would be stored as the byte sequence ``\u00E4``. This function replaces
         high-order chars with a unicode escape sequence suitable for CINEMA 4D.
+        
+        If you use this function in R12 you need to balance each call with a
+        call to :py:func:`UnescapeUnicode` when the time comes to use or display
+        the string.
+        
+        In R13 and R14 it returns the string untouched since in those versions
+        the CPython intergration handles Unicode encoded strings properly.
     """
     result = ""
-    if c4d.GetC4DVersion() > 12999:
+    if C4D_VERSION <= 12999:
         try:
-            s = s.decode('utf-8')
-        except UnicodeEncodeError:
-            # already unicode?
+            s = s.decode('utf-8').encode('latin-1')
+        except UnicodeDecodeError:
             pass
-    for b in s:
-        if ord(b) > 126:
-            result += r"\\u%04X" % (ord(b),)
-        else:
-            result += b
+        except UnicodeEncodeError:
+            pass
+        for b in s:
+            if ord(b) > 126:
+                result += r"\u%04X" % (ord(b),)
+            else:
+                result += b
+        if DEBUG:
+            print("result = %r" % result)
+    else:
+        return s
     return result
 
 
 def UnescapeUnicode(s):
-    ur""" CINEMA 4D's CPython integration stores high-order chars (``ord > 126``) 
+    ur""" CINEMA 4D R12's CPython integration stores high-order chars (``ord > 126``) 
         as 4-byte unicode escape sequences with upper case hex letters.
         
-        This function converts unicode escape sequences used by CINEMA 4D to their
-        corresponding high-order characters.
+        This function converts unicode escape sequences used by CINEMA 4D when passing 
+        bytes (e.g. ``\u00FC`` -> ``\xfc``) to their corresponding high-order characters.
+         
+        It should be used in R12 only and should balance out any calls made to 
+        :py:func:`EscapeUnicode`.
+
+        In R13 and R14 the string is returned untouched since in those versions
+        the CPython intergration handles Unicode encoded strings properly.
     """
-    try:
-        return s.decode('unicode_escape')
-    except UnicodeEncodeError:
-        # already unicode?
-        return s
+    if C4D_VERSION <= 12999:
+        try:
+            return s.decode('unicode_escape')
+        except UnicodeEncodeError:
+            return s
+    else:
+        try:
+            return s.decode("utf-8")
+        except UnicodeDecodeError:
+            return s
+        except UnicodeEncodeError:
+            return s
 
 
 def VersionString(versionTuple):

@@ -1,0 +1,21 @@
+// C4D-DialogResource
+
+DIALOGSTRINGS IDD_DIALOG_SETTINGS
+{
+  IDS_BUTTON_CANCEL          "Cancel";
+  IDS_BUTTON_DOIT            "Replace";
+  IDS_CHECK_DOTALL           "Dot all";
+  IDS_CHECK_IGNORECASE       "Ignore case";
+  IDS_CHECK_MULTILINE        "Multiline";
+  IDS_CHECK_SELECTIONONLY    "Selected objects only";
+  IDS_CHECK_VERBOSE          "Verbose";
+  IDS_DIALOG_TITLE           "Regex Renamer";
+  IDS_DUMMY                  "Dummy";
+  IDS_GROUP_BUTTONS          "Buttons";
+  IDS_GROUP_ENTRYUI          "Entry UI";
+  IDS_GROUP_SETTINGS_REGEX   "Regex Settings";
+  IDS_GROUP_SETTINGS_TARGET  "Target Settings";
+  IDS_GROUP_WRAPPER          "Wrapper";
+  IDS_STATIC_REPLACE         "Replace with:";
+  IDS_STATIC_SEARCH          "Search for:";
+}
