@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Utils &mdash; py4dlib 0.6.1 documentation</title>
+    <title>Utils &mdash; py4dlib 0.6.5 documentation</title>
     
     <link rel="stylesheet" href="../_static/pydoctheme.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.6.1',
+        VERSION:     '0.6.5',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="py4dlib 0.6.1 documentation" href="../index.html" />
+    <link rel="top" title="py4dlib 0.6.5 documentation" href="../index.html" />
     <link rel="up" title="API docs" href="../api.html" />
     <link rel="next" title="Examples" href="../examples.html" />
     <link rel="prev" title="Plugins" href="plugins.html" /> 
@@ -41,7 +41,7 @@
         <li class="right" >
           <a href="plugins.html" title="Plugins"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.6.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.6.5 documentation</a> &raquo;</li>
           <li><a href="../api.html" accesskey="U">API docs</a> &raquo;</li> 
       </ul>
     </div>  
@@ -75,20 +75,53 @@ the longest string match.</p>
 <dl class="function">
 <dt id="EscapeUnicode">
 <tt class="descname">EscapeUnicode</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#EscapeUnicode" title="Permalink to this definition">¶</a></dt>
-<dd><p>CINEMA 4D&#8217;s CPython integration stores high-order chars (<tt class="docutils literal"><span class="pre">ord</span> <span class="pre">&gt;</span> <span class="pre">126</span></tt>)
+<dd><p>CINEMA 4D R12&#8217;s CPython integration stores high-order chars (<tt class="docutils literal"><span class="pre">ord</span> <span class="pre">&gt;</span> <span class="pre">126</span></tt>)
 as 4-byte unicode escape sequences with upper case hex letters.</p>
 <p>For example the character <tt class="docutils literal"><span class="pre">ä</span></tt> (<em>LATIN SMALL LETTER A WITH DIAERESIS</em>)
 would be stored as the byte sequence <tt class="docutils literal"><span class="pre">\u00E4</span></tt>. This function replaces
-high-order chars with a unicode escape sequence suitable for CINEMA 4D.</p>
+high-order chars with a unicode escape sequence suitable for CINEMA 4D R12.</p>
+<p>If you use this function in R12 you probably need to balance each call with a
+call to <a class="reference internal" href="#UnescapeUnicode" title="UnescapeUnicode"><tt class="xref py py-func docutils literal"><span class="pre">UnescapeUnicode()</span></tt></a> when the time comes to use, display or
+compare your string to a string returned by some internal function of C4D R12.</p>
+<p>For example, if you ask an object named <tt class="docutils literal"><span class="pre">Würfel</span></tt> (German for cube)
+for its name:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">opname</span> <span class="o">=</span> <span class="n">op</span><span class="o">.</span><span class="n">GetName</span><span class="p">()</span>
+
+<span class="c"># opname now prints as &quot;W\ürfel&quot; but is actually &quot;W\u00FCrfel&quot;</span>
+<span class="c"># if you UnescapeUnicode now you will get a Python byte string</span>
+<span class="c"># with proper encoding</span>
+
+<span class="n">opname_unescaped</span> <span class="o">=</span> <span class="n">UnescapeUnicode</span><span class="p">(</span><span class="n">opname</span><span class="p">)</span>
+
+<span class="c"># opname_unescaped is now &quot;W\xfcrfel&quot; (latin-1) and you can compare</span>
+<span class="c"># it to other Python byte strings with no additional fuzz. If you want</span>
+<span class="c"># to change the byte string and then pass it to C4D to set an object&#39;s</span>
+<span class="c"># new name you would have to escape the byte string to get a string</span>
+<span class="c"># that uses an escape sequence similar to the one shown at the beginning</span>
+
+<span class="n">new_opname_escaped</span> <span class="o">=</span> <span class="n">EscapeUnicode</span><span class="p">(</span><span class="n">opname_unescaped</span><span class="p">)</span>
+
+<span class="n">op</span><span class="o">.</span><span class="n">SetName</span><span class="p">(</span><span class="n">new_opname_escaped</span><span class="p">)</span>
+
+<span class="c"># Remember this is only relevant for R12. In R13 and R14 both functions</span>
+<span class="c"># are practically no-ops.</span>
+</pre></div>
+</div>
+<p>In R13 and R14 it returns the string untouched since in those versions
+the CPython intergration handles Unicode encoded strings properly.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="UnescapeUnicode">
 <tt class="descname">UnescapeUnicode</tt><big>(</big><em>s</em><big>)</big><a class="headerlink" href="#UnescapeUnicode" title="Permalink to this definition">¶</a></dt>
-<dd><p>CINEMA 4D&#8217;s CPython integration stores high-order chars (<tt class="docutils literal"><span class="pre">ord</span> <span class="pre">&gt;</span> <span class="pre">126</span></tt>)
+<dd><p>CINEMA 4D R12&#8217;s CPython integration stores high-order chars (<tt class="docutils literal"><span class="pre">ord</span> <span class="pre">&gt;</span> <span class="pre">126</span></tt>)
 as 4-byte unicode escape sequences with upper case hex letters.</p>
-<p>This function converts unicode escape sequences used by CINEMA 4D to their
-corresponding high-order characters.</p>
+<p>This function converts unicode escape sequences used by CINEMA 4D when passing
+bytes (e.g. <tt class="docutils literal"><span class="pre">\u00FC</span></tt> -&gt; <tt class="docutils literal"><span class="pre">\xfc</span></tt>) to their corresponding high-order characters.</p>
+<p>It should be used in R12 only and should balance out any calls made to
+<a class="reference internal" href="#EscapeUnicode" title="EscapeUnicode"><tt class="xref py py-func docutils literal"><span class="pre">EscapeUnicode()</span></tt></a>.</p>
+<p>In R13 and R14 the string is returned untouched since in those versions
+the CPython intergration handles Unicode encoded strings properly.</p>
 </dd></dl>
 
 <dl class="function">
@@ -290,7 +323,7 @@ function now favored in place of the deprecated one.</li>
         <li class="right" >
           <a href="plugins.html" title="Plugins"
              >previous</a> |</li>
-        <li><a href="../index.html">py4dlib 0.6.1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">py4dlib 0.6.5 documentation</a> &raquo;</li>
           <li><a href="../api.html" >API docs</a> &raquo;</li> 
       </ul>
     </div>

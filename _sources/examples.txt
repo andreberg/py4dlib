@@ -48,3 +48,17 @@ creating a workplane object.
 
 As a future improvement it shouldn't be hard at all to use polygons of other objects as
 planar targets. 
+
+RegexRenamer
+~~~~~~~~~~~~
+
+Regex Renamer is a command plugin, that shows how to use the :py:class:`UserDefaults` class
+to provide UI state persistence between times the plugin is run. 
+
+The plugin's function is to utilize Python's powerful "re" module to perform regular expression 
+based searching and replacing within object names.
+
+
+Check out `http://regular-expression.info <http://regular-expression.info>`_ to learn more 
+about regular expressions.
+

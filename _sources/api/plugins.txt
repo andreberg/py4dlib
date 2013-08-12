@@ -38,8 +38,10 @@ Plugins
    
    :param str filepath: usually ``res/settings.ini`` relative to the 
        source code file of the plugin, that uses the config store.
-   :param dict defaults: default values to be used if the config file 
-       needs to be created.
+   :param defaults: ``dict`` default values to be used if the config
+      file needs to be created. It is also possible to pass None
+      here and then use the :py:func:`Set` and :py:func:`Save` functions 
+      to set inidividual settings after creation of the config object.
    :param str header: the name for a section in the .ini file.
        Usually you can get away with leaving it at the default.
        This will add a header ``[Settings]`` under which your
@@ -47,17 +49,45 @@ Plugins
        you are advised to modify the config parser state 
        directly through ``self.state``.
    
-   .. function:: Get(self, name, section=None, default=None)
+   .. function:: Get(self, name, section=None, default=None, valuetype="str")
       
       Retrieve a previously stored value from the config object.
 
       :param str name: name of the setting
-      :param str section: the section name. ``self.default_section`` if None.
+      :param str section: the section name. ``self.header`` if None.
       :param any default: a default value to use in case name wasn't found.
+      :param str valuetype: type of the value to get. can be one of ``[str, bool, int, float]``.
       :return: ``str`` on success, None or *default* on failure.
           this will always return a string even if the value was
           stored as another type previously. So the caller is
           responsible for the convertion to the wanted data type.
+
+   .. function:: GetInt(self, name, section=None, default=None)
+
+      Retrieve a previously stored integer value from the config object.
+
+      :param str name:  name of the setting
+      :param str section: the section name. ``self.header`` if None.
+      :param any default: a default value to use in case name wasn't found.
+      :return: ``int`` on success, None or 'default' on failure.
+
+   .. function:: GetFloat(self, name, section=None, default=None)
+
+      Retrieve a previously stored float value from the config object.
+
+      :param str name:  name of the setting
+      :param str section: the section name. ``self.header`` if None.
+      :param any default: a default value to use in case name wasn't found.
+      :return: ``float`` on success, None or 'default' on failure.
+
+   .. function:: GetBool(self, name, section=None, default=None)
+
+      Retrieve a previously stored boolean value from the config object.
+
+      :param str name:  name of the setting
+      :param str section: the section name. ``self.header`` if None.
+      :param any default: a default value to use in case name wasn't found.
+      :return: ``bool`` on success, None or 'default' on failure.
       
    .. function:: Set(self, name, value, section=None)
       
@@ -65,7 +95,7 @@ Plugins
 
       :param str name: name of the setting
       :param any value: value to set.
-      :param str section: the section name. ``self.default_section`` if None.
+      :param str section: the section name. ``self.header`` if None.
       :return: True if successful, False otherwise.
       
    .. function:: Read(self)
